@@ -1,0 +1,16 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input FindProfileDto {
+  id: Float!
+}
+
+type Profile {
+  id: Float!
+  name: String!
+}
+
+type Query {
+  getProfile(findProfile: FindProfileDto!): Profile!
+}
