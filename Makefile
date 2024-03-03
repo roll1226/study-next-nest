@@ -12,3 +12,5 @@ restart:
 	@make up
 codegen:
 	cd frontend && npm run codegen
+postgres:
+	docker compose exec postgres bash

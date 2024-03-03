@@ -32,6 +32,10 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_USER: postgres
+      POSTGRES_DB: nest_next
+      TZ: "Asia/Tokyo"
+
   graphql-engine:
     image: hasura/graphql-engine:v2.37.0
     ports:
@@ -55,6 +59,7 @@ services:
     depends_on:
       data-connector-agent:
         condition: service_healthy
+
   data-connector-agent:
     image: hasura/graphql-data-connector:v2.37.0
     restart: always
@@ -71,5 +76,6 @@ services:
       timeout: 10s
       retries: 5
       start_period: 5s
+
 volumes:
   db_data:

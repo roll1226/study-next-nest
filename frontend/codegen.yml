@@ -7,7 +7,7 @@
 #     plugins: []
 
 overwrite: true
-schema: ../api/src/schema.gql
+schema: "http://localhost:8080/"
 documents: src/**/*.gql
 hooks:
   afterAllFileWrite:
