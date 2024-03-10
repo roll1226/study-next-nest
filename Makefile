@@ -13,7 +13,7 @@ down:
 	docker compose down
 restart:
 	@make down
-	@make up
+	@make up-background
 codegen:
 	cd frontend && npm run codegen
 postgres:
