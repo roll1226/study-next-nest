@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Customer {
+  email: String!
+  first_name: String!
+  id: Float!
+  ip_address: String!
+  last_name: String!
+  phone: String!
+  username: String!
+}
+
+input FindCustomerDto {
+  id: Float!
+}
+
 input FindProfileDto {
   id: Float!
 }
@@ -12,5 +26,6 @@ type Profile {
 }
 
 type Query {
+  getCustomer(findCustomer: FindCustomerDto!): Customer!
   getProfile(findProfile: FindProfileDto!): Profile!
 }

@@ -8,10 +8,12 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { ProfilesModule } from './profiles/profiles.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './db/database.config';
+import { CustomersModule } from './customers/customers.module';
 
 @Module({
   imports: [
     ProfilesModule,
+    CustomersModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       debug: true,
