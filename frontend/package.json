@@ -10,6 +10,7 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.6",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
@@ -31,6 +32,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "prettier": "^3.2.5",
     "typescript": "^5"
   }
 }

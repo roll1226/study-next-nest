@@ -1,0 +1,7 @@
+# Try out GraphQL queries here
+query getCustomer($id: Float!) {
+  getCustomer(findCustomer: { id: $id }) {
+    id
+    username
+  }
+}

@@ -1,7 +1,0 @@
-# Try out GraphQL queries here
-query Profiles {
-  profiles {
-    id
-    name
-  }
-}
