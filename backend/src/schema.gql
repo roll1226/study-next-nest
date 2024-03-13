@@ -8,6 +8,7 @@ type Customer {
   id: Float!
   ip_address: String!
   last_name: String!
+  orders: [Order!]!
   phone: String!
   username: String!
 }
@@ -16,16 +17,21 @@ input FindCustomerDto {
   id: Float!
 }
 
-input FindProfileDto {
+input FindOrderDto {
   id: Float!
 }
 
-type Profile {
+type Order {
+  customer: [Customer!]!
+  discount_price: String!
   id: Float!
-  name: String!
+  order_date: String!
+  product: String!
+  purchase_price: String!
+  transaction_id: String!
 }
 
 type Query {
   getCustomer(findCustomer: FindCustomerDto!): Customer!
-  getProfile(findProfile: FindProfileDto!): Profile!
+  getOrder(findOrder: FindOrderDto!): Order!
 }

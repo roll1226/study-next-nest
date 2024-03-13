@@ -38,6 +38,7 @@ export type Customer = {
   id: Scalars["Float"]["output"];
   ip_address: Scalars["String"]["output"];
   last_name: Scalars["String"]["output"];
+  orders: Array<Order>;
   phone: Scalars["String"]["output"];
   username: Scalars["String"]["output"];
 };
@@ -46,28 +47,33 @@ export type FindCustomerDto = {
   id: Scalars["Float"]["input"];
 };
 
-export type FindProfileDto = {
+export type FindOrderDto = {
   id: Scalars["Float"]["input"];
 };
 
-export type Profile = {
-  __typename?: "Profile";
+export type Order = {
+  __typename?: "Order";
+  customer: Array<Customer>;
+  discount_price: Scalars["String"]["output"];
   id: Scalars["Float"]["output"];
-  name: Scalars["String"]["output"];
+  order_date: Scalars["String"]["output"];
+  product: Scalars["String"]["output"];
+  purchase_price: Scalars["String"]["output"];
+  transaction_id: Scalars["String"]["output"];
 };
 
 export type Query = {
   __typename?: "Query";
   getCustomer: Customer;
-  getProfile: Profile;
+  getOrder: Order;
 };
 
 export type QuerygetCustomerArgs = {
   findCustomer: FindCustomerDto;
 };
 
-export type QuerygetProfileArgs = {
-  findProfile: FindProfileDto;
+export type QuerygetOrderArgs = {
+  findOrder: FindOrderDto;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -180,9 +186,9 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
   Customer: ResolverTypeWrapper<Customer>;
   FindCustomerDto: FindCustomerDto;
-  FindProfileDto: FindProfileDto;
+  FindOrderDto: FindOrderDto;
   Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
-  Profile: ResolverTypeWrapper<Profile>;
+  Order: ResolverTypeWrapper<Order>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]["output"]>;
 };
@@ -192,9 +198,9 @@ export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"]["output"];
   Customer: Customer;
   FindCustomerDto: FindCustomerDto;
-  FindProfileDto: FindProfileDto;
+  FindOrderDto: FindOrderDto;
   Float: Scalars["Float"]["output"];
-  Profile: Profile;
+  Order: Order;
   Query: {};
   String: Scalars["String"]["output"];
 };
@@ -209,18 +215,28 @@ export type CustomerResolvers<
   id: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
   ip_address: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   last_name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  orders: Resolver<Array<ResolversTypes["Order"]>, ParentType, ContextType>;
   phone: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   username: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProfileResolvers<
+export type OrderResolvers<
   ContextType = any,
   ParentType extends
-    ResolversParentTypes["Profile"] = ResolversParentTypes["Profile"],
+    ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
 > = {
+  customer: Resolver<
+    Array<ResolversTypes["Customer"]>,
+    ParentType,
+    ContextType
+  >;
+  discount_price: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   id: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
-  name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  order_date: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  product: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  purchase_price: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  transaction_id: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -235,16 +251,16 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QuerygetCustomerArgs, "findCustomer">
   >;
-  getProfile: Resolver<
-    ResolversTypes["Profile"],
+  getOrder: Resolver<
+    ResolversTypes["Order"],
     ParentType,
     ContextType,
-    RequireFields<QuerygetProfileArgs, "findProfile">
+    RequireFields<QuerygetOrderArgs, "findOrder">
   >;
 };
 
 export type Resolvers<ContextType = any> = {
   Customer: CustomerResolvers<ContextType>;
-  Profile: ProfileResolvers<ContextType>;
+  Order: OrderResolvers<ContextType>;
   Query: QueryResolvers<ContextType>;
 };

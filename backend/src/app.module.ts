@@ -5,14 +5,14 @@ import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule } from '@nestjs/config';
 import { ApolloDriver } from '@nestjs/apollo';
-import { ProfilesModule } from './profiles/profiles.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './db/database.config';
 import { CustomersModule } from './customers/customers.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
-    ProfilesModule,
+    OrdersModule,
     CustomersModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,

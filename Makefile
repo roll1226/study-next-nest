@@ -14,6 +14,8 @@ down:
 restart:
 	@make down
 	@make up-background
+ps:
+	docker compose ps
 codegen:
 	cd frontend && npm run codegen
 postgres:

@@ -1,0 +1,10 @@
+query GetOrder($id: Float!) {
+  getOrder(findOrder: { id: $id }) {
+    id
+    product
+    customer {
+      id
+      username
+    }
+  }
+}

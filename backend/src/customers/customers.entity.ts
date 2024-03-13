@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/orders/orders.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity('customer')
@@ -15,25 +16,29 @@ export class Customer {
 
   @Column('text', { comment: '名', nullable: true })
   @Field()
-  first_name?: string;
+  readonly first_name?: string;
 
   @Column('text', { comment: '姓', nullable: true })
   @Field()
-  last_name?: string;
+  readonly last_name?: string;
 
   @Column('text', { comment: 'メールアドレス', nullable: true })
   @Field()
-  email?: string;
+  readonly email?: string;
 
   @Column('text', { comment: '電話番号', nullable: true })
   @Field()
-  phone?: string;
+  readonly phone?: string;
 
   @Column('text', { comment: 'ユーザーネーム', nullable: true })
   @Field()
-  username?: string;
+  readonly username?: string;
 
   @Column('text', { comment: 'IPアドレス', nullable: true })
   @Field()
-  ip_address?: string;
+  readonly ip_address?: string;
+
+  @OneToMany(() => Order, (order) => order.customer)
+  @Field(() => [Order])
+  orders: Order[];
 }
