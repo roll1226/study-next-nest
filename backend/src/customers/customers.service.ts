@@ -11,6 +11,9 @@ export class CustomersService {
   ) {}
 
   async findOne(id: number): Promise<Customer> | null {
-    return this.customerRepository.findOneBy({ id });
+    return this.customerRepository.findOne({
+      where: { id },
+      relations: ['orders'],
+    });
   }
 }

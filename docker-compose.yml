@@ -55,7 +55,14 @@ services:
       # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
-      HASURA_GRAPHQL_METADATA_DEFAULTS: '{"backend_configs":{"dataconnector":{"athena":{"uri":"http://data-connector-agent:8081/api/v1/athena"},"mariadb":{"uri":"http://data-connector-agent:8081/api/v1/mariadb"},"mysql8":{"uri":"http://data-connector-agent:8081/api/v1/mysql"},"oracle":{"uri":"http://data-connector-agent:8081/api/v1/oracle"},"snowflake":{"uri":"http://data-connector-agent:8081/api/v1/snowflake"}}}}'
+      HASURA_GRAPHQL_METADATA_DEFAULTS: ${HASURA_GRAPHQL_METADATA_DEFAULTS}
+      NESTJS_EVENT_WEBHOOK_SHARED_SECRET: ${NESTJS_EVENT_WEBHOOK_SHARED_SECRET}
+      NESTJS_EVENT_WEBHOOK_ENDPOINT: ${NESTJS_BASE_URL}/hasura/events
+      HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: "true"
+      HASURA_GRAPHQL_ENABLE_APOLLO_FEDERATION: "true"
+    volumes:
+      - ./backend/hasura/migrations:/hasura-migrations
+      - ./backend/hasura/metadata:/hasura-metadata
     depends_on:
       data-connector-agent:
         condition: service_healthy

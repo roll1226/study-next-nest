@@ -20,3 +20,5 @@ codegen:
 	cd frontend && npm run codegen
 postgres:
 	docker compose exec postgres bash
+hasura-console:
+	cd backend/hasura && hasura console
