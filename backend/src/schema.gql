@@ -33,5 +33,6 @@ type Order {
 
 type Query {
   getCustomer(findCustomer: FindCustomerDto!): Customer!
+  getCustomerAll: [Customer!]!
   getOrder(findOrder: FindOrderDto!): Order!
 }

@@ -9,3 +9,29 @@ array_relationships:
         table:
           name: order
           schema: public
+remote_relationships:
+  - definition:
+      to_remote_schema:
+        lhs_fields:
+          - id
+        remote_field:
+          getCustomer:
+            arguments:
+              findCustomer:
+                id: $id
+        remote_schema: nest
+    name: getCustomer
+event_triggers:
+  - name: newCustomer
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 15
+      num_retries: 3
+      timeout_sec: 100
+    webhook_from_env: NESTJS_EVENT_WEBHOOK_ENDPOINT
+    headers:
+      - name: secret-header
+        value_from_env: NESTJS_EVENT_WEBHOOK_SHARED_SECRET

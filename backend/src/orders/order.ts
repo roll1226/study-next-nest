@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Customer } from 'src/customers/customers.entity';
+import { Customer } from 'src/customers/customer';
 import {
   Column,
   Entity,
@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 @ObjectType()
-@Entity('order')
+@Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn({
     name: 'id',

@@ -1,5 +1,5 @@
 import { FindOrderDto } from './dto/find-order.dto';
-import { Order } from './orders.entity';
+import { Order } from './order';
 import { OrdersService } from './orders.service';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 

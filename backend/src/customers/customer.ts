@@ -1,9 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Order } from 'src/orders/orders.entity';
+import { Order } from 'src/orders/order';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity('customers')
 @ObjectType()
-@Entity('customer')
 export class Customer {
   @PrimaryGeneratedColumn({
     name: 'id',
@@ -40,5 +40,5 @@ export class Customer {
 
   @OneToMany(() => Order, (order) => order.customer)
   @Field(() => [Order])
-  orders: Order[];
+  readonly orders: Order[];
 }

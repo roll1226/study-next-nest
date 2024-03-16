@@ -7,9 +7,9 @@ import { ConfigModule } from '@nestjs/config';
 import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './db/database.config';
-import { CustomersModule } from './customers/customers.module';
-import { OrdersModule } from './orders/orders.module';
 import { HasuraModule } from '@golevelup/nestjs-hasura';
+import { OrdersModule } from './orders/orders.module';
+import { CustomersModule } from './customers/customers.module';
 
 @Module({
   imports: [
@@ -45,7 +45,11 @@ import { HasuraModule } from '@golevelup/nestjs-hasura';
         },
       },
     }),
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: [`.env.${process.env.NODE_ENV}`, `.env`],
+      load: [],
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: TypeOrmConfigService,

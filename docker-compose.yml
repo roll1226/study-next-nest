@@ -12,6 +12,8 @@ services:
         target: /backend
     ports:
       - "3000:3000"
+    depends_on:
+      - postgres
 
   frontend:
     build:
@@ -63,6 +65,7 @@ services:
     volumes:
       - ./backend/hasura/migrations:/hasura-migrations
       - ./backend/hasura/metadata:/hasura-metadata
+      - ./backend/hasura/seeds:/hasura-seeds
     depends_on:
       data-connector-agent:
         condition: service_healthy

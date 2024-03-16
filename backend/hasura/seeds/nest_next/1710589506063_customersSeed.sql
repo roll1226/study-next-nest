@@ -1,0 +1,11 @@
+SET check_function_bodies = false;
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (1, 'Daisy', 'Syme', 'dsyme0@hp.com', '+20 (915) 874-5336', 'dsyme0', '42.14.173.181');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (2, 'Berny', 'Linford', 'blinford1@odnoklassniki.ru', '+55 (659) 852-4292', 'blinford1', '84.112.166.217');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (3, 'Krystal', 'Fretwell', 'kfretwell2@fda.gov', '+358 (577) 234-5107', 'kfretwell2', '16.230.140.234');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (4, 'Donnell', 'Yve', 'dyve3@aboutads.info', '+81 (167) 244-5980', 'dyve3', '50.23.181.152');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (5, 'Ola', 'Fretter', 'ofretter4@sitemeter.com', '+86 (690) 881-4182', 'ofretter4', '73.164.185.62');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (6, 'Ximenes', 'Mote', 'xmote5@barnesandnoble.com', '+502 (536) 300-9224', 'xmote5', '175.219.84.213');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (7, 'Ainslie', 'Davidzon', 'adavidzon6@cbslocal.com', '+254 (755) 803-4401', 'adavidzon6', '186.172.158.188');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (8, 'Diego', 'Ellit', 'dellit7@walmart.com', '+62 (310) 893-0690', 'dellit7', '86.123.251.103');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (9, 'Maximilien', 'Longbothom', 'mlongbothom8@yahoo.co.jp', '+33 (279) 317-1163', 'mlongbothom8', '5.68.95.19');
+INSERT INTO public.customers (id, first_name, last_name, email, phone, username, ip_address) VALUES (10, 'Garold', 'Pendock', 'gpendock9@foxnews.com', '+27 (948) 957-1398', 'gpendock9', '153.194.87.243');
