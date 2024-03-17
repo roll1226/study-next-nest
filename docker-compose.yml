@@ -63,9 +63,9 @@ services:
       HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: "true"
       HASURA_GRAPHQL_ENABLE_APOLLO_FEDERATION: "true"
     volumes:
-      - ./backend/hasura/migrations:/hasura-migrations
-      - ./backend/hasura/metadata:/hasura-metadata
-      - ./backend/hasura/seeds:/hasura-seeds
+      - ./hasura/migrations:/hasura-migrations
+      - ./hasura/metadata:/hasura-metadata
+      - ./hasura/seeds:/hasura-seeds
     depends_on:
       data-connector-agent:
         condition: service_healthy
