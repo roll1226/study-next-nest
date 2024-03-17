@@ -1,22 +1,6 @@
-- name: nest
+- name: nest_graphql_schemas
   definition:
     url: http://host.docker.internal:3000/graphql
     timeout_seconds: 60
     customization: {}
-  comment: Nestjs graphql
-  remote_relationships:
-    - relationships: []
-      type_name: Query
-    - relationships:
-        - definition:
-            to_remote_schema:
-              lhs_fields:
-                - id
-              remote_field:
-                getCustomer:
-                  arguments:
-                    findCustomer:
-                      id: $id
-              remote_schema: nest
-          name: getCustomer
-      type_name: Customer
+  comment: Nestjs graphql schemas

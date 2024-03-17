@@ -1,5 +1,5 @@
 table:
-  name: order
+  name: orders
   schema: public
 object_relationships:
   - name: customer

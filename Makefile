@@ -56,3 +56,11 @@ create-library:
 	cd backend && nest g lib ${name}
 create-resource:
 	cd backend && nest g res ${name}
+hasuraa-console:
+	cd backend && hasura --project hasura console
+hasura-metadata-export:
+	cd backend && hasura --project hasura metadata export
+hasura-metadata-apply:
+	cd backend && hasura --project hasura metadata apply
+hasura-metadata-reload:
+	cd backend && hasura --project hasura metadata reload
