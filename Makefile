@@ -20,8 +20,6 @@ codegen:
 	cd frontend && npm run codegen
 postgres:
 	docker compose exec postgres bash
-hasura-console:
-	cd backend/hasura && hasura console
 create-model:
 	cd backend && nest g mo ${name}
 create-resolver:
@@ -56,6 +54,8 @@ create-library:
 	cd backend && nest g lib ${name}
 create-resource:
 	cd backend && nest g res ${name}
+hasura-console:
+	hasura --project hasura console
 hasuraa-console:
 	hasura --project hasura console
 hasura-metadata-export:
