@@ -65,6 +65,7 @@ export type Order = {
 export type Query = {
   __typename?: "Query";
   getCustomer: Customer;
+  getCustomerAll: Array<Customer>;
   getOrder: Order;
 };
 
@@ -250,6 +251,11 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QuerygetCustomerArgs, "findCustomer">
+  >;
+  getCustomerAll: Resolver<
+    Array<ResolversTypes["Customer"]>,
+    ParentType,
+    ContextType
   >;
   getOrder: Resolver<
     ResolversTypes["Order"],
