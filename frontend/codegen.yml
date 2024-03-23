@@ -1,11 +1,3 @@
-# overwrite: true
-# schema: "http://localhost:3000/"
-# documents: "src/**/*.tsx"
-# generates:
-#   src/gql/:
-#     preset: "client"
-#     plugins: []
-
 overwrite: true
 schema: "../backend/src/schema.gql"
 documents: src/**/*.gql
