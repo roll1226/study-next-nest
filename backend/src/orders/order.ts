@@ -41,7 +41,7 @@ export class Order {
   readonly order_date?: string;
 
   @ManyToOne(() => Customer, (customer) => customer.orders)
-  @Field(() => [Customer])
+  @Field(() => Customer)
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 }

@@ -3,13 +3,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './db/database.config';
 import { HasuraModule } from '@golevelup/nestjs-hasura';
 import { OrdersModule } from './orders/orders.module';
 import { CustomersModule } from './customers/customers.module';
+
+const configService = new ConfigService();
 
 @Module({
   imports: [
@@ -34,7 +36,7 @@ import { CustomersModule } from './customers/customers.module';
       },
       managedMetaDataConfig: {
         metadataVersion: 'v3',
-        dirPath: join(process.cwd(), 'hasura/metadata'),
+        dirPath: configService.get('HASURA_METADATA_PATH'),
         secretHeaderEnvName: 'NESTJS_EVENT_WEBHOOK_SHARED_SECRET',
         nestEndpointEnvName: 'NESTJS_EVENT_WEBHOOK_ENDPOINT',
         defaultEventRetryConfig: {

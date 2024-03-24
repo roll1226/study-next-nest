@@ -22,7 +22,7 @@ input FindOrderDto {
 }
 
 type Order {
-  customer: [Customer!]!
+  customer: Customer!
   discount_price: String!
   id: Float!
   order_date: String!
