@@ -64,3 +64,11 @@ hasura-metadata-apply:
 	hasura --project hasura metadata apply
 hasura-metadata-reload:
 	hasura --project hasura metadata reload
+hasura-seeds:
+	hasura --project hasura seeds apply
+hasura-create-seed:
+	hasura --project hasura create ${name}
+hasura-create-migrate:
+	hasura --project hasura migrate create init --sql-from-server
+hasura-migrate:
+	hasura --project hasura migrate apply --database-name nest_next
