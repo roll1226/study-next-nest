@@ -133,3 +133,5 @@ dist
 !/db_data/**/.gitkeep
 
 .dist
+
+.DS_store
