@@ -1,5 +1,8 @@
 overwrite: true
-schema: "../backend/src/schema.gql"
+schema:
+  - "http://localhost:8080/v1/graphql":
+    headers:
+      x-hasura-admin-secret: "roll1226"
 documents: src/**/*.gql
 hooks:
   afterAllFileWrite:
