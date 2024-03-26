@@ -36,6 +36,26 @@ export type Scalars = {
   smallint: { input: any; output: any };
 };
 
+export type Customer = {
+  __typename?: "Customer";
+  email: Scalars["String"]["output"];
+  first_name: Scalars["String"]["output"];
+  id: Scalars["Float"]["output"];
+  ip_address: Scalars["String"]["output"];
+  last_name: Scalars["String"]["output"];
+  orders: Array<Order>;
+  phone: Scalars["String"]["output"];
+  username: Scalars["String"]["output"];
+};
+
+export type FindCustomerDto = {
+  id: Scalars["Float"]["input"];
+};
+
+export type FindOrderDto = {
+  id: Scalars["Float"]["input"];
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_comparison_exp = {
   _eq: InputMaybe<Scalars["Int"]["input"]>;
@@ -47,6 +67,17 @@ export type Int_comparison_exp = {
   _lte: InputMaybe<Scalars["Int"]["input"]>;
   _neq: InputMaybe<Scalars["Int"]["input"]>;
   _nin: InputMaybe<Array<Scalars["Int"]["input"]>>;
+};
+
+export type Order = {
+  __typename?: "Order";
+  customer: Customer;
+  discount_price: Scalars["String"]["output"];
+  id: Scalars["Float"]["output"];
+  order_date: Scalars["String"]["output"];
+  product: Scalars["String"]["output"];
+  purchase_price: Scalars["String"]["output"];
+  transaction_id: Scalars["String"]["output"];
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -1033,6 +1064,9 @@ export type query_root = {
   customers_aggregate: customers_aggregate;
   /** fetch data from the table: "customers" using primary key columns */
   customers_by_pk: Maybe<customers>;
+  getCustomer: Customer;
+  getCustomerAll: Array<Customer>;
+  getOrder: Order;
   /** An array relationship */
   orders: Array<orders>;
   /** An aggregate relationship */
@@ -1059,6 +1093,14 @@ export type query_rootcustomers_aggregateArgs = {
 
 export type query_rootcustomers_by_pkArgs = {
   id: Scalars["smallint"]["input"];
+};
+
+export type query_rootgetCustomerArgs = {
+  findCustomer: FindCustomerDto;
+};
+
+export type query_rootgetOrderArgs = {
+  findOrder: FindOrderDto;
 };
 
 export type query_rootordersArgs = {
@@ -1274,9 +1316,13 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
+  Customer: ResolverTypeWrapper<Customer>;
+  FindCustomerDto: FindCustomerDto;
+  FindOrderDto: FindOrderDto;
   Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
   Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
   Int_comparison_exp: Int_comparison_exp;
+  Order: ResolverTypeWrapper<Order>;
   String: ResolverTypeWrapper<Scalars["String"]["output"]>;
   String_comparison_exp: String_comparison_exp;
   _Service: ResolverTypeWrapper<_Service>;
@@ -1361,9 +1407,13 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"]["output"];
+  Customer: Customer;
+  FindCustomerDto: FindCustomerDto;
+  FindOrderDto: FindOrderDto;
   Float: Scalars["Float"]["output"];
   Int: Scalars["Int"]["output"];
   Int_comparison_exp: Int_comparison_exp;
+  Order: Order;
   String: Scalars["String"]["output"];
   String_comparison_exp: String_comparison_exp;
   _Service: _Service;
@@ -1448,6 +1498,37 @@ export type cachedDirectiveResolver<
   ContextType = any,
   Args = cachedDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type CustomerResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["Customer"] = ResolversParentTypes["Customer"],
+> = {
+  email: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  first_name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  ip_address: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  last_name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  orders: Resolver<Array<ResolversTypes["Order"]>, ParentType, ContextType>;
+  phone: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  username: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OrderResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
+> = {
+  customer: Resolver<ResolversTypes["Customer"], ParentType, ContextType>;
+  discount_price: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  order_date: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  product: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  purchase_price: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  transaction_id: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type _ServiceResolvers<
   ContextType = any,
@@ -2128,6 +2209,23 @@ export type query_rootResolvers<
     ContextType,
     RequireFields<query_rootcustomers_by_pkArgs, "id">
   >;
+  getCustomer: Resolver<
+    ResolversTypes["Customer"],
+    ParentType,
+    ContextType,
+    RequireFields<query_rootgetCustomerArgs, "findCustomer">
+  >;
+  getCustomerAll: Resolver<
+    Array<ResolversTypes["Customer"]>,
+    ParentType,
+    ContextType
+  >;
+  getOrder: Resolver<
+    ResolversTypes["Order"],
+    ParentType,
+    ContextType,
+    RequireFields<query_rootgetOrderArgs, "findOrder">
+  >;
   orders: Resolver<
     Array<ResolversTypes["orders"]>,
     ParentType,
@@ -2220,6 +2318,8 @@ export type subscription_rootResolvers<
 };
 
 export type Resolvers<ContextType = any> = {
+  Customer: CustomerResolvers<ContextType>;
+  Order: OrderResolvers<ContextType>;
   _Service: _ServiceResolvers<ContextType>;
   customers: customersResolvers<ContextType>;
   customers_aggregate: customers_aggregateResolvers<ContextType>;
