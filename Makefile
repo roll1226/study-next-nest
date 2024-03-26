@@ -56,8 +56,6 @@ create-resource:
 	cd backend && nest g res ${name}
 hasura-console:
 	hasura --project hasura console
-hasuraa-console:
-	hasura --project hasura console
 hasura-metadata-export:
 	hasura --project hasura metadata export
 hasura-metadata-apply:

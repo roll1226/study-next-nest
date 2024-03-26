@@ -1,6 +1,6 @@
 version: 3
 endpoint: http://localhost:8080/
-admin_secret: roll1226
+admin_secret: HASURA_GRAPHQL_ADMIN_SECRET
 enable_telemetry: false
 api_paths:
   v1_query: v1/query
@@ -17,5 +17,5 @@ actions:
   kind: synchronous
   handler_webhook_baseurl: http://localhost:3000
   codegen:
-    framework: ''
-    output_dir: ''
+    framework: ""
+    output_dir: ""
