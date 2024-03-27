@@ -1,12 +1,14 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const config: CodegenConfig = {
   overwrite: true,
   schema: [
     {
-      "http://localhost:8080/v1/graphql": {
+      [process.env.HASURA_GRAPHQL_ENDPOINT]: {
         headers: {
-          "x-hasura-admin-secret": "roll1226",
+          "x-hasura-admin-secret": process.env.HASURA_GRAPHQL_ADMIN_SECRET,
         },
       },
     },

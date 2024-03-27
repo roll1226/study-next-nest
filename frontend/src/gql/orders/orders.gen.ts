@@ -4,22 +4,26 @@ import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 const defaultOptions = {} as const;
 export type GetOrderQueryVariables = Types.Exact<{
-  id: Types.Scalars["Float"]["input"];
+  id: Types.smallint_comparison_exp;
 }>;
 
 export type GetOrderQuery = {
-  __typename?: "Query";
-  getOrder: {
-    __typename?: "Order";
-    id: number;
-    product: string;
-    customer: Array<{ __typename?: "Customer"; id: number; username: string }>;
-  };
+  __typename?: "query_root";
+  orders: Array<{
+    __typename?: "orders";
+    id: any;
+    product: string | null;
+    customer: {
+      __typename?: "customers";
+      id: any;
+      username: string | null;
+    } | null;
+  }>;
 };
 
 export const GetOrderDocument = gql`
-  query GetOrder($id: Float!) {
-    getOrder(findOrder: { id: $id }) {
+  query GetOrder($id: smallint_comparison_exp!) {
+    orders(where: { id: $id }) {
       id
       product
       customer {
