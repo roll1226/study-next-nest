@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order } from './order';
+import { Task } from './task';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class OrdersService {
+export class TasksService {
   constructor(
-    @InjectRepository(Order)
-    private orderRepository: Repository<Order>,
+    @InjectRepository(Task)
+    private taskRepository: Repository<Task>,
   ) {}
 
-  async findOne(id: number): Promise<Order> | null {
-    return this.orderRepository.findOne({
+  async findOne(id: number): Promise<Task> {
+    return await this.taskRepository.findOne({
       where: { id },
       relations: ['customer'],
     });

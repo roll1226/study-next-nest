@@ -8,14 +8,14 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './db/database.config';
 import { HasuraModule } from '@golevelup/nestjs-hasura';
-import { OrdersModule } from './orders/orders.module';
 import { CustomersModule } from './customers/customers.module';
+import { TasksModule } from './tasks/tasks.module';
 
 const configService = new ConfigService();
 
 @Module({
   imports: [
-    OrdersModule,
+    TasksModule,
     CustomersModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,

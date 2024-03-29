@@ -3,7 +3,7 @@ query GetCustomer($id: Float!) {
   getCustomer(findCustomer: { id: $id }) {
     id
     username
-    orders {
+    tasks {
       id
       product
     }

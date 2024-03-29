@@ -1,0 +1,11 @@
+table:
+  name: customers
+  schema: public
+array_relationships:
+  - name: tasks
+    using:
+      foreign_key_constraint_on:
+        column: customer_id
+        table:
+          name: tasks
+          schema: public
