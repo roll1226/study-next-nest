@@ -1,30 +1,29 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Customer } from 'src/customers/customer';
+import { Task } from 'src/task/task';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('tasks')
+@Entity('customers')
 @ObjectType()
-export class Task {
+export class Customer {
   @PrimaryGeneratedColumn({
     name: 'id',
     unsigned: true,
     type: 'int',
-    comment: 'タスクID',
+    comment: 'Customer ID',
   })
   @Field(() => ID)
   readonly id: number;
 
-  @Column('text', { comment: 'タスク名' })
+  @Column('text', { comment: 'ユーザーネーム' })
   @Field()
-  readonly name: string;
+  readonly username: string;
 
   @CreateDateColumn({ comment: '作成日時' })
   @Field()
@@ -34,8 +33,7 @@ export class Task {
   @Field()
   readonly updated_at: Date;
 
-  @ManyToOne(() => Customer, (customer) => customer.tasks)
-  @Field(() => Customer)
-  @JoinColumn({ name: 'customer_id' })
-  readonly customer: Customer;
+  @OneToMany(() => Task, (task) => task.customer)
+  @Field(() => [Task])
+  readonly tasks: Task[];
 }
