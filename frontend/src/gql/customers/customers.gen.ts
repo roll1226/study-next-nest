@@ -3,169 +3,182 @@ import * as Types from "../../types/graphql.gen";
 import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 const defaultOptions = {} as const;
-export type GetCustomerQueryVariables = Types.Exact<{
+export type GetCustomerByIdQueryVariables = Types.Exact<{
   id: Types.Scalars["Float"]["input"];
 }>;
 
-export type GetCustomerQuery = {
+export type GetCustomerByIdQuery = {
   __typename?: "query_root";
   getCustomer: {
     __typename?: "Customer";
-    id: number;
     username: string;
-    orders: Array<{ __typename?: "Order"; id: number; product: string }>;
+    tasks: Array<{ __typename?: "Task"; name: string }>;
   };
 };
 
-export type MyQueryQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type GetCustomersQueryVariables = Types.Exact<{ [key: string]: never }>;
 
-export type MyQueryQuery = {
+export type GetCustomersQuery = {
   __typename?: "query_root";
-  customers: Array<{ __typename?: "customers"; username: string | null }>;
+  customers: Array<{
+    __typename?: "customers";
+    username: string;
+    tasks: Array<{ __typename?: "tasks"; name: string }>;
+  }>;
 };
 
-export const GetCustomerDocument = gql`
-  query GetCustomer($id: Float!) {
-    getCustomer(findCustomer: { id: $id }) {
-      id
+export const GetCustomerByIdDocument = gql`
+  query GetCustomerById($id: Float!) {
+    getCustomer(customerId: $id) {
       username
-      orders {
-        id
-        product
+      tasks {
+        name
       }
     }
   }
 `;
 
 /**
- * __useGetCustomerQuery__
+ * __useGetCustomerByIdQuery__
  *
- * To run a query within a React component, call `useGetCustomerQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCustomerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCustomerByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomerByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetCustomerQuery({
+ * const { data, loading, error } = useGetCustomerByIdQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetCustomerQuery(
+export function useGetCustomerByIdQuery(
   baseOptions: Apollo.QueryHookOptions<
-    GetCustomerQuery,
-    GetCustomerQueryVariables
+    GetCustomerByIdQuery,
+    GetCustomerByIdQueryVariables
   > &
     (
-      | { variables: GetCustomerQueryVariables; skip?: boolean }
+      | { variables: GetCustomerByIdQueryVariables; skip?: boolean }
       | { skip: boolean }
     ),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetCustomerQuery, GetCustomerQueryVariables>(
-    GetCustomerDocument,
+  return Apollo.useQuery<GetCustomerByIdQuery, GetCustomerByIdQueryVariables>(
+    GetCustomerByIdDocument,
     options,
   );
 }
-export function useGetCustomerLazyQuery(
+export function useGetCustomerByIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetCustomerQuery,
-    GetCustomerQueryVariables
+    GetCustomerByIdQuery,
+    GetCustomerByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetCustomerQuery, GetCustomerQueryVariables>(
-    GetCustomerDocument,
-    options,
-  );
+  return Apollo.useLazyQuery<
+    GetCustomerByIdQuery,
+    GetCustomerByIdQueryVariables
+  >(GetCustomerByIdDocument, options);
 }
-export function useGetCustomerSuspenseQuery(
+export function useGetCustomerByIdSuspenseQuery(
   baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetCustomerQuery,
-    GetCustomerQueryVariables
+    GetCustomerByIdQuery,
+    GetCustomerByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<GetCustomerQuery, GetCustomerQueryVariables>(
-    GetCustomerDocument,
-    options,
-  );
+  return Apollo.useSuspenseQuery<
+    GetCustomerByIdQuery,
+    GetCustomerByIdQueryVariables
+  >(GetCustomerByIdDocument, options);
 }
-export type GetCustomerQueryHookResult = ReturnType<typeof useGetCustomerQuery>;
-export type GetCustomerLazyQueryHookResult = ReturnType<
-  typeof useGetCustomerLazyQuery
+export type GetCustomerByIdQueryHookResult = ReturnType<
+  typeof useGetCustomerByIdQuery
 >;
-export type GetCustomerSuspenseQueryHookResult = ReturnType<
-  typeof useGetCustomerSuspenseQuery
+export type GetCustomerByIdLazyQueryHookResult = ReturnType<
+  typeof useGetCustomerByIdLazyQuery
 >;
-export type GetCustomerQueryResult = Apollo.QueryResult<
-  GetCustomerQuery,
-  GetCustomerQueryVariables
+export type GetCustomerByIdSuspenseQueryHookResult = ReturnType<
+  typeof useGetCustomerByIdSuspenseQuery
 >;
-export const MyQueryDocument = gql`
-  query MyQuery {
+export type GetCustomerByIdQueryResult = Apollo.QueryResult<
+  GetCustomerByIdQuery,
+  GetCustomerByIdQueryVariables
+>;
+export const GetCustomersDocument = gql`
+  query GetCustomers {
     customers {
       username
+      tasks {
+        name
+      }
     }
   }
 `;
 
 /**
- * __useMyQueryQuery__
+ * __useGetCustomersQuery__
  *
- * To run a query within a React component, call `useMyQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useMyQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCustomersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMyQueryQuery({
+ * const { data, loading, error } = useGetCustomersQuery({
  *   variables: {
  *   },
  * });
  */
-export function useMyQueryQuery(
-  baseOptions?: Apollo.QueryHookOptions<MyQueryQuery, MyQueryQueryVariables>,
+export function useGetCustomersQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetCustomersQuery,
+    GetCustomersQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<MyQueryQuery, MyQueryQueryVariables>(
-    MyQueryDocument,
+  return Apollo.useQuery<GetCustomersQuery, GetCustomersQueryVariables>(
+    GetCustomersDocument,
     options,
   );
 }
-export function useMyQueryLazyQuery(
+export function useGetCustomersLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    MyQueryQuery,
-    MyQueryQueryVariables
+    GetCustomersQuery,
+    GetCustomersQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<MyQueryQuery, MyQueryQueryVariables>(
-    MyQueryDocument,
+  return Apollo.useLazyQuery<GetCustomersQuery, GetCustomersQueryVariables>(
+    GetCustomersDocument,
     options,
   );
 }
-export function useMyQuerySuspenseQuery(
+export function useGetCustomersSuspenseQuery(
   baseOptions?: Apollo.SuspenseQueryHookOptions<
-    MyQueryQuery,
-    MyQueryQueryVariables
+    GetCustomersQuery,
+    GetCustomersQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<MyQueryQuery, MyQueryQueryVariables>(
-    MyQueryDocument,
+  return Apollo.useSuspenseQuery<GetCustomersQuery, GetCustomersQueryVariables>(
+    GetCustomersDocument,
     options,
   );
 }
-export type MyQueryQueryHookResult = ReturnType<typeof useMyQueryQuery>;
-export type MyQueryLazyQueryHookResult = ReturnType<typeof useMyQueryLazyQuery>;
-export type MyQuerySuspenseQueryHookResult = ReturnType<
-  typeof useMyQuerySuspenseQuery
+export type GetCustomersQueryHookResult = ReturnType<
+  typeof useGetCustomersQuery
 >;
-export type MyQueryQueryResult = Apollo.QueryResult<
-  MyQueryQuery,
-  MyQueryQueryVariables
+export type GetCustomersLazyQueryHookResult = ReturnType<
+  typeof useGetCustomersLazyQuery
+>;
+export type GetCustomersSuspenseQueryHookResult = ReturnType<
+  typeof useGetCustomersSuspenseQuery
+>;
+export type GetCustomersQueryResult = Apollo.QueryResult<
+  GetCustomersQuery,
+  GetCustomersQueryVariables
 >;

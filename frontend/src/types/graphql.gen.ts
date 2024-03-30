@@ -33,27 +33,17 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  smallint: { input: any; output: any };
+  DateTime: { input: any; output: any };
+  timestamp: { input: any; output: any };
 };
 
 export type Customer = {
   __typename?: "Customer";
-  email: Scalars["String"]["output"];
-  first_name: Scalars["String"]["output"];
-  id: Scalars["Float"]["output"];
-  ip_address: Scalars["String"]["output"];
-  last_name: Scalars["String"]["output"];
-  orders: Array<Order>;
-  phone: Scalars["String"]["output"];
+  created_at: Scalars["DateTime"]["output"];
+  id: Scalars["ID"]["output"];
+  tasks: Array<Task>;
+  updated_at: Scalars["DateTime"]["output"];
   username: Scalars["String"]["output"];
-};
-
-export type FindCustomerDto = {
-  id: Scalars["Float"]["input"];
-};
-
-export type FindOrderDto = {
-  id: Scalars["Float"]["input"];
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -67,17 +57,6 @@ export type Int_comparison_exp = {
   _lte: InputMaybe<Scalars["Int"]["input"]>;
   _neq: InputMaybe<Scalars["Int"]["input"]>;
   _nin: InputMaybe<Array<Scalars["Int"]["input"]>>;
-};
-
-export type Order = {
-  __typename?: "Order";
-  customer: Customer;
-  discount_price: Scalars["String"]["output"];
-  id: Scalars["Float"]["output"];
-  order_date: Scalars["String"]["output"];
-  product: Scalars["String"]["output"];
-  purchase_price: Scalars["String"]["output"];
-  transaction_id: Scalars["String"]["output"];
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -113,6 +92,15 @@ export type String_comparison_exp = {
   _similar: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type Task = {
+  __typename?: "Task";
+  created_at: Scalars["DateTime"]["output"];
+  customer: Customer;
+  id: Scalars["ID"]["output"];
+  name: Scalars["String"]["output"];
+  updated_at: Scalars["DateTime"]["output"];
+};
+
 export type _Service = {
   __typename?: "_Service";
   /** SDL representation of schema */
@@ -129,42 +117,36 @@ export type cursor_ordering =
 /** columns and relationships of "customers" */
 export type customers = {
   __typename?: "customers";
-  /** メールアドレス */
-  email: Maybe<Scalars["String"]["output"]>;
-  /** 名 */
-  first_name: Maybe<Scalars["String"]["output"]>;
-  /** ID */
-  id: Scalars["smallint"]["output"];
-  /** IPアドレス */
-  ip_address: Maybe<Scalars["String"]["output"]>;
-  /** 姓 */
-  last_name: Maybe<Scalars["String"]["output"]>;
+  /** 作成日時 */
+  created_at: Scalars["timestamp"]["output"];
+  /** Customer ID */
+  id: Scalars["Int"]["output"];
   /** An array relationship */
-  orders: Array<orders>;
+  tasks: Array<tasks>;
   /** An aggregate relationship */
-  orders_aggregate: orders_aggregate;
-  /** 電話番号 */
-  phone: Maybe<Scalars["String"]["output"]>;
+  tasks_aggregate: tasks_aggregate;
+  /** 更新日時 */
+  updated_at: Scalars["timestamp"]["output"];
   /** ユーザーネーム */
-  username: Maybe<Scalars["String"]["output"]>;
+  username: Scalars["String"]["output"];
 };
 
 /** columns and relationships of "customers" */
-export type customersordersArgs = {
-  distinct_on: InputMaybe<Array<orders_select_column>>;
+export type customerstasksArgs = {
+  distinct_on: InputMaybe<Array<tasks_select_column>>;
   limit: InputMaybe<Scalars["Int"]["input"]>;
   offset: InputMaybe<Scalars["Int"]["input"]>;
-  order_by: InputMaybe<Array<orders_order_by>>;
-  where: InputMaybe<orders_bool_exp>;
+  order_by: InputMaybe<Array<tasks_order_by>>;
+  where: InputMaybe<tasks_bool_exp>;
 };
 
 /** columns and relationships of "customers" */
-export type customersorders_aggregateArgs = {
-  distinct_on: InputMaybe<Array<orders_select_column>>;
+export type customerstasks_aggregateArgs = {
+  distinct_on: InputMaybe<Array<tasks_select_column>>;
   limit: InputMaybe<Scalars["Int"]["input"]>;
   offset: InputMaybe<Scalars["Int"]["input"]>;
-  order_by: InputMaybe<Array<orders_order_by>>;
-  where: InputMaybe<orders_bool_exp>;
+  order_by: InputMaybe<Array<tasks_order_by>>;
+  where: InputMaybe<tasks_bool_exp>;
 };
 
 /** aggregated selection of "customers" */
@@ -199,7 +181,7 @@ export type customers_aggregate_fieldscountArgs = {
 /** aggregate avg on columns */
 export type customers_avg_fields = {
   __typename?: "customers_avg_fields";
-  /** ID */
+  /** Customer ID */
   id: Maybe<Scalars["Float"]["output"]>;
 };
 
@@ -208,14 +190,11 @@ export type customers_bool_exp = {
   _and: InputMaybe<Array<customers_bool_exp>>;
   _not: InputMaybe<customers_bool_exp>;
   _or: InputMaybe<Array<customers_bool_exp>>;
-  email: InputMaybe<String_comparison_exp>;
-  first_name: InputMaybe<String_comparison_exp>;
-  id: InputMaybe<smallint_comparison_exp>;
-  ip_address: InputMaybe<String_comparison_exp>;
-  last_name: InputMaybe<String_comparison_exp>;
-  orders: InputMaybe<orders_bool_exp>;
-  orders_aggregate: InputMaybe<orders_aggregate_bool_exp>;
-  phone: InputMaybe<String_comparison_exp>;
+  created_at: InputMaybe<timestamp_comparison_exp>;
+  id: InputMaybe<Int_comparison_exp>;
+  tasks: InputMaybe<tasks_bool_exp>;
+  tasks_aggregate: InputMaybe<tasks_aggregate_bool_exp>;
+  updated_at: InputMaybe<timestamp_comparison_exp>;
   username: InputMaybe<String_comparison_exp>;
 };
 
@@ -226,25 +205,19 @@ export type customers_constraint =
 
 /** input type for incrementing numeric columns in table "customers" */
 export type customers_inc_input = {
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
+  /** Customer ID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 /** input type for inserting data into table "customers" */
 export type customers_insert_input = {
-  /** メールアドレス */
-  email: InputMaybe<Scalars["String"]["input"]>;
-  /** 名 */
-  first_name: InputMaybe<Scalars["String"]["input"]>;
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** IPアドレス */
-  ip_address: InputMaybe<Scalars["String"]["input"]>;
-  /** 姓 */
-  last_name: InputMaybe<Scalars["String"]["input"]>;
-  orders: InputMaybe<orders_arr_rel_insert_input>;
-  /** 電話番号 */
-  phone: InputMaybe<Scalars["String"]["input"]>;
+  /** 作成日時 */
+  created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** Customer ID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
+  tasks: InputMaybe<tasks_arr_rel_insert_input>;
+  /** 更新日時 */
+  updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
   /** ユーザーネーム */
   username: InputMaybe<Scalars["String"]["input"]>;
 };
@@ -252,18 +225,12 @@ export type customers_insert_input = {
 /** aggregate max on columns */
 export type customers_max_fields = {
   __typename?: "customers_max_fields";
-  /** メールアドレス */
-  email: Maybe<Scalars["String"]["output"]>;
-  /** 名 */
-  first_name: Maybe<Scalars["String"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["smallint"]["output"]>;
-  /** IPアドレス */
-  ip_address: Maybe<Scalars["String"]["output"]>;
-  /** 姓 */
-  last_name: Maybe<Scalars["String"]["output"]>;
-  /** 電話番号 */
-  phone: Maybe<Scalars["String"]["output"]>;
+  /** 作成日時 */
+  created_at: Maybe<Scalars["timestamp"]["output"]>;
+  /** Customer ID */
+  id: Maybe<Scalars["Int"]["output"]>;
+  /** 更新日時 */
+  updated_at: Maybe<Scalars["timestamp"]["output"]>;
   /** ユーザーネーム */
   username: Maybe<Scalars["String"]["output"]>;
 };
@@ -271,18 +238,12 @@ export type customers_max_fields = {
 /** aggregate min on columns */
 export type customers_min_fields = {
   __typename?: "customers_min_fields";
-  /** メールアドレス */
-  email: Maybe<Scalars["String"]["output"]>;
-  /** 名 */
-  first_name: Maybe<Scalars["String"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["smallint"]["output"]>;
-  /** IPアドレス */
-  ip_address: Maybe<Scalars["String"]["output"]>;
-  /** 姓 */
-  last_name: Maybe<Scalars["String"]["output"]>;
-  /** 電話番号 */
-  phone: Maybe<Scalars["String"]["output"]>;
+  /** 作成日時 */
+  created_at: Maybe<Scalars["timestamp"]["output"]>;
+  /** Customer ID */
+  id: Maybe<Scalars["Int"]["output"]>;
+  /** 更新日時 */
+  updated_at: Maybe<Scalars["timestamp"]["output"]>;
   /** ユーザーネーム */
   username: Maybe<Scalars["String"]["output"]>;
 };
@@ -312,53 +273,38 @@ export type customers_on_conflict = {
 
 /** Ordering options when selecting data from "customers". */
 export type customers_order_by = {
-  email: InputMaybe<order_by>;
-  first_name: InputMaybe<order_by>;
+  created_at: InputMaybe<order_by>;
   id: InputMaybe<order_by>;
-  ip_address: InputMaybe<order_by>;
-  last_name: InputMaybe<order_by>;
-  orders_aggregate: InputMaybe<orders_aggregate_order_by>;
-  phone: InputMaybe<order_by>;
+  tasks_aggregate: InputMaybe<tasks_aggregate_order_by>;
+  updated_at: InputMaybe<order_by>;
   username: InputMaybe<order_by>;
 };
 
 /** primary key columns input for table: customers */
 export type customers_pk_columns_input = {
-  /** ID */
-  id: Scalars["smallint"]["input"];
+  /** Customer ID */
+  id: Scalars["Int"]["input"];
 };
 
 /** select columns of table "customers" */
 export type customers_select_column =
   /** column name */
-  | "email"
-  /** column name */
-  | "first_name"
+  | "created_at"
   /** column name */
   | "id"
   /** column name */
-  | "ip_address"
-  /** column name */
-  | "last_name"
-  /** column name */
-  | "phone"
+  | "updated_at"
   /** column name */
   | "username";
 
 /** input type for updating data in table "customers" */
 export type customers_set_input = {
-  /** メールアドレス */
-  email: InputMaybe<Scalars["String"]["input"]>;
-  /** 名 */
-  first_name: InputMaybe<Scalars["String"]["input"]>;
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** IPアドレス */
-  ip_address: InputMaybe<Scalars["String"]["input"]>;
-  /** 姓 */
-  last_name: InputMaybe<Scalars["String"]["input"]>;
-  /** 電話番号 */
-  phone: InputMaybe<Scalars["String"]["input"]>;
+  /** 作成日時 */
+  created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** Customer ID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
+  /** 更新日時 */
+  updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
   /** ユーザーネーム */
   username: InputMaybe<Scalars["String"]["input"]>;
 };
@@ -366,21 +312,21 @@ export type customers_set_input = {
 /** aggregate stddev on columns */
 export type customers_stddev_fields = {
   __typename?: "customers_stddev_fields";
-  /** ID */
+  /** Customer ID */
   id: Maybe<Scalars["Float"]["output"]>;
 };
 
 /** aggregate stddev_pop on columns */
 export type customers_stddev_pop_fields = {
   __typename?: "customers_stddev_pop_fields";
-  /** ID */
+  /** Customer ID */
   id: Maybe<Scalars["Float"]["output"]>;
 };
 
 /** aggregate stddev_samp on columns */
 export type customers_stddev_samp_fields = {
   __typename?: "customers_stddev_samp_fields";
-  /** ID */
+  /** Customer ID */
   id: Maybe<Scalars["Float"]["output"]>;
 };
 
@@ -394,18 +340,12 @@ export type customers_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type customers_stream_cursor_value_input = {
-  /** メールアドレス */
-  email: InputMaybe<Scalars["String"]["input"]>;
-  /** 名 */
-  first_name: InputMaybe<Scalars["String"]["input"]>;
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** IPアドレス */
-  ip_address: InputMaybe<Scalars["String"]["input"]>;
-  /** 姓 */
-  last_name: InputMaybe<Scalars["String"]["input"]>;
-  /** 電話番号 */
-  phone: InputMaybe<Scalars["String"]["input"]>;
+  /** 作成日時 */
+  created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** Customer ID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
+  /** 更新日時 */
+  updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
   /** ユーザーネーム */
   username: InputMaybe<Scalars["String"]["input"]>;
 };
@@ -413,24 +353,18 @@ export type customers_stream_cursor_value_input = {
 /** aggregate sum on columns */
 export type customers_sum_fields = {
   __typename?: "customers_sum_fields";
-  /** ID */
-  id: Maybe<Scalars["smallint"]["output"]>;
+  /** Customer ID */
+  id: Maybe<Scalars["Int"]["output"]>;
 };
 
 /** update columns of table "customers" */
 export type customers_update_column =
   /** column name */
-  | "email"
-  /** column name */
-  | "first_name"
+  | "created_at"
   /** column name */
   | "id"
   /** column name */
-  | "ip_address"
-  /** column name */
-  | "last_name"
-  /** column name */
-  | "phone"
+  | "updated_at"
   /** column name */
   | "username";
 
@@ -446,21 +380,21 @@ export type customers_updates = {
 /** aggregate var_pop on columns */
 export type customers_var_pop_fields = {
   __typename?: "customers_var_pop_fields";
-  /** ID */
+  /** Customer ID */
   id: Maybe<Scalars["Float"]["output"]>;
 };
 
 /** aggregate var_samp on columns */
 export type customers_var_samp_fields = {
   __typename?: "customers_var_samp_fields";
-  /** ID */
+  /** Customer ID */
   id: Maybe<Scalars["Float"]["output"]>;
 };
 
 /** aggregate variance on columns */
 export type customers_variance_fields = {
   __typename?: "customers_variance_fields";
-  /** ID */
+  /** Customer ID */
   id: Maybe<Scalars["Float"]["output"]>;
 };
 
@@ -471,30 +405,30 @@ export type mutation_root = {
   delete_customers: Maybe<customers_mutation_response>;
   /** delete single row from the table: "customers" */
   delete_customers_by_pk: Maybe<customers>;
-  /** delete data from the table: "orders" */
-  delete_orders: Maybe<orders_mutation_response>;
-  /** delete single row from the table: "orders" */
-  delete_orders_by_pk: Maybe<orders>;
+  /** delete data from the table: "tasks" */
+  delete_tasks: Maybe<tasks_mutation_response>;
+  /** delete single row from the table: "tasks" */
+  delete_tasks_by_pk: Maybe<tasks>;
   /** insert data into the table: "customers" */
   insert_customers: Maybe<customers_mutation_response>;
   /** insert a single row into the table: "customers" */
   insert_customers_one: Maybe<customers>;
-  /** insert data into the table: "orders" */
-  insert_orders: Maybe<orders_mutation_response>;
-  /** insert a single row into the table: "orders" */
-  insert_orders_one: Maybe<orders>;
+  /** insert data into the table: "tasks" */
+  insert_tasks: Maybe<tasks_mutation_response>;
+  /** insert a single row into the table: "tasks" */
+  insert_tasks_one: Maybe<tasks>;
   /** update data of the table: "customers" */
   update_customers: Maybe<customers_mutation_response>;
   /** update single row of the table: "customers" */
   update_customers_by_pk: Maybe<customers>;
   /** update multiples rows of table: "customers" */
   update_customers_many: Maybe<Array<Maybe<customers_mutation_response>>>;
-  /** update data of the table: "orders" */
-  update_orders: Maybe<orders_mutation_response>;
-  /** update single row of the table: "orders" */
-  update_orders_by_pk: Maybe<orders>;
-  /** update multiples rows of table: "orders" */
-  update_orders_many: Maybe<Array<Maybe<orders_mutation_response>>>;
+  /** update data of the table: "tasks" */
+  update_tasks: Maybe<tasks_mutation_response>;
+  /** update single row of the table: "tasks" */
+  update_tasks_by_pk: Maybe<tasks>;
+  /** update multiples rows of table: "tasks" */
+  update_tasks_many: Maybe<Array<Maybe<tasks_mutation_response>>>;
 };
 
 /** mutation root */
@@ -504,17 +438,17 @@ export type mutation_rootdelete_customersArgs = {
 
 /** mutation root */
 export type mutation_rootdelete_customers_by_pkArgs = {
-  id: Scalars["smallint"]["input"];
+  id: Scalars["Int"]["input"];
 };
 
 /** mutation root */
-export type mutation_rootdelete_ordersArgs = {
-  where: orders_bool_exp;
+export type mutation_rootdelete_tasksArgs = {
+  where: tasks_bool_exp;
 };
 
 /** mutation root */
-export type mutation_rootdelete_orders_by_pkArgs = {
-  id: Scalars["smallint"]["input"];
+export type mutation_rootdelete_tasks_by_pkArgs = {
+  id: Scalars["Int"]["input"];
 };
 
 /** mutation root */
@@ -530,15 +464,15 @@ export type mutation_rootinsert_customers_oneArgs = {
 };
 
 /** mutation root */
-export type mutation_rootinsert_ordersArgs = {
-  objects: Array<orders_insert_input>;
-  on_conflict: InputMaybe<orders_on_conflict>;
+export type mutation_rootinsert_tasksArgs = {
+  objects: Array<tasks_insert_input>;
+  on_conflict: InputMaybe<tasks_on_conflict>;
 };
 
 /** mutation root */
-export type mutation_rootinsert_orders_oneArgs = {
-  object: orders_insert_input;
-  on_conflict: InputMaybe<orders_on_conflict>;
+export type mutation_rootinsert_tasks_oneArgs = {
+  object: tasks_insert_input;
+  on_conflict: InputMaybe<tasks_on_conflict>;
 };
 
 /** mutation root */
@@ -561,22 +495,22 @@ export type mutation_rootupdate_customers_manyArgs = {
 };
 
 /** mutation root */
-export type mutation_rootupdate_ordersArgs = {
-  _inc: InputMaybe<orders_inc_input>;
-  _set: InputMaybe<orders_set_input>;
-  where: orders_bool_exp;
+export type mutation_rootupdate_tasksArgs = {
+  _inc: InputMaybe<tasks_inc_input>;
+  _set: InputMaybe<tasks_set_input>;
+  where: tasks_bool_exp;
 };
 
 /** mutation root */
-export type mutation_rootupdate_orders_by_pkArgs = {
-  _inc: InputMaybe<orders_inc_input>;
-  _set: InputMaybe<orders_set_input>;
-  pk_columns: orders_pk_columns_input;
+export type mutation_rootupdate_tasks_by_pkArgs = {
+  _inc: InputMaybe<tasks_inc_input>;
+  _set: InputMaybe<tasks_set_input>;
+  pk_columns: tasks_pk_columns_input;
 };
 
 /** mutation root */
-export type mutation_rootupdate_orders_manyArgs = {
-  updates: Array<orders_updates>;
+export type mutation_rootupdate_tasks_manyArgs = {
+  updates: Array<tasks_updates>;
 };
 
 /** column ordering options */
@@ -594,467 +528,6 @@ export type order_by =
   /** in descending order, nulls last */
   | "desc_nulls_last";
 
-/** columns and relationships of "orders" */
-export type orders = {
-  __typename?: "orders";
-  /** An object relationship */
-  customer: Maybe<customers>;
-  /** ID */
-  customer_id: Maybe<Scalars["smallint"]["output"]>;
-  /** 割引価格 */
-  discount_price: Maybe<Scalars["String"]["output"]>;
-  /** ID */
-  id: Scalars["smallint"]["output"];
-  /** 購入日 */
-  order_date: Maybe<Scalars["String"]["output"]>;
-  /** 商品 */
-  product: Maybe<Scalars["String"]["output"]>;
-  /** 購入価格 */
-  purchase_price: Maybe<Scalars["String"]["output"]>;
-  /** 取引ID */
-  transaction_id: Maybe<Scalars["String"]["output"]>;
-};
-
-/** aggregated selection of "orders" */
-export type orders_aggregate = {
-  __typename?: "orders_aggregate";
-  aggregate: Maybe<orders_aggregate_fields>;
-  nodes: Array<orders>;
-};
-
-export type orders_aggregate_bool_exp = {
-  count: InputMaybe<orders_aggregate_bool_exp_count>;
-};
-
-export type orders_aggregate_bool_exp_count = {
-  arguments: InputMaybe<Array<orders_select_column>>;
-  distinct: InputMaybe<Scalars["Boolean"]["input"]>;
-  filter: InputMaybe<orders_bool_exp>;
-  predicate: Int_comparison_exp;
-};
-
-/** aggregate fields of "orders" */
-export type orders_aggregate_fields = {
-  __typename?: "orders_aggregate_fields";
-  avg: Maybe<orders_avg_fields>;
-  count: Scalars["Int"]["output"];
-  max: Maybe<orders_max_fields>;
-  min: Maybe<orders_min_fields>;
-  stddev: Maybe<orders_stddev_fields>;
-  stddev_pop: Maybe<orders_stddev_pop_fields>;
-  stddev_samp: Maybe<orders_stddev_samp_fields>;
-  sum: Maybe<orders_sum_fields>;
-  var_pop: Maybe<orders_var_pop_fields>;
-  var_samp: Maybe<orders_var_samp_fields>;
-  variance: Maybe<orders_variance_fields>;
-};
-
-/** aggregate fields of "orders" */
-export type orders_aggregate_fieldscountArgs = {
-  columns: InputMaybe<Array<orders_select_column>>;
-  distinct: InputMaybe<Scalars["Boolean"]["input"]>;
-};
-
-/** order by aggregate values of table "orders" */
-export type orders_aggregate_order_by = {
-  avg: InputMaybe<orders_avg_order_by>;
-  count: InputMaybe<order_by>;
-  max: InputMaybe<orders_max_order_by>;
-  min: InputMaybe<orders_min_order_by>;
-  stddev: InputMaybe<orders_stddev_order_by>;
-  stddev_pop: InputMaybe<orders_stddev_pop_order_by>;
-  stddev_samp: InputMaybe<orders_stddev_samp_order_by>;
-  sum: InputMaybe<orders_sum_order_by>;
-  var_pop: InputMaybe<orders_var_pop_order_by>;
-  var_samp: InputMaybe<orders_var_samp_order_by>;
-  variance: InputMaybe<orders_variance_order_by>;
-};
-
-/** input type for inserting array relation for remote table "orders" */
-export type orders_arr_rel_insert_input = {
-  data: Array<orders_insert_input>;
-  /** upsert condition */
-  on_conflict: InputMaybe<orders_on_conflict>;
-};
-
-/** aggregate avg on columns */
-export type orders_avg_fields = {
-  __typename?: "orders_avg_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["Float"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** order by avg() on columns of table "orders" */
-export type orders_avg_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
-/** Boolean expression to filter rows from the table "orders". All fields are combined with a logical 'AND'. */
-export type orders_bool_exp = {
-  _and: InputMaybe<Array<orders_bool_exp>>;
-  _not: InputMaybe<orders_bool_exp>;
-  _or: InputMaybe<Array<orders_bool_exp>>;
-  customer: InputMaybe<customers_bool_exp>;
-  customer_id: InputMaybe<smallint_comparison_exp>;
-  discount_price: InputMaybe<String_comparison_exp>;
-  id: InputMaybe<smallint_comparison_exp>;
-  order_date: InputMaybe<String_comparison_exp>;
-  product: InputMaybe<String_comparison_exp>;
-  purchase_price: InputMaybe<String_comparison_exp>;
-  transaction_id: InputMaybe<String_comparison_exp>;
-};
-
-/** unique or primary key constraints on table "orders" */
-export type orders_constraint =
-  /** unique or primary key constraint on columns "id" */
-  "PK_710e2d4957aa5878dfe94e4ac2f";
-
-/** input type for incrementing numeric columns in table "orders" */
-export type orders_inc_input = {
-  /** ID */
-  customer_id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
-};
-
-/** input type for inserting data into table "orders" */
-export type orders_insert_input = {
-  customer: InputMaybe<customers_obj_rel_insert_input>;
-  /** ID */
-  customer_id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** 割引価格 */
-  discount_price: InputMaybe<Scalars["String"]["input"]>;
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** 購入日 */
-  order_date: InputMaybe<Scalars["String"]["input"]>;
-  /** 商品 */
-  product: InputMaybe<Scalars["String"]["input"]>;
-  /** 購入価格 */
-  purchase_price: InputMaybe<Scalars["String"]["input"]>;
-  /** 取引ID */
-  transaction_id: InputMaybe<Scalars["String"]["input"]>;
-};
-
-/** aggregate max on columns */
-export type orders_max_fields = {
-  __typename?: "orders_max_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["smallint"]["output"]>;
-  /** 割引価格 */
-  discount_price: Maybe<Scalars["String"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["smallint"]["output"]>;
-  /** 購入日 */
-  order_date: Maybe<Scalars["String"]["output"]>;
-  /** 商品 */
-  product: Maybe<Scalars["String"]["output"]>;
-  /** 購入価格 */
-  purchase_price: Maybe<Scalars["String"]["output"]>;
-  /** 取引ID */
-  transaction_id: Maybe<Scalars["String"]["output"]>;
-};
-
-/** order by max() on columns of table "orders" */
-export type orders_max_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** 割引価格 */
-  discount_price: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-  /** 購入日 */
-  order_date: InputMaybe<order_by>;
-  /** 商品 */
-  product: InputMaybe<order_by>;
-  /** 購入価格 */
-  purchase_price: InputMaybe<order_by>;
-  /** 取引ID */
-  transaction_id: InputMaybe<order_by>;
-};
-
-/** aggregate min on columns */
-export type orders_min_fields = {
-  __typename?: "orders_min_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["smallint"]["output"]>;
-  /** 割引価格 */
-  discount_price: Maybe<Scalars["String"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["smallint"]["output"]>;
-  /** 購入日 */
-  order_date: Maybe<Scalars["String"]["output"]>;
-  /** 商品 */
-  product: Maybe<Scalars["String"]["output"]>;
-  /** 購入価格 */
-  purchase_price: Maybe<Scalars["String"]["output"]>;
-  /** 取引ID */
-  transaction_id: Maybe<Scalars["String"]["output"]>;
-};
-
-/** order by min() on columns of table "orders" */
-export type orders_min_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** 割引価格 */
-  discount_price: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-  /** 購入日 */
-  order_date: InputMaybe<order_by>;
-  /** 商品 */
-  product: InputMaybe<order_by>;
-  /** 購入価格 */
-  purchase_price: InputMaybe<order_by>;
-  /** 取引ID */
-  transaction_id: InputMaybe<order_by>;
-};
-
-/** response of any mutation on the table "orders" */
-export type orders_mutation_response = {
-  __typename?: "orders_mutation_response";
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars["Int"]["output"];
-  /** data from the rows affected by the mutation */
-  returning: Array<orders>;
-};
-
-/** on_conflict condition type for table "orders" */
-export type orders_on_conflict = {
-  constraint: orders_constraint;
-  update_columns: Array<orders_update_column>;
-  where: InputMaybe<orders_bool_exp>;
-};
-
-/** Ordering options when selecting data from "orders". */
-export type orders_order_by = {
-  customer: InputMaybe<customers_order_by>;
-  customer_id: InputMaybe<order_by>;
-  discount_price: InputMaybe<order_by>;
-  id: InputMaybe<order_by>;
-  order_date: InputMaybe<order_by>;
-  product: InputMaybe<order_by>;
-  purchase_price: InputMaybe<order_by>;
-  transaction_id: InputMaybe<order_by>;
-};
-
-/** primary key columns input for table: orders */
-export type orders_pk_columns_input = {
-  /** ID */
-  id: Scalars["smallint"]["input"];
-};
-
-/** select columns of table "orders" */
-export type orders_select_column =
-  /** column name */
-  | "customer_id"
-  /** column name */
-  | "discount_price"
-  /** column name */
-  | "id"
-  /** column name */
-  | "order_date"
-  /** column name */
-  | "product"
-  /** column name */
-  | "purchase_price"
-  /** column name */
-  | "transaction_id";
-
-/** input type for updating data in table "orders" */
-export type orders_set_input = {
-  /** ID */
-  customer_id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** 割引価格 */
-  discount_price: InputMaybe<Scalars["String"]["input"]>;
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** 購入日 */
-  order_date: InputMaybe<Scalars["String"]["input"]>;
-  /** 商品 */
-  product: InputMaybe<Scalars["String"]["input"]>;
-  /** 購入価格 */
-  purchase_price: InputMaybe<Scalars["String"]["input"]>;
-  /** 取引ID */
-  transaction_id: InputMaybe<Scalars["String"]["input"]>;
-};
-
-/** aggregate stddev on columns */
-export type orders_stddev_fields = {
-  __typename?: "orders_stddev_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["Float"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** order by stddev() on columns of table "orders" */
-export type orders_stddev_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
-/** aggregate stddev_pop on columns */
-export type orders_stddev_pop_fields = {
-  __typename?: "orders_stddev_pop_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["Float"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** order by stddev_pop() on columns of table "orders" */
-export type orders_stddev_pop_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
-/** aggregate stddev_samp on columns */
-export type orders_stddev_samp_fields = {
-  __typename?: "orders_stddev_samp_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["Float"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** order by stddev_samp() on columns of table "orders" */
-export type orders_stddev_samp_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
-/** Streaming cursor of the table "orders" */
-export type orders_stream_cursor_input = {
-  /** Stream column input with initial value */
-  initial_value: orders_stream_cursor_value_input;
-  /** cursor ordering */
-  ordering: InputMaybe<cursor_ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type orders_stream_cursor_value_input = {
-  /** ID */
-  customer_id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** 割引価格 */
-  discount_price: InputMaybe<Scalars["String"]["input"]>;
-  /** ID */
-  id: InputMaybe<Scalars["smallint"]["input"]>;
-  /** 購入日 */
-  order_date: InputMaybe<Scalars["String"]["input"]>;
-  /** 商品 */
-  product: InputMaybe<Scalars["String"]["input"]>;
-  /** 購入価格 */
-  purchase_price: InputMaybe<Scalars["String"]["input"]>;
-  /** 取引ID */
-  transaction_id: InputMaybe<Scalars["String"]["input"]>;
-};
-
-/** aggregate sum on columns */
-export type orders_sum_fields = {
-  __typename?: "orders_sum_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["smallint"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["smallint"]["output"]>;
-};
-
-/** order by sum() on columns of table "orders" */
-export type orders_sum_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
-/** update columns of table "orders" */
-export type orders_update_column =
-  /** column name */
-  | "customer_id"
-  /** column name */
-  | "discount_price"
-  /** column name */
-  | "id"
-  /** column name */
-  | "order_date"
-  /** column name */
-  | "product"
-  /** column name */
-  | "purchase_price"
-  /** column name */
-  | "transaction_id";
-
-export type orders_updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc: InputMaybe<orders_inc_input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set: InputMaybe<orders_set_input>;
-  /** filter the rows which have to be updated */
-  where: orders_bool_exp;
-};
-
-/** aggregate var_pop on columns */
-export type orders_var_pop_fields = {
-  __typename?: "orders_var_pop_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["Float"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** order by var_pop() on columns of table "orders" */
-export type orders_var_pop_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
-/** aggregate var_samp on columns */
-export type orders_var_samp_fields = {
-  __typename?: "orders_var_samp_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["Float"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** order by var_samp() on columns of table "orders" */
-export type orders_var_samp_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
-/** aggregate variance on columns */
-export type orders_variance_fields = {
-  __typename?: "orders_variance_fields";
-  /** ID */
-  customer_id: Maybe<Scalars["Float"]["output"]>;
-  /** ID */
-  id: Maybe<Scalars["Float"]["output"]>;
-};
-
-/** order by variance() on columns of table "orders" */
-export type orders_variance_order_by = {
-  /** ID */
-  customer_id: InputMaybe<order_by>;
-  /** ID */
-  id: InputMaybe<order_by>;
-};
-
 export type query_root = {
   __typename?: "query_root";
   _service: _Service;
@@ -1065,14 +538,13 @@ export type query_root = {
   /** fetch data from the table: "customers" using primary key columns */
   customers_by_pk: Maybe<customers>;
   getCustomer: Customer;
-  getCustomerAll: Array<Customer>;
-  getOrder: Order;
+  getTask: Task;
   /** An array relationship */
-  orders: Array<orders>;
+  tasks: Array<tasks>;
   /** An aggregate relationship */
-  orders_aggregate: orders_aggregate;
-  /** fetch data from the table: "orders" using primary key columns */
-  orders_by_pk: Maybe<orders>;
+  tasks_aggregate: tasks_aggregate;
+  /** fetch data from the table: "tasks" using primary key columns */
+  tasks_by_pk: Maybe<tasks>;
 };
 
 export type query_rootcustomersArgs = {
@@ -1092,48 +564,35 @@ export type query_rootcustomers_aggregateArgs = {
 };
 
 export type query_rootcustomers_by_pkArgs = {
-  id: Scalars["smallint"]["input"];
+  id: Scalars["Int"]["input"];
 };
 
 export type query_rootgetCustomerArgs = {
-  findCustomer: FindCustomerDto;
+  customerId: Scalars["Float"]["input"];
 };
 
-export type query_rootgetOrderArgs = {
-  findOrder: FindOrderDto;
+export type query_rootgetTaskArgs = {
+  taskId: Scalars["Float"]["input"];
 };
 
-export type query_rootordersArgs = {
-  distinct_on: InputMaybe<Array<orders_select_column>>;
+export type query_roottasksArgs = {
+  distinct_on: InputMaybe<Array<tasks_select_column>>;
   limit: InputMaybe<Scalars["Int"]["input"]>;
   offset: InputMaybe<Scalars["Int"]["input"]>;
-  order_by: InputMaybe<Array<orders_order_by>>;
-  where: InputMaybe<orders_bool_exp>;
+  order_by: InputMaybe<Array<tasks_order_by>>;
+  where: InputMaybe<tasks_bool_exp>;
 };
 
-export type query_rootorders_aggregateArgs = {
-  distinct_on: InputMaybe<Array<orders_select_column>>;
+export type query_roottasks_aggregateArgs = {
+  distinct_on: InputMaybe<Array<tasks_select_column>>;
   limit: InputMaybe<Scalars["Int"]["input"]>;
   offset: InputMaybe<Scalars["Int"]["input"]>;
-  order_by: InputMaybe<Array<orders_order_by>>;
-  where: InputMaybe<orders_bool_exp>;
+  order_by: InputMaybe<Array<tasks_order_by>>;
+  where: InputMaybe<tasks_bool_exp>;
 };
 
-export type query_rootorders_by_pkArgs = {
-  id: Scalars["smallint"]["input"];
-};
-
-/** Boolean expression to compare columns of type "smallint". All fields are combined with logical 'AND'. */
-export type smallint_comparison_exp = {
-  _eq: InputMaybe<Scalars["smallint"]["input"]>;
-  _gt: InputMaybe<Scalars["smallint"]["input"]>;
-  _gte: InputMaybe<Scalars["smallint"]["input"]>;
-  _in: InputMaybe<Array<Scalars["smallint"]["input"]>>;
-  _is_null: InputMaybe<Scalars["Boolean"]["input"]>;
-  _lt: InputMaybe<Scalars["smallint"]["input"]>;
-  _lte: InputMaybe<Scalars["smallint"]["input"]>;
-  _neq: InputMaybe<Scalars["smallint"]["input"]>;
-  _nin: InputMaybe<Array<Scalars["smallint"]["input"]>>;
+export type query_roottasks_by_pkArgs = {
+  id: Scalars["Int"]["input"];
 };
 
 export type subscription_root = {
@@ -1147,13 +606,13 @@ export type subscription_root = {
   /** fetch data from the table in a streaming manner: "customers" */
   customers_stream: Array<customers>;
   /** An array relationship */
-  orders: Array<orders>;
+  tasks: Array<tasks>;
   /** An aggregate relationship */
-  orders_aggregate: orders_aggregate;
-  /** fetch data from the table: "orders" using primary key columns */
-  orders_by_pk: Maybe<orders>;
-  /** fetch data from the table in a streaming manner: "orders" */
-  orders_stream: Array<orders>;
+  tasks_aggregate: tasks_aggregate;
+  /** fetch data from the table: "tasks" using primary key columns */
+  tasks_by_pk: Maybe<tasks>;
+  /** fetch data from the table in a streaming manner: "tasks" */
+  tasks_stream: Array<tasks>;
 };
 
 export type subscription_rootcustomersArgs = {
@@ -1173,7 +632,7 @@ export type subscription_rootcustomers_aggregateArgs = {
 };
 
 export type subscription_rootcustomers_by_pkArgs = {
-  id: Scalars["smallint"]["input"];
+  id: Scalars["Int"]["input"];
 };
 
 export type subscription_rootcustomers_streamArgs = {
@@ -1182,30 +641,460 @@ export type subscription_rootcustomers_streamArgs = {
   where: InputMaybe<customers_bool_exp>;
 };
 
-export type subscription_rootordersArgs = {
-  distinct_on: InputMaybe<Array<orders_select_column>>;
+export type subscription_roottasksArgs = {
+  distinct_on: InputMaybe<Array<tasks_select_column>>;
   limit: InputMaybe<Scalars["Int"]["input"]>;
   offset: InputMaybe<Scalars["Int"]["input"]>;
-  order_by: InputMaybe<Array<orders_order_by>>;
-  where: InputMaybe<orders_bool_exp>;
+  order_by: InputMaybe<Array<tasks_order_by>>;
+  where: InputMaybe<tasks_bool_exp>;
 };
 
-export type subscription_rootorders_aggregateArgs = {
-  distinct_on: InputMaybe<Array<orders_select_column>>;
+export type subscription_roottasks_aggregateArgs = {
+  distinct_on: InputMaybe<Array<tasks_select_column>>;
   limit: InputMaybe<Scalars["Int"]["input"]>;
   offset: InputMaybe<Scalars["Int"]["input"]>;
-  order_by: InputMaybe<Array<orders_order_by>>;
-  where: InputMaybe<orders_bool_exp>;
+  order_by: InputMaybe<Array<tasks_order_by>>;
+  where: InputMaybe<tasks_bool_exp>;
 };
 
-export type subscription_rootorders_by_pkArgs = {
-  id: Scalars["smallint"]["input"];
+export type subscription_roottasks_by_pkArgs = {
+  id: Scalars["Int"]["input"];
 };
 
-export type subscription_rootorders_streamArgs = {
+export type subscription_roottasks_streamArgs = {
   batch_size: Scalars["Int"]["input"];
-  cursor: Array<InputMaybe<orders_stream_cursor_input>>;
-  where: InputMaybe<orders_bool_exp>;
+  cursor: Array<InputMaybe<tasks_stream_cursor_input>>;
+  where: InputMaybe<tasks_bool_exp>;
+};
+
+/** columns and relationships of "tasks" */
+export type tasks = {
+  __typename?: "tasks";
+  /** 作成日時 */
+  created_at: Scalars["timestamp"]["output"];
+  /** An object relationship */
+  customer: Maybe<customers>;
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Int"]["output"]>;
+  /** タスクID */
+  id: Scalars["Int"]["output"];
+  /** タスク名 */
+  name: Scalars["String"]["output"];
+  /** 更新日時 */
+  updated_at: Scalars["timestamp"]["output"];
+};
+
+/** aggregated selection of "tasks" */
+export type tasks_aggregate = {
+  __typename?: "tasks_aggregate";
+  aggregate: Maybe<tasks_aggregate_fields>;
+  nodes: Array<tasks>;
+};
+
+export type tasks_aggregate_bool_exp = {
+  count: InputMaybe<tasks_aggregate_bool_exp_count>;
+};
+
+export type tasks_aggregate_bool_exp_count = {
+  arguments: InputMaybe<Array<tasks_select_column>>;
+  distinct: InputMaybe<Scalars["Boolean"]["input"]>;
+  filter: InputMaybe<tasks_bool_exp>;
+  predicate: Int_comparison_exp;
+};
+
+/** aggregate fields of "tasks" */
+export type tasks_aggregate_fields = {
+  __typename?: "tasks_aggregate_fields";
+  avg: Maybe<tasks_avg_fields>;
+  count: Scalars["Int"]["output"];
+  max: Maybe<tasks_max_fields>;
+  min: Maybe<tasks_min_fields>;
+  stddev: Maybe<tasks_stddev_fields>;
+  stddev_pop: Maybe<tasks_stddev_pop_fields>;
+  stddev_samp: Maybe<tasks_stddev_samp_fields>;
+  sum: Maybe<tasks_sum_fields>;
+  var_pop: Maybe<tasks_var_pop_fields>;
+  var_samp: Maybe<tasks_var_samp_fields>;
+  variance: Maybe<tasks_variance_fields>;
+};
+
+/** aggregate fields of "tasks" */
+export type tasks_aggregate_fieldscountArgs = {
+  columns: InputMaybe<Array<tasks_select_column>>;
+  distinct: InputMaybe<Scalars["Boolean"]["input"]>;
+};
+
+/** order by aggregate values of table "tasks" */
+export type tasks_aggregate_order_by = {
+  avg: InputMaybe<tasks_avg_order_by>;
+  count: InputMaybe<order_by>;
+  max: InputMaybe<tasks_max_order_by>;
+  min: InputMaybe<tasks_min_order_by>;
+  stddev: InputMaybe<tasks_stddev_order_by>;
+  stddev_pop: InputMaybe<tasks_stddev_pop_order_by>;
+  stddev_samp: InputMaybe<tasks_stddev_samp_order_by>;
+  sum: InputMaybe<tasks_sum_order_by>;
+  var_pop: InputMaybe<tasks_var_pop_order_by>;
+  var_samp: InputMaybe<tasks_var_samp_order_by>;
+  variance: InputMaybe<tasks_variance_order_by>;
+};
+
+/** input type for inserting array relation for remote table "tasks" */
+export type tasks_arr_rel_insert_input = {
+  data: Array<tasks_insert_input>;
+  /** upsert condition */
+  on_conflict: InputMaybe<tasks_on_conflict>;
+};
+
+/** aggregate avg on columns */
+export type tasks_avg_fields = {
+  __typename?: "tasks_avg_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Float"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** order by avg() on columns of table "tasks" */
+export type tasks_avg_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** Boolean expression to filter rows from the table "tasks". All fields are combined with a logical 'AND'. */
+export type tasks_bool_exp = {
+  _and: InputMaybe<Array<tasks_bool_exp>>;
+  _not: InputMaybe<tasks_bool_exp>;
+  _or: InputMaybe<Array<tasks_bool_exp>>;
+  created_at: InputMaybe<timestamp_comparison_exp>;
+  customer: InputMaybe<customers_bool_exp>;
+  customer_id: InputMaybe<Int_comparison_exp>;
+  id: InputMaybe<Int_comparison_exp>;
+  name: InputMaybe<String_comparison_exp>;
+  updated_at: InputMaybe<timestamp_comparison_exp>;
+};
+
+/** unique or primary key constraints on table "tasks" */
+export type tasks_constraint =
+  /** unique or primary key constraint on columns "id" */
+  "PK_8d12ff38fcc62aaba2cab748772";
+
+/** input type for incrementing numeric columns in table "tasks" */
+export type tasks_inc_input = {
+  /** Customer ID */
+  customer_id: InputMaybe<Scalars["Int"]["input"]>;
+  /** タスクID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+/** input type for inserting data into table "tasks" */
+export type tasks_insert_input = {
+  /** 作成日時 */
+  created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  customer: InputMaybe<customers_obj_rel_insert_input>;
+  /** Customer ID */
+  customer_id: InputMaybe<Scalars["Int"]["input"]>;
+  /** タスクID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
+  /** タスク名 */
+  name: InputMaybe<Scalars["String"]["input"]>;
+  /** 更新日時 */
+  updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
+};
+
+/** aggregate max on columns */
+export type tasks_max_fields = {
+  __typename?: "tasks_max_fields";
+  /** 作成日時 */
+  created_at: Maybe<Scalars["timestamp"]["output"]>;
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Int"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Int"]["output"]>;
+  /** タスク名 */
+  name: Maybe<Scalars["String"]["output"]>;
+  /** 更新日時 */
+  updated_at: Maybe<Scalars["timestamp"]["output"]>;
+};
+
+/** order by max() on columns of table "tasks" */
+export type tasks_max_order_by = {
+  /** 作成日時 */
+  created_at: InputMaybe<order_by>;
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+  /** タスク名 */
+  name: InputMaybe<order_by>;
+  /** 更新日時 */
+  updated_at: InputMaybe<order_by>;
+};
+
+/** aggregate min on columns */
+export type tasks_min_fields = {
+  __typename?: "tasks_min_fields";
+  /** 作成日時 */
+  created_at: Maybe<Scalars["timestamp"]["output"]>;
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Int"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Int"]["output"]>;
+  /** タスク名 */
+  name: Maybe<Scalars["String"]["output"]>;
+  /** 更新日時 */
+  updated_at: Maybe<Scalars["timestamp"]["output"]>;
+};
+
+/** order by min() on columns of table "tasks" */
+export type tasks_min_order_by = {
+  /** 作成日時 */
+  created_at: InputMaybe<order_by>;
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+  /** タスク名 */
+  name: InputMaybe<order_by>;
+  /** 更新日時 */
+  updated_at: InputMaybe<order_by>;
+};
+
+/** response of any mutation on the table "tasks" */
+export type tasks_mutation_response = {
+  __typename?: "tasks_mutation_response";
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars["Int"]["output"];
+  /** data from the rows affected by the mutation */
+  returning: Array<tasks>;
+};
+
+/** on_conflict condition type for table "tasks" */
+export type tasks_on_conflict = {
+  constraint: tasks_constraint;
+  update_columns: Array<tasks_update_column>;
+  where: InputMaybe<tasks_bool_exp>;
+};
+
+/** Ordering options when selecting data from "tasks". */
+export type tasks_order_by = {
+  created_at: InputMaybe<order_by>;
+  customer: InputMaybe<customers_order_by>;
+  customer_id: InputMaybe<order_by>;
+  id: InputMaybe<order_by>;
+  name: InputMaybe<order_by>;
+  updated_at: InputMaybe<order_by>;
+};
+
+/** primary key columns input for table: tasks */
+export type tasks_pk_columns_input = {
+  /** タスクID */
+  id: Scalars["Int"]["input"];
+};
+
+/** select columns of table "tasks" */
+export type tasks_select_column =
+  /** column name */
+  | "created_at"
+  /** column name */
+  | "customer_id"
+  /** column name */
+  | "id"
+  /** column name */
+  | "name"
+  /** column name */
+  | "updated_at";
+
+/** input type for updating data in table "tasks" */
+export type tasks_set_input = {
+  /** 作成日時 */
+  created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** Customer ID */
+  customer_id: InputMaybe<Scalars["Int"]["input"]>;
+  /** タスクID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
+  /** タスク名 */
+  name: InputMaybe<Scalars["String"]["input"]>;
+  /** 更新日時 */
+  updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
+};
+
+/** aggregate stddev on columns */
+export type tasks_stddev_fields = {
+  __typename?: "tasks_stddev_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Float"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** order by stddev() on columns of table "tasks" */
+export type tasks_stddev_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** aggregate stddev_pop on columns */
+export type tasks_stddev_pop_fields = {
+  __typename?: "tasks_stddev_pop_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Float"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** order by stddev_pop() on columns of table "tasks" */
+export type tasks_stddev_pop_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** aggregate stddev_samp on columns */
+export type tasks_stddev_samp_fields = {
+  __typename?: "tasks_stddev_samp_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Float"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** order by stddev_samp() on columns of table "tasks" */
+export type tasks_stddev_samp_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** Streaming cursor of the table "tasks" */
+export type tasks_stream_cursor_input = {
+  /** Stream column input with initial value */
+  initial_value: tasks_stream_cursor_value_input;
+  /** cursor ordering */
+  ordering: InputMaybe<cursor_ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type tasks_stream_cursor_value_input = {
+  /** 作成日時 */
+  created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** Customer ID */
+  customer_id: InputMaybe<Scalars["Int"]["input"]>;
+  /** タスクID */
+  id: InputMaybe<Scalars["Int"]["input"]>;
+  /** タスク名 */
+  name: InputMaybe<Scalars["String"]["input"]>;
+  /** 更新日時 */
+  updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
+};
+
+/** aggregate sum on columns */
+export type tasks_sum_fields = {
+  __typename?: "tasks_sum_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Int"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Int"]["output"]>;
+};
+
+/** order by sum() on columns of table "tasks" */
+export type tasks_sum_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** update columns of table "tasks" */
+export type tasks_update_column =
+  /** column name */
+  | "created_at"
+  /** column name */
+  | "customer_id"
+  /** column name */
+  | "id"
+  /** column name */
+  | "name"
+  /** column name */
+  | "updated_at";
+
+export type tasks_updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc: InputMaybe<tasks_inc_input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set: InputMaybe<tasks_set_input>;
+  /** filter the rows which have to be updated */
+  where: tasks_bool_exp;
+};
+
+/** aggregate var_pop on columns */
+export type tasks_var_pop_fields = {
+  __typename?: "tasks_var_pop_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Float"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** order by var_pop() on columns of table "tasks" */
+export type tasks_var_pop_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** aggregate var_samp on columns */
+export type tasks_var_samp_fields = {
+  __typename?: "tasks_var_samp_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Float"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** order by var_samp() on columns of table "tasks" */
+export type tasks_var_samp_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** aggregate variance on columns */
+export type tasks_variance_fields = {
+  __typename?: "tasks_variance_fields";
+  /** Customer ID */
+  customer_id: Maybe<Scalars["Float"]["output"]>;
+  /** タスクID */
+  id: Maybe<Scalars["Float"]["output"]>;
+};
+
+/** order by variance() on columns of table "tasks" */
+export type tasks_variance_order_by = {
+  /** Customer ID */
+  customer_id: InputMaybe<order_by>;
+  /** タスクID */
+  id: InputMaybe<order_by>;
+};
+
+/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+export type timestamp_comparison_exp = {
+  _eq: InputMaybe<Scalars["timestamp"]["input"]>;
+  _gt: InputMaybe<Scalars["timestamp"]["input"]>;
+  _gte: InputMaybe<Scalars["timestamp"]["input"]>;
+  _in: InputMaybe<Array<Scalars["timestamp"]["input"]>>;
+  _is_null: InputMaybe<Scalars["Boolean"]["input"]>;
+  _lt: InputMaybe<Scalars["timestamp"]["input"]>;
+  _lte: InputMaybe<Scalars["timestamp"]["input"]>;
+  _neq: InputMaybe<Scalars["timestamp"]["input"]>;
+  _nin: InputMaybe<Array<Scalars["timestamp"]["input"]>>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -1317,14 +1206,14 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
   Customer: ResolverTypeWrapper<Customer>;
-  FindCustomerDto: FindCustomerDto;
-  FindOrderDto: FindOrderDto;
+  DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
   Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
+  ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
   Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
   Int_comparison_exp: Int_comparison_exp;
-  Order: ResolverTypeWrapper<Order>;
   String: ResolverTypeWrapper<Scalars["String"]["output"]>;
   String_comparison_exp: String_comparison_exp;
+  Task: ResolverTypeWrapper<Task>;
   _Service: ResolverTypeWrapper<_Service>;
   cursor_ordering: cursor_ordering;
   customers: ResolverTypeWrapper<customers>;
@@ -1357,65 +1246,65 @@ export type ResolversTypes = {
   customers_variance_fields: ResolverTypeWrapper<customers_variance_fields>;
   mutation_root: ResolverTypeWrapper<{}>;
   order_by: order_by;
-  orders: ResolverTypeWrapper<orders>;
-  orders_aggregate: ResolverTypeWrapper<orders_aggregate>;
-  orders_aggregate_bool_exp: orders_aggregate_bool_exp;
-  orders_aggregate_bool_exp_count: orders_aggregate_bool_exp_count;
-  orders_aggregate_fields: ResolverTypeWrapper<orders_aggregate_fields>;
-  orders_aggregate_order_by: orders_aggregate_order_by;
-  orders_arr_rel_insert_input: orders_arr_rel_insert_input;
-  orders_avg_fields: ResolverTypeWrapper<orders_avg_fields>;
-  orders_avg_order_by: orders_avg_order_by;
-  orders_bool_exp: orders_bool_exp;
-  orders_constraint: orders_constraint;
-  orders_inc_input: orders_inc_input;
-  orders_insert_input: orders_insert_input;
-  orders_max_fields: ResolverTypeWrapper<orders_max_fields>;
-  orders_max_order_by: orders_max_order_by;
-  orders_min_fields: ResolverTypeWrapper<orders_min_fields>;
-  orders_min_order_by: orders_min_order_by;
-  orders_mutation_response: ResolverTypeWrapper<orders_mutation_response>;
-  orders_on_conflict: orders_on_conflict;
-  orders_order_by: orders_order_by;
-  orders_pk_columns_input: orders_pk_columns_input;
-  orders_select_column: orders_select_column;
-  orders_set_input: orders_set_input;
-  orders_stddev_fields: ResolverTypeWrapper<orders_stddev_fields>;
-  orders_stddev_order_by: orders_stddev_order_by;
-  orders_stddev_pop_fields: ResolverTypeWrapper<orders_stddev_pop_fields>;
-  orders_stddev_pop_order_by: orders_stddev_pop_order_by;
-  orders_stddev_samp_fields: ResolverTypeWrapper<orders_stddev_samp_fields>;
-  orders_stddev_samp_order_by: orders_stddev_samp_order_by;
-  orders_stream_cursor_input: orders_stream_cursor_input;
-  orders_stream_cursor_value_input: orders_stream_cursor_value_input;
-  orders_sum_fields: ResolverTypeWrapper<orders_sum_fields>;
-  orders_sum_order_by: orders_sum_order_by;
-  orders_update_column: orders_update_column;
-  orders_updates: orders_updates;
-  orders_var_pop_fields: ResolverTypeWrapper<orders_var_pop_fields>;
-  orders_var_pop_order_by: orders_var_pop_order_by;
-  orders_var_samp_fields: ResolverTypeWrapper<orders_var_samp_fields>;
-  orders_var_samp_order_by: orders_var_samp_order_by;
-  orders_variance_fields: ResolverTypeWrapper<orders_variance_fields>;
-  orders_variance_order_by: orders_variance_order_by;
   query_root: ResolverTypeWrapper<{}>;
-  smallint: ResolverTypeWrapper<Scalars["smallint"]["output"]>;
-  smallint_comparison_exp: smallint_comparison_exp;
   subscription_root: ResolverTypeWrapper<{}>;
+  tasks: ResolverTypeWrapper<tasks>;
+  tasks_aggregate: ResolverTypeWrapper<tasks_aggregate>;
+  tasks_aggregate_bool_exp: tasks_aggregate_bool_exp;
+  tasks_aggregate_bool_exp_count: tasks_aggregate_bool_exp_count;
+  tasks_aggregate_fields: ResolverTypeWrapper<tasks_aggregate_fields>;
+  tasks_aggregate_order_by: tasks_aggregate_order_by;
+  tasks_arr_rel_insert_input: tasks_arr_rel_insert_input;
+  tasks_avg_fields: ResolverTypeWrapper<tasks_avg_fields>;
+  tasks_avg_order_by: tasks_avg_order_by;
+  tasks_bool_exp: tasks_bool_exp;
+  tasks_constraint: tasks_constraint;
+  tasks_inc_input: tasks_inc_input;
+  tasks_insert_input: tasks_insert_input;
+  tasks_max_fields: ResolverTypeWrapper<tasks_max_fields>;
+  tasks_max_order_by: tasks_max_order_by;
+  tasks_min_fields: ResolverTypeWrapper<tasks_min_fields>;
+  tasks_min_order_by: tasks_min_order_by;
+  tasks_mutation_response: ResolverTypeWrapper<tasks_mutation_response>;
+  tasks_on_conflict: tasks_on_conflict;
+  tasks_order_by: tasks_order_by;
+  tasks_pk_columns_input: tasks_pk_columns_input;
+  tasks_select_column: tasks_select_column;
+  tasks_set_input: tasks_set_input;
+  tasks_stddev_fields: ResolverTypeWrapper<tasks_stddev_fields>;
+  tasks_stddev_order_by: tasks_stddev_order_by;
+  tasks_stddev_pop_fields: ResolverTypeWrapper<tasks_stddev_pop_fields>;
+  tasks_stddev_pop_order_by: tasks_stddev_pop_order_by;
+  tasks_stddev_samp_fields: ResolverTypeWrapper<tasks_stddev_samp_fields>;
+  tasks_stddev_samp_order_by: tasks_stddev_samp_order_by;
+  tasks_stream_cursor_input: tasks_stream_cursor_input;
+  tasks_stream_cursor_value_input: tasks_stream_cursor_value_input;
+  tasks_sum_fields: ResolverTypeWrapper<tasks_sum_fields>;
+  tasks_sum_order_by: tasks_sum_order_by;
+  tasks_update_column: tasks_update_column;
+  tasks_updates: tasks_updates;
+  tasks_var_pop_fields: ResolverTypeWrapper<tasks_var_pop_fields>;
+  tasks_var_pop_order_by: tasks_var_pop_order_by;
+  tasks_var_samp_fields: ResolverTypeWrapper<tasks_var_samp_fields>;
+  tasks_var_samp_order_by: tasks_var_samp_order_by;
+  tasks_variance_fields: ResolverTypeWrapper<tasks_variance_fields>;
+  tasks_variance_order_by: tasks_variance_order_by;
+  timestamp: ResolverTypeWrapper<Scalars["timestamp"]["output"]>;
+  timestamp_comparison_exp: timestamp_comparison_exp;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"]["output"];
   Customer: Customer;
-  FindCustomerDto: FindCustomerDto;
-  FindOrderDto: FindOrderDto;
+  DateTime: Scalars["DateTime"]["output"];
   Float: Scalars["Float"]["output"];
+  ID: Scalars["ID"]["output"];
   Int: Scalars["Int"]["output"];
   Int_comparison_exp: Int_comparison_exp;
-  Order: Order;
   String: Scalars["String"]["output"];
   String_comparison_exp: String_comparison_exp;
+  Task: Task;
   _Service: _Service;
   customers: customers;
   customers_aggregate: customers_aggregate;
@@ -1443,48 +1332,48 @@ export type ResolversParentTypes = {
   customers_var_samp_fields: customers_var_samp_fields;
   customers_variance_fields: customers_variance_fields;
   mutation_root: {};
-  orders: orders;
-  orders_aggregate: orders_aggregate;
-  orders_aggregate_bool_exp: orders_aggregate_bool_exp;
-  orders_aggregate_bool_exp_count: orders_aggregate_bool_exp_count;
-  orders_aggregate_fields: orders_aggregate_fields;
-  orders_aggregate_order_by: orders_aggregate_order_by;
-  orders_arr_rel_insert_input: orders_arr_rel_insert_input;
-  orders_avg_fields: orders_avg_fields;
-  orders_avg_order_by: orders_avg_order_by;
-  orders_bool_exp: orders_bool_exp;
-  orders_inc_input: orders_inc_input;
-  orders_insert_input: orders_insert_input;
-  orders_max_fields: orders_max_fields;
-  orders_max_order_by: orders_max_order_by;
-  orders_min_fields: orders_min_fields;
-  orders_min_order_by: orders_min_order_by;
-  orders_mutation_response: orders_mutation_response;
-  orders_on_conflict: orders_on_conflict;
-  orders_order_by: orders_order_by;
-  orders_pk_columns_input: orders_pk_columns_input;
-  orders_set_input: orders_set_input;
-  orders_stddev_fields: orders_stddev_fields;
-  orders_stddev_order_by: orders_stddev_order_by;
-  orders_stddev_pop_fields: orders_stddev_pop_fields;
-  orders_stddev_pop_order_by: orders_stddev_pop_order_by;
-  orders_stddev_samp_fields: orders_stddev_samp_fields;
-  orders_stddev_samp_order_by: orders_stddev_samp_order_by;
-  orders_stream_cursor_input: orders_stream_cursor_input;
-  orders_stream_cursor_value_input: orders_stream_cursor_value_input;
-  orders_sum_fields: orders_sum_fields;
-  orders_sum_order_by: orders_sum_order_by;
-  orders_updates: orders_updates;
-  orders_var_pop_fields: orders_var_pop_fields;
-  orders_var_pop_order_by: orders_var_pop_order_by;
-  orders_var_samp_fields: orders_var_samp_fields;
-  orders_var_samp_order_by: orders_var_samp_order_by;
-  orders_variance_fields: orders_variance_fields;
-  orders_variance_order_by: orders_variance_order_by;
   query_root: {};
-  smallint: Scalars["smallint"]["output"];
-  smallint_comparison_exp: smallint_comparison_exp;
   subscription_root: {};
+  tasks: tasks;
+  tasks_aggregate: tasks_aggregate;
+  tasks_aggregate_bool_exp: tasks_aggregate_bool_exp;
+  tasks_aggregate_bool_exp_count: tasks_aggregate_bool_exp_count;
+  tasks_aggregate_fields: tasks_aggregate_fields;
+  tasks_aggregate_order_by: tasks_aggregate_order_by;
+  tasks_arr_rel_insert_input: tasks_arr_rel_insert_input;
+  tasks_avg_fields: tasks_avg_fields;
+  tasks_avg_order_by: tasks_avg_order_by;
+  tasks_bool_exp: tasks_bool_exp;
+  tasks_inc_input: tasks_inc_input;
+  tasks_insert_input: tasks_insert_input;
+  tasks_max_fields: tasks_max_fields;
+  tasks_max_order_by: tasks_max_order_by;
+  tasks_min_fields: tasks_min_fields;
+  tasks_min_order_by: tasks_min_order_by;
+  tasks_mutation_response: tasks_mutation_response;
+  tasks_on_conflict: tasks_on_conflict;
+  tasks_order_by: tasks_order_by;
+  tasks_pk_columns_input: tasks_pk_columns_input;
+  tasks_set_input: tasks_set_input;
+  tasks_stddev_fields: tasks_stddev_fields;
+  tasks_stddev_order_by: tasks_stddev_order_by;
+  tasks_stddev_pop_fields: tasks_stddev_pop_fields;
+  tasks_stddev_pop_order_by: tasks_stddev_pop_order_by;
+  tasks_stddev_samp_fields: tasks_stddev_samp_fields;
+  tasks_stddev_samp_order_by: tasks_stddev_samp_order_by;
+  tasks_stream_cursor_input: tasks_stream_cursor_input;
+  tasks_stream_cursor_value_input: tasks_stream_cursor_value_input;
+  tasks_sum_fields: tasks_sum_fields;
+  tasks_sum_order_by: tasks_sum_order_by;
+  tasks_updates: tasks_updates;
+  tasks_var_pop_fields: tasks_var_pop_fields;
+  tasks_var_pop_order_by: tasks_var_pop_order_by;
+  tasks_var_samp_fields: tasks_var_samp_fields;
+  tasks_var_samp_order_by: tasks_var_samp_order_by;
+  tasks_variance_fields: tasks_variance_fields;
+  tasks_variance_order_by: tasks_variance_order_by;
+  timestamp: Scalars["timestamp"]["output"];
+  timestamp_comparison_exp: timestamp_comparison_exp;
 };
 
 export type cachedDirectiveArgs = {
@@ -1504,29 +1393,29 @@ export type CustomerResolvers<
   ParentType extends
     ResolversParentTypes["Customer"] = ResolversParentTypes["Customer"],
 > = {
-  email: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  first_name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  id: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
-  ip_address: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  last_name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  orders: Resolver<Array<ResolversTypes["Order"]>, ParentType, ContextType>;
-  phone: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  created_at: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  id: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  tasks: Resolver<Array<ResolversTypes["Task"]>, ParentType, ContextType>;
+  updated_at: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   username: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type OrderResolvers<
+export interface DateTimeScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
+  name: "DateTime";
+}
+
+export type TaskResolvers<
   ContextType = any,
   ParentType extends
-    ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
+    ResolversParentTypes["Task"] = ResolversParentTypes["Task"],
 > = {
+  created_at: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   customer: Resolver<ResolversTypes["Customer"], ParentType, ContextType>;
-  discount_price: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  id: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
-  order_date: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  product: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  purchase_price: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  transaction_id: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updated_at: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1544,33 +1433,22 @@ export type customersResolvers<
   ParentType extends
     ResolversParentTypes["customers"] = ResolversParentTypes["customers"],
 > = {
-  email: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  first_name: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<ResolversTypes["smallint"], ParentType, ContextType>;
-  ip_address: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  last_name: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  orders: Resolver<
-    Array<ResolversTypes["orders"]>,
+  created_at: Resolver<ResolversTypes["timestamp"], ParentType, ContextType>;
+  id: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  tasks: Resolver<
+    Array<ResolversTypes["tasks"]>,
     ParentType,
     ContextType,
-    customersordersArgs
+    customerstasksArgs
   >;
-  orders_aggregate: Resolver<
-    ResolversTypes["orders_aggregate"],
+  tasks_aggregate: Resolver<
+    ResolversTypes["tasks_aggregate"],
     ParentType,
     ContextType,
-    customersorders_aggregateArgs
+    customerstasks_aggregateArgs
   >;
-  phone: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  username: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  updated_at: Resolver<ResolversTypes["timestamp"], ParentType, ContextType>;
+  username: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1666,20 +1544,17 @@ export type customers_max_fieldsResolvers<
   ParentType extends
     ResolversParentTypes["customers_max_fields"] = ResolversParentTypes["customers_max_fields"],
 > = {
-  email: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  first_name: Resolver<
-    Maybe<ResolversTypes["String"]>,
+  created_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
     ParentType,
     ContextType
   >;
-  id: Resolver<Maybe<ResolversTypes["smallint"]>, ParentType, ContextType>;
-  ip_address: Resolver<
-    Maybe<ResolversTypes["String"]>,
+  id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  updated_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
     ParentType,
     ContextType
   >;
-  last_name: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  phone: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   username: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1689,20 +1564,17 @@ export type customers_min_fieldsResolvers<
   ParentType extends
     ResolversParentTypes["customers_min_fields"] = ResolversParentTypes["customers_min_fields"],
 > = {
-  email: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  first_name: Resolver<
-    Maybe<ResolversTypes["String"]>,
+  created_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
     ParentType,
     ContextType
   >;
-  id: Resolver<Maybe<ResolversTypes["smallint"]>, ParentType, ContextType>;
-  ip_address: Resolver<
-    Maybe<ResolversTypes["String"]>,
+  id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  updated_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
     ParentType,
     ContextType
   >;
-  last_name: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  phone: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   username: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1753,7 +1625,7 @@ export type customers_sum_fieldsResolvers<
   ParentType extends
     ResolversParentTypes["customers_sum_fields"] = ResolversParentTypes["customers_sum_fields"],
 > = {
-  id: Resolver<Maybe<ResolversTypes["smallint"]>, ParentType, ContextType>;
+  id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1801,17 +1673,17 @@ export type mutation_rootResolvers<
     ContextType,
     RequireFields<mutation_rootdelete_customers_by_pkArgs, "id">
   >;
-  delete_orders: Resolver<
-    Maybe<ResolversTypes["orders_mutation_response"]>,
+  delete_tasks: Resolver<
+    Maybe<ResolversTypes["tasks_mutation_response"]>,
     ParentType,
     ContextType,
-    RequireFields<mutation_rootdelete_ordersArgs, "where">
+    RequireFields<mutation_rootdelete_tasksArgs, "where">
   >;
-  delete_orders_by_pk: Resolver<
-    Maybe<ResolversTypes["orders"]>,
+  delete_tasks_by_pk: Resolver<
+    Maybe<ResolversTypes["tasks"]>,
     ParentType,
     ContextType,
-    RequireFields<mutation_rootdelete_orders_by_pkArgs, "id">
+    RequireFields<mutation_rootdelete_tasks_by_pkArgs, "id">
   >;
   insert_customers: Resolver<
     Maybe<ResolversTypes["customers_mutation_response"]>,
@@ -1825,17 +1697,17 @@ export type mutation_rootResolvers<
     ContextType,
     RequireFields<mutation_rootinsert_customers_oneArgs, "object">
   >;
-  insert_orders: Resolver<
-    Maybe<ResolversTypes["orders_mutation_response"]>,
+  insert_tasks: Resolver<
+    Maybe<ResolversTypes["tasks_mutation_response"]>,
     ParentType,
     ContextType,
-    RequireFields<mutation_rootinsert_ordersArgs, "objects">
+    RequireFields<mutation_rootinsert_tasksArgs, "objects">
   >;
-  insert_orders_one: Resolver<
-    Maybe<ResolversTypes["orders"]>,
+  insert_tasks_one: Resolver<
+    Maybe<ResolversTypes["tasks"]>,
     ParentType,
     ContextType,
-    RequireFields<mutation_rootinsert_orders_oneArgs, "object">
+    RequireFields<mutation_rootinsert_tasks_oneArgs, "object">
   >;
   update_customers: Resolver<
     Maybe<ResolversTypes["customers_mutation_response"]>,
@@ -1855,334 +1727,24 @@ export type mutation_rootResolvers<
     ContextType,
     RequireFields<mutation_rootupdate_customers_manyArgs, "updates">
   >;
-  update_orders: Resolver<
-    Maybe<ResolversTypes["orders_mutation_response"]>,
+  update_tasks: Resolver<
+    Maybe<ResolversTypes["tasks_mutation_response"]>,
     ParentType,
     ContextType,
-    RequireFields<mutation_rootupdate_ordersArgs, "where">
+    RequireFields<mutation_rootupdate_tasksArgs, "where">
   >;
-  update_orders_by_pk: Resolver<
-    Maybe<ResolversTypes["orders"]>,
+  update_tasks_by_pk: Resolver<
+    Maybe<ResolversTypes["tasks"]>,
     ParentType,
     ContextType,
-    RequireFields<mutation_rootupdate_orders_by_pkArgs, "pk_columns">
+    RequireFields<mutation_rootupdate_tasks_by_pkArgs, "pk_columns">
   >;
-  update_orders_many: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["orders_mutation_response"]>>>,
+  update_tasks_many: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["tasks_mutation_response"]>>>,
     ParentType,
     ContextType,
-    RequireFields<mutation_rootupdate_orders_manyArgs, "updates">
+    RequireFields<mutation_rootupdate_tasks_manyArgs, "updates">
   >;
-};
-
-export type ordersResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders"] = ResolversParentTypes["orders"],
-> = {
-  customer: Resolver<
-    Maybe<ResolversTypes["customers"]>,
-    ParentType,
-    ContextType
-  >;
-  customer_id: Resolver<
-    Maybe<ResolversTypes["smallint"]>,
-    ParentType,
-    ContextType
-  >;
-  discount_price: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<ResolversTypes["smallint"], ParentType, ContextType>;
-  order_date: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  product: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  purchase_price: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  transaction_id: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_aggregateResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_aggregate"] = ResolversParentTypes["orders_aggregate"],
-> = {
-  aggregate: Resolver<
-    Maybe<ResolversTypes["orders_aggregate_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  nodes: Resolver<Array<ResolversTypes["orders"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_aggregate_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_aggregate_fields"] = ResolversParentTypes["orders_aggregate_fields"],
-> = {
-  avg: Resolver<
-    Maybe<ResolversTypes["orders_avg_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  count: Resolver<
-    ResolversTypes["Int"],
-    ParentType,
-    ContextType,
-    orders_aggregate_fieldscountArgs
-  >;
-  max: Resolver<
-    Maybe<ResolversTypes["orders_max_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  min: Resolver<
-    Maybe<ResolversTypes["orders_min_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  stddev: Resolver<
-    Maybe<ResolversTypes["orders_stddev_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  stddev_pop: Resolver<
-    Maybe<ResolversTypes["orders_stddev_pop_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  stddev_samp: Resolver<
-    Maybe<ResolversTypes["orders_stddev_samp_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  sum: Resolver<
-    Maybe<ResolversTypes["orders_sum_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  var_pop: Resolver<
-    Maybe<ResolversTypes["orders_var_pop_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  var_samp: Resolver<
-    Maybe<ResolversTypes["orders_var_samp_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  variance: Resolver<
-    Maybe<ResolversTypes["orders_variance_fields"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_avg_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_avg_fields"] = ResolversParentTypes["orders_avg_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["Float"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_max_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_max_fields"] = ResolversParentTypes["orders_max_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["smallint"]>,
-    ParentType,
-    ContextType
-  >;
-  discount_price: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["smallint"]>, ParentType, ContextType>;
-  order_date: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  product: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  purchase_price: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  transaction_id: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_min_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_min_fields"] = ResolversParentTypes["orders_min_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["smallint"]>,
-    ParentType,
-    ContextType
-  >;
-  discount_price: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["smallint"]>, ParentType, ContextType>;
-  order_date: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  product: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  purchase_price: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  transaction_id: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_mutation_responseResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_mutation_response"] = ResolversParentTypes["orders_mutation_response"],
-> = {
-  affected_rows: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  returning: Resolver<Array<ResolversTypes["orders"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_stddev_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_stddev_fields"] = ResolversParentTypes["orders_stddev_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["Float"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_stddev_pop_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_stddev_pop_fields"] = ResolversParentTypes["orders_stddev_pop_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["Float"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_stddev_samp_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_stddev_samp_fields"] = ResolversParentTypes["orders_stddev_samp_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["Float"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_sum_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_sum_fields"] = ResolversParentTypes["orders_sum_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["smallint"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["smallint"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_var_pop_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_var_pop_fields"] = ResolversParentTypes["orders_var_pop_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["Float"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_var_samp_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_var_samp_fields"] = ResolversParentTypes["orders_var_samp_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["Float"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type orders_variance_fieldsResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["orders_variance_fields"] = ResolversParentTypes["orders_variance_fields"],
-> = {
-  customer_id: Resolver<
-    Maybe<ResolversTypes["Float"]>,
-    ParentType,
-    ContextType
-  >;
-  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type query_rootResolvers<
@@ -2213,43 +1775,33 @@ export type query_rootResolvers<
     ResolversTypes["Customer"],
     ParentType,
     ContextType,
-    RequireFields<query_rootgetCustomerArgs, "findCustomer">
+    RequireFields<query_rootgetCustomerArgs, "customerId">
   >;
-  getCustomerAll: Resolver<
-    Array<ResolversTypes["Customer"]>,
-    ParentType,
-    ContextType
-  >;
-  getOrder: Resolver<
-    ResolversTypes["Order"],
+  getTask: Resolver<
+    ResolversTypes["Task"],
     ParentType,
     ContextType,
-    RequireFields<query_rootgetOrderArgs, "findOrder">
+    RequireFields<query_rootgetTaskArgs, "taskId">
   >;
-  orders: Resolver<
-    Array<ResolversTypes["orders"]>,
+  tasks: Resolver<
+    Array<ResolversTypes["tasks"]>,
     ParentType,
     ContextType,
-    query_rootordersArgs
+    query_roottasksArgs
   >;
-  orders_aggregate: Resolver<
-    ResolversTypes["orders_aggregate"],
+  tasks_aggregate: Resolver<
+    ResolversTypes["tasks_aggregate"],
     ParentType,
     ContextType,
-    query_rootorders_aggregateArgs
+    query_roottasks_aggregateArgs
   >;
-  orders_by_pk: Resolver<
-    Maybe<ResolversTypes["orders"]>,
+  tasks_by_pk: Resolver<
+    Maybe<ResolversTypes["tasks"]>,
     ParentType,
     ContextType,
-    RequireFields<query_rootorders_by_pkArgs, "id">
+    RequireFields<query_roottasks_by_pkArgs, "id">
   >;
 };
-
-export interface smallintScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["smallint"], any> {
-  name: "smallint";
-}
 
 export type subscription_rootResolvers<
   ContextType = any,
@@ -2287,39 +1839,301 @@ export type subscription_rootResolvers<
       "batch_size" | "cursor"
     >
   >;
-  orders: SubscriptionResolver<
-    Array<ResolversTypes["orders"]>,
-    "orders",
+  tasks: SubscriptionResolver<
+    Array<ResolversTypes["tasks"]>,
+    "tasks",
     ParentType,
     ContextType,
-    subscription_rootordersArgs
+    subscription_roottasksArgs
   >;
-  orders_aggregate: SubscriptionResolver<
-    ResolversTypes["orders_aggregate"],
-    "orders_aggregate",
+  tasks_aggregate: SubscriptionResolver<
+    ResolversTypes["tasks_aggregate"],
+    "tasks_aggregate",
     ParentType,
     ContextType,
-    subscription_rootorders_aggregateArgs
+    subscription_roottasks_aggregateArgs
   >;
-  orders_by_pk: SubscriptionResolver<
-    Maybe<ResolversTypes["orders"]>,
-    "orders_by_pk",
+  tasks_by_pk: SubscriptionResolver<
+    Maybe<ResolversTypes["tasks"]>,
+    "tasks_by_pk",
     ParentType,
     ContextType,
-    RequireFields<subscription_rootorders_by_pkArgs, "id">
+    RequireFields<subscription_roottasks_by_pkArgs, "id">
   >;
-  orders_stream: SubscriptionResolver<
-    Array<ResolversTypes["orders"]>,
-    "orders_stream",
+  tasks_stream: SubscriptionResolver<
+    Array<ResolversTypes["tasks"]>,
+    "tasks_stream",
     ParentType,
     ContextType,
-    RequireFields<subscription_rootorders_streamArgs, "batch_size" | "cursor">
+    RequireFields<subscription_roottasks_streamArgs, "batch_size" | "cursor">
   >;
 };
 
+export type tasksResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks"] = ResolversParentTypes["tasks"],
+> = {
+  created_at: Resolver<ResolversTypes["timestamp"], ParentType, ContextType>;
+  customer: Resolver<
+    Maybe<ResolversTypes["customers"]>,
+    ParentType,
+    ContextType
+  >;
+  customer_id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  id: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  name: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updated_at: Resolver<ResolversTypes["timestamp"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_aggregateResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_aggregate"] = ResolversParentTypes["tasks_aggregate"],
+> = {
+  aggregate: Resolver<
+    Maybe<ResolversTypes["tasks_aggregate_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  nodes: Resolver<Array<ResolversTypes["tasks"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_aggregate_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_aggregate_fields"] = ResolversParentTypes["tasks_aggregate_fields"],
+> = {
+  avg: Resolver<
+    Maybe<ResolversTypes["tasks_avg_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  count: Resolver<
+    ResolversTypes["Int"],
+    ParentType,
+    ContextType,
+    tasks_aggregate_fieldscountArgs
+  >;
+  max: Resolver<
+    Maybe<ResolversTypes["tasks_max_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  min: Resolver<
+    Maybe<ResolversTypes["tasks_min_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  stddev: Resolver<
+    Maybe<ResolversTypes["tasks_stddev_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  stddev_pop: Resolver<
+    Maybe<ResolversTypes["tasks_stddev_pop_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  stddev_samp: Resolver<
+    Maybe<ResolversTypes["tasks_stddev_samp_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  sum: Resolver<
+    Maybe<ResolversTypes["tasks_sum_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  var_pop: Resolver<
+    Maybe<ResolversTypes["tasks_var_pop_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  var_samp: Resolver<
+    Maybe<ResolversTypes["tasks_var_samp_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  variance: Resolver<
+    Maybe<ResolversTypes["tasks_variance_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_avg_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_avg_fields"] = ResolversParentTypes["tasks_avg_fields"],
+> = {
+  customer_id: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_max_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_max_fields"] = ResolversParentTypes["tasks_max_fields"],
+> = {
+  created_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
+    ParentType,
+    ContextType
+  >;
+  customer_id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  name: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  updated_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_min_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_min_fields"] = ResolversParentTypes["tasks_min_fields"],
+> = {
+  created_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
+    ParentType,
+    ContextType
+  >;
+  customer_id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  name: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  updated_at: Resolver<
+    Maybe<ResolversTypes["timestamp"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_mutation_responseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_mutation_response"] = ResolversParentTypes["tasks_mutation_response"],
+> = {
+  affected_rows: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  returning: Resolver<Array<ResolversTypes["tasks"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_stddev_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_stddev_fields"] = ResolversParentTypes["tasks_stddev_fields"],
+> = {
+  customer_id: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_stddev_pop_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_stddev_pop_fields"] = ResolversParentTypes["tasks_stddev_pop_fields"],
+> = {
+  customer_id: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_stddev_samp_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_stddev_samp_fields"] = ResolversParentTypes["tasks_stddev_samp_fields"],
+> = {
+  customer_id: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_sum_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_sum_fields"] = ResolversParentTypes["tasks_sum_fields"],
+> = {
+  customer_id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_var_pop_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_var_pop_fields"] = ResolversParentTypes["tasks_var_pop_fields"],
+> = {
+  customer_id: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_var_samp_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_var_samp_fields"] = ResolversParentTypes["tasks_var_samp_fields"],
+> = {
+  customer_id: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type tasks_variance_fieldsResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["tasks_variance_fields"] = ResolversParentTypes["tasks_variance_fields"],
+> = {
+  customer_id: Resolver<
+    Maybe<ResolversTypes["Float"]>,
+    ParentType,
+    ContextType
+  >;
+  id: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface timestampScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["timestamp"], any> {
+  name: "timestamp";
+}
+
 export type Resolvers<ContextType = any> = {
   Customer: CustomerResolvers<ContextType>;
-  Order: OrderResolvers<ContextType>;
+  DateTime: GraphQLScalarType;
+  Task: TaskResolvers<ContextType>;
   _Service: _ServiceResolvers<ContextType>;
   customers: customersResolvers<ContextType>;
   customers_aggregate: customers_aggregateResolvers<ContextType>;
@@ -2336,23 +2150,23 @@ export type Resolvers<ContextType = any> = {
   customers_var_samp_fields: customers_var_samp_fieldsResolvers<ContextType>;
   customers_variance_fields: customers_variance_fieldsResolvers<ContextType>;
   mutation_root: mutation_rootResolvers<ContextType>;
-  orders: ordersResolvers<ContextType>;
-  orders_aggregate: orders_aggregateResolvers<ContextType>;
-  orders_aggregate_fields: orders_aggregate_fieldsResolvers<ContextType>;
-  orders_avg_fields: orders_avg_fieldsResolvers<ContextType>;
-  orders_max_fields: orders_max_fieldsResolvers<ContextType>;
-  orders_min_fields: orders_min_fieldsResolvers<ContextType>;
-  orders_mutation_response: orders_mutation_responseResolvers<ContextType>;
-  orders_stddev_fields: orders_stddev_fieldsResolvers<ContextType>;
-  orders_stddev_pop_fields: orders_stddev_pop_fieldsResolvers<ContextType>;
-  orders_stddev_samp_fields: orders_stddev_samp_fieldsResolvers<ContextType>;
-  orders_sum_fields: orders_sum_fieldsResolvers<ContextType>;
-  orders_var_pop_fields: orders_var_pop_fieldsResolvers<ContextType>;
-  orders_var_samp_fields: orders_var_samp_fieldsResolvers<ContextType>;
-  orders_variance_fields: orders_variance_fieldsResolvers<ContextType>;
   query_root: query_rootResolvers<ContextType>;
-  smallint: GraphQLScalarType;
   subscription_root: subscription_rootResolvers<ContextType>;
+  tasks: tasksResolvers<ContextType>;
+  tasks_aggregate: tasks_aggregateResolvers<ContextType>;
+  tasks_aggregate_fields: tasks_aggregate_fieldsResolvers<ContextType>;
+  tasks_avg_fields: tasks_avg_fieldsResolvers<ContextType>;
+  tasks_max_fields: tasks_max_fieldsResolvers<ContextType>;
+  tasks_min_fields: tasks_min_fieldsResolvers<ContextType>;
+  tasks_mutation_response: tasks_mutation_responseResolvers<ContextType>;
+  tasks_stddev_fields: tasks_stddev_fieldsResolvers<ContextType>;
+  tasks_stddev_pop_fields: tasks_stddev_pop_fieldsResolvers<ContextType>;
+  tasks_stddev_samp_fields: tasks_stddev_samp_fieldsResolvers<ContextType>;
+  tasks_sum_fields: tasks_sum_fieldsResolvers<ContextType>;
+  tasks_var_pop_fields: tasks_var_pop_fieldsResolvers<ContextType>;
+  tasks_var_samp_fields: tasks_var_samp_fieldsResolvers<ContextType>;
+  tasks_variance_fields: tasks_variance_fieldsResolvers<ContextType>;
+  timestamp: GraphQLScalarType;
 };
 
 export type DirectiveResolvers<ContextType = any> = {

@@ -1,0 +1,17 @@
+query GetTaskById($id: Float!) {
+  getTask(taskId: $id) {
+    name
+    customer {
+      username
+    }
+  }
+}
+
+query GetTasks {
+  tasks {
+    name
+    customer {
+      username
+    }
+  }
+}
