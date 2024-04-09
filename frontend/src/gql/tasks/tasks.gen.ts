@@ -27,6 +27,20 @@ export type GetTasksQuery = {
   }>;
 };
 
+export type InsertTaskMutationVariables = Types.Exact<{
+  newTask: Types.tasks_insert_input;
+}>;
+
+export type InsertTaskMutation = {
+  __typename?: "mutation_root";
+  insert_tasks_one: {
+    __typename?: "tasks";
+    id: number;
+    name: string;
+    customer: { __typename?: "customers"; username: string } | null;
+  } | null;
+};
+
 export const GetTaskByIdDocument = gql`
   query GetTaskById($id: Float!) {
     getTask(taskId: $id) {
@@ -174,4 +188,58 @@ export type GetTasksSuspenseQueryHookResult = ReturnType<
 export type GetTasksQueryResult = Apollo.QueryResult<
   GetTasksQuery,
   GetTasksQueryVariables
+>;
+export const InsertTaskDocument = gql`
+  mutation InsertTask($newTask: tasks_insert_input!) {
+    insert_tasks_one(object: $newTask) {
+      id
+      name
+      customer {
+        username
+      }
+    }
+  }
+`;
+export type InsertTaskMutationFn = Apollo.MutationFunction<
+  InsertTaskMutation,
+  InsertTaskMutationVariables
+>;
+
+/**
+ * __useInsertTaskMutation__
+ *
+ * To run a mutation, you first call `useInsertTaskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertTaskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertTaskMutation, { data, loading, error }] = useInsertTaskMutation({
+ *   variables: {
+ *      newTask: // value for 'newTask'
+ *   },
+ * });
+ */
+export function useInsertTaskMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    InsertTaskMutation,
+    InsertTaskMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<InsertTaskMutation, InsertTaskMutationVariables>(
+    InsertTaskDocument,
+    options,
+  );
+}
+export type InsertTaskMutationHookResult = ReturnType<
+  typeof useInsertTaskMutation
+>;
+export type InsertTaskMutationResult =
+  Apollo.MutationResult<InsertTaskMutation>;
+export type InsertTaskMutationOptions = Apollo.BaseMutationOptions<
+  InsertTaskMutation,
+  InsertTaskMutationVariables
 >;

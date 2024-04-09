@@ -15,3 +15,13 @@ query GetTasks {
     }
   }
 }
+
+mutation InsertTask($newTask: tasks_insert_input!) {
+  insert_tasks_one(object: $newTask) {
+    id
+    name
+    customer {
+      username
+    }
+  }
+}
