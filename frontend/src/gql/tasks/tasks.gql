@@ -16,8 +16,8 @@ query GetTasks {
   }
 }
 
-mutation InsertTask($newTask: tasks_insert_input!) {
-  insert_tasks_one(object: $newTask) {
+mutation InsertTask($name: String!, $customer_id: Int!) {
+  insert_tasks_one(object: { name: $name, customer_id: $customer_id }) {
     id
     name
     customer {

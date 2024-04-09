@@ -28,7 +28,8 @@ export type GetTasksQuery = {
 };
 
 export type InsertTaskMutationVariables = Types.Exact<{
-  newTask: Types.tasks_insert_input;
+  name: Types.Scalars["String"]["input"];
+  customer_id: Types.Scalars["Int"]["input"];
 }>;
 
 export type InsertTaskMutation = {
@@ -190,8 +191,8 @@ export type GetTasksQueryResult = Apollo.QueryResult<
   GetTasksQueryVariables
 >;
 export const InsertTaskDocument = gql`
-  mutation InsertTask($newTask: tasks_insert_input!) {
-    insert_tasks_one(object: $newTask) {
+  mutation InsertTask($name: String!, $customer_id: Int!) {
+    insert_tasks_one(object: { name: $name, customer_id: $customer_id }) {
       id
       name
       customer {
@@ -218,7 +219,8 @@ export type InsertTaskMutationFn = Apollo.MutationFunction<
  * @example
  * const [insertTaskMutation, { data, loading, error }] = useInsertTaskMutation({
  *   variables: {
- *      newTask: // value for 'newTask'
+ *      name: // value for 'name'
+ *      customer_id: // value for 'customer_id'
  *   },
  * });
  */
