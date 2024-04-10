@@ -8,7 +8,7 @@ const Tasks = () => {
     <main>
       <AppProvider>
         <TaskComponent />
-        <div>hoge</div>
+        <div>追加</div>
       </AppProvider>
     </main>
   );

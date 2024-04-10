@@ -25,3 +25,13 @@ mutation InsertTask($name: String!, $customer_id: Int!) {
     }
   }
 }
+
+mutation UpdateTask($id: Int!, $name: String!) {
+  update_tasks_by_pk(
+    pk_columns: { id: $id }
+    _set: { name: $name, updated_at: now }
+  ) {
+    id
+    name
+  }
+}

@@ -42,6 +42,16 @@ export type InsertTaskMutation = {
   } | null;
 };
 
+export type UpdateTaskMutationVariables = Types.Exact<{
+  id: Types.Scalars["Int"]["input"];
+  name: Types.Scalars["String"]["input"];
+}>;
+
+export type UpdateTaskMutation = {
+  __typename?: "mutation_root";
+  update_tasks_by_pk: { __typename?: "tasks"; id: number; name: string } | null;
+};
+
 export const GetTaskByIdDocument = gql`
   query GetTaskById($id: Float!) {
     getTask(taskId: $id) {
@@ -244,4 +254,59 @@ export type InsertTaskMutationResult =
 export type InsertTaskMutationOptions = Apollo.BaseMutationOptions<
   InsertTaskMutation,
   InsertTaskMutationVariables
+>;
+export const UpdateTaskDocument = gql`
+  mutation UpdateTask($id: Int!, $name: String!) {
+    update_tasks_by_pk(
+      pk_columns: { id: $id }
+      _set: { name: $name, updated_at: now }
+    ) {
+      id
+      name
+    }
+  }
+`;
+export type UpdateTaskMutationFn = Apollo.MutationFunction<
+  UpdateTaskMutation,
+  UpdateTaskMutationVariables
+>;
+
+/**
+ * __useUpdateTaskMutation__
+ *
+ * To run a mutation, you first call `useUpdateTaskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTaskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTaskMutation, { data, loading, error }] = useUpdateTaskMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useUpdateTaskMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateTaskMutation,
+    UpdateTaskMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateTaskMutation, UpdateTaskMutationVariables>(
+    UpdateTaskDocument,
+    options,
+  );
+}
+export type UpdateTaskMutationHookResult = ReturnType<
+  typeof useUpdateTaskMutation
+>;
+export type UpdateTaskMutationResult =
+  Apollo.MutationResult<UpdateTaskMutation>;
+export type UpdateTaskMutationOptions = Apollo.BaseMutationOptions<
+  UpdateTaskMutation,
+  UpdateTaskMutationVariables
 >;

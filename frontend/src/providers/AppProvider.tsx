@@ -1,3 +1,5 @@
+"use client";
+
 import { client } from "../utils/apolloClient";
 import { ApolloProvider } from "@apollo/client";
 import { FC, ReactNode } from "react";

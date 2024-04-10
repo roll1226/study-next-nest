@@ -1,3 +1,5 @@
+"use client";
+
 import { useGetCustomersQuery } from "@/gql/customers/customers.gen";
 import { useEffect } from "react";
 
