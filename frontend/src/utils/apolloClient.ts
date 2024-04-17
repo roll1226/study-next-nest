@@ -40,8 +40,10 @@ const wsLink = new WebSocketLink({
 });
 
 // 開発環境のみ読み出されるようにする
-loadDevMessages();
-loadErrorMessages();
+if (process.env.NODE_ENV !== "production") {
+  loadDevMessages();
+  loadErrorMessages();
+}
 
 const link = ApolloLink.from([errorLink]).split(
   ({ query }) => {

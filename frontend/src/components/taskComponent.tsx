@@ -12,7 +12,7 @@ export const TaskComponent = () => {
   const addTask = () => {
     InsertTaskMutation({
       variables: {
-        name: "test12356",
+        name: "テスト１",
         customer_id: 1,
       },
     });
