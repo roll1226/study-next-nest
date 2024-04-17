@@ -5,12 +5,10 @@ import { AppProvider } from "@/providers/AppProvider";
 
 const UpdateTasks = () => {
   return (
-    <main>
-      <AppProvider>
-        <UpdateTaskComponent />
-        <p>変更</p>
-      </AppProvider>
-    </main>
+    <>
+      <UpdateTaskComponent />
+      <p>変更</p>
+    </>
   );
 };
 

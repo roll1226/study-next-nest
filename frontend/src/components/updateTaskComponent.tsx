@@ -6,8 +6,8 @@ export const UpdateTaskComponent = () => {
   const updateTask = () => {
     updateTaskMutation({
       variables: {
-        id: 2,
-        name: "テストUpdate",
+        id: 7,
+        name: "テストUpdate7",
       },
     });
   };
