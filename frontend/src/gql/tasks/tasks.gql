@@ -16,6 +16,12 @@ query GetTasks {
   }
 }
 
+subscription GetTasksSubscription {
+  tasks {
+    name
+  }
+}
+
 mutation InsertTask($name: String!, $customer_id: Int!) {
   insert_tasks_one(object: { name: $name, customer_id: $customer_id }) {
     id

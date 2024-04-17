@@ -27,6 +27,15 @@ export type GetTasksQuery = {
   }>;
 };
 
+export type GetTasksSubscriptionSubscriptionVariables = Types.Exact<{
+  [key: string]: never;
+}>;
+
+export type GetTasksSubscriptionSubscription = {
+  __typename?: "subscription_root";
+  tasks: Array<{ __typename?: "tasks"; name: string }>;
+};
+
 export type InsertTaskMutationVariables = Types.Exact<{
   name: Types.Scalars["String"]["input"];
   customer_id: Types.Scalars["Int"]["input"];
@@ -200,6 +209,46 @@ export type GetTasksQueryResult = Apollo.QueryResult<
   GetTasksQuery,
   GetTasksQueryVariables
 >;
+export const GetTasksSubscriptionDocument = gql`
+  subscription GetTasksSubscription {
+    tasks {
+      name
+    }
+  }
+`;
+
+/**
+ * __useGetTasksSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useGetTasksSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetTasksSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTasksSubscriptionSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTasksSubscriptionSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    GetTasksSubscriptionSubscription,
+    GetTasksSubscriptionSubscriptionVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    GetTasksSubscriptionSubscription,
+    GetTasksSubscriptionSubscriptionVariables
+  >(GetTasksSubscriptionDocument, options);
+}
+export type GetTasksSubscriptionSubscriptionHookResult = ReturnType<
+  typeof useGetTasksSubscriptionSubscription
+>;
+export type GetTasksSubscriptionSubscriptionResult =
+  Apollo.SubscriptionResult<GetTasksSubscriptionSubscription>;
 export const InsertTaskDocument = gql`
   mutation InsertTask($name: String!, $customer_id: Int!) {
     insert_tasks_one(object: { name: $name, customer_id: $customer_id }) {
