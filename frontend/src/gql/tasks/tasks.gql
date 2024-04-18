@@ -18,6 +18,7 @@ query GetTasks {
 
 subscription GetTasksSubscription {
   tasks {
+    id
     name
   }
 }

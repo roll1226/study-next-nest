@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetCustomersQuery } from "@/gql/customers/customers.gen";
-import Logger from "@/utils/debugger/logger";
+import Logger from "@/utils/debugger/Logger";
 import { useEffect } from "react";
 
 export const UserComponent = () => {

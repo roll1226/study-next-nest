@@ -1,37 +1,28 @@
-import {
-  useGetTasksSubscriptionSubscription,
-  useInsertTaskMutation,
-} from "@/gql/tasks/tasks.gen";
-import Logger from "@/utils/debugger/logger";
-import { useEffect } from "react";
+import { useInsertTaskMutation } from "@/gql/tasks/tasks.gen";
+import { useTaskSubscription } from "@/hooks/subscription/useTaskSubscription";
 
 export const TaskComponent = () => {
   const [InsertTaskMutation] = useInsertTaskMutation();
 
-  const { data, loading } = useGetTasksSubscriptionSubscription();
+  const { tasks, taskError, taskLoading } = useTaskSubscription();
 
   const addTask = () => {
     InsertTaskMutation({
       variables: {
-        name: "テスト１",
+        name: "テスト5",
         customer_id: 1,
       },
     });
   };
-
-  useEffect(() => {
-    if (loading || !data) return;
-    Logger.debug(data);
-  }, [data, loading]);
 
   return (
     <>
       <button type="button" onClick={addTask}>
         追加
       </button>
-      {/* {data.forEach((task) => {
-        return <></>;
-      })} */}
+      {tasks?.map((task) => {
+        return <p key={task.id}>{task.name}</p>;
+      })}
     </>
   );
 };

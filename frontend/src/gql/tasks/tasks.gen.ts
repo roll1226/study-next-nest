@@ -33,7 +33,7 @@ export type GetTasksSubscriptionSubscriptionVariables = Types.Exact<{
 
 export type GetTasksSubscriptionSubscription = {
   __typename?: "subscription_root";
-  tasks: Array<{ __typename?: "tasks"; name: string }>;
+  tasks: Array<{ __typename?: "tasks"; id: number; name: string }>;
 };
 
 export type InsertTaskMutationVariables = Types.Exact<{
@@ -212,6 +212,7 @@ export type GetTasksQueryResult = Apollo.QueryResult<
 export const GetTasksSubscriptionDocument = gql`
   subscription GetTasksSubscription {
     tasks {
+      id
       name
     }
   }
