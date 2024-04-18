@@ -8,6 +8,7 @@ import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { env } from "@/env/dotEnv";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;
@@ -21,26 +22,26 @@ const errorLink = onError((errors) => {
 });
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ENDPOINT,
+  uri: env.getHasuraGraphQLAdminSecret(),
   headers: {
-    "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ADMIN_SECRET}`,
+    "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
   },
 });
 
 const wsLink = new WebSocketLink({
-  uri: `${process.env.NEXT_PUBLIC_HASURA_GRAPHQL_WEBSOCKET_ENDPOINT}`,
+  uri: `${env.getHasuraGraphQLWebsocketEndpoint()}`,
   options: {
     reconnect: true,
     connectionParams: {
       headers: {
-        "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ADMIN_SECRET}`,
+        "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
       },
     },
   },
 });
 
 // 開発環境のみ読み出されるようにする
-if (process.env.NODE_ENV !== "production") {
+if (env.getNodeEnv() === "development") {
   loadDevMessages();
   loadErrorMessages();
 }
