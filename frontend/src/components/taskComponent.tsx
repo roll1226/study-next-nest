@@ -20,9 +20,13 @@ export const TaskComponent = () => {
       <button type="button" onClick={addTask}>
         追加
       </button>
-      {tasks?.map((task) => {
-        return <p key={task.id}>{task.name}</p>;
-      })}
+      {taskLoading ? (
+        <p>Loading</p>
+      ) : (
+        tasks?.map((task) => {
+          return <p key={task.id}>{task.name}</p>;
+        })
+      )}
     </>
   );
 };
