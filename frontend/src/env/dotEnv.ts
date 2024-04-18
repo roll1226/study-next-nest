@@ -1,6 +1,6 @@
 import { DotEnvInterface } from "@/interface/DotEnvInterface";
 
-export default class DotEnv implements DotEnvInterface {
+class DotEnv implements DotEnvInterface {
   getHasuraGraphQLAdminSecret = () => {
     return process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ADMIN_SECRET;
   };
