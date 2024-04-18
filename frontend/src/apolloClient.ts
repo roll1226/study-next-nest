@@ -6,19 +6,20 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
-import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { env } from "@/env/dotEnv";
+import HasuraLogger from "./utils/debugger/hasuraLogger";
+import Logger from "./utils/debugger/logger";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(
+      Logger.debug(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       )
     );
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  if (networkError) Logger.debug(`[Network error]: ${networkError}`);
 });
 
 const httpLink = createHttpLink({
@@ -41,10 +42,7 @@ const wsLink = new WebSocketLink({
 });
 
 // 開発環境のみ読み出されるようにする
-if (env.getNodeEnv() === "development") {
-  loadDevMessages();
-  loadErrorMessages();
-}
+HasuraLogger.Messages();
 
 const link = ApolloLink.from([errorLink]).split(
   ({ query }) => {

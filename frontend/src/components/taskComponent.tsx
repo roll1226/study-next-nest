@@ -2,6 +2,7 @@ import {
   useGetTasksSubscriptionSubscription,
   useInsertTaskMutation,
 } from "@/gql/tasks/tasks.gen";
+import Logger from "@/utils/debugger/logger";
 import { useEffect } from "react";
 
 export const TaskComponent = () => {
@@ -20,7 +21,7 @@ export const TaskComponent = () => {
 
   useEffect(() => {
     if (loading || !data) return;
-    console.log(data);
+    Logger.debug(data);
   }, [data, loading]);
 
   return (
