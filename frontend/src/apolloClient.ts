@@ -8,8 +8,8 @@ import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { env } from "@/env/dotEnv";
-import HasuraLogger from "./utils/debugger/hasuraLogger";
-import Logger from "./utils/debugger/logger";
+import HasuraLogger from "@/utils/debugger/HasuraLogger";
+import Logger from "@/utils/debugger/Logger";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;
@@ -23,7 +23,7 @@ const errorLink = onError((errors) => {
 });
 
 const httpLink = createHttpLink({
-  uri: env.getHasuraGraphQLAdminSecret(),
+  uri: env.getHasuraGraphQLEndpoint(),
   headers: {
     "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
   },
