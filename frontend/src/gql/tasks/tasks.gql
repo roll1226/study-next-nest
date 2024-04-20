@@ -33,6 +33,12 @@ mutation InsertTask($name: String!, $customer_id: Int!) {
   }
 }
 
+mutation RemoveTask($task_id: Int!) {
+  delete_tasks(where: { id: { _eq: $task_id } }) {
+    affected_rows
+  }
+}
+
 mutation UpdateTask($id: Int!, $name: String!) {
   update_tasks_by_pk(
     pk_columns: { id: $id }

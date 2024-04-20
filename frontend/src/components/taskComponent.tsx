@@ -1,8 +1,12 @@
-import { useInsertTaskMutation } from "@/gql/tasks/tasks.gen";
+import {
+  useInsertTaskMutation,
+  useRemoveTaskMutation,
+} from "@/gql/tasks/tasks.gen";
 import { useTaskSubscription } from "@/hooks/subscription/useTaskSubscription";
 
 export const TaskComponent = () => {
   const [InsertTaskMutation] = useInsertTaskMutation();
+  const [RemoveTaskMutation] = useRemoveTaskMutation();
 
   const { tasks, taskError, taskLoading } = useTaskSubscription();
 
@@ -11,6 +15,14 @@ export const TaskComponent = () => {
       variables: {
         name: "テスト5",
         customer_id: 1,
+      },
+    });
+  };
+
+  const removeTask = ($taskId: number) => {
+    RemoveTaskMutation({
+      variables: {
+        task_id: $taskId,
       },
     });
   };
@@ -24,7 +36,14 @@ export const TaskComponent = () => {
         <p>Loading</p>
       ) : (
         tasks?.map((task) => {
-          return <p key={task.id}>{task.name}</p>;
+          return (
+            <p key={task.id}>
+              {task.name}
+              <button type="button" onClick={() => removeTask(task.id)}>
+                削除
+              </button>
+            </p>
+          );
         })
       )}
     </>

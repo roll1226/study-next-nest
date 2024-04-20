@@ -51,6 +51,18 @@ export type InsertTaskMutation = {
   } | null;
 };
 
+export type RemoveTaskMutationVariables = Types.Exact<{
+  task_id: Types.Scalars["Int"]["input"];
+}>;
+
+export type RemoveTaskMutation = {
+  __typename?: "mutation_root";
+  delete_tasks: {
+    __typename?: "tasks_mutation_response";
+    affected_rows: number;
+  } | null;
+};
+
 export type UpdateTaskMutationVariables = Types.Exact<{
   id: Types.Scalars["Int"]["input"];
   name: Types.Scalars["String"]["input"];
@@ -304,6 +316,56 @@ export type InsertTaskMutationResult =
 export type InsertTaskMutationOptions = Apollo.BaseMutationOptions<
   InsertTaskMutation,
   InsertTaskMutationVariables
+>;
+export const RemoveTaskDocument = gql`
+  mutation RemoveTask($task_id: Int!) {
+    delete_tasks(where: { id: { _eq: $task_id } }) {
+      affected_rows
+    }
+  }
+`;
+export type RemoveTaskMutationFn = Apollo.MutationFunction<
+  RemoveTaskMutation,
+  RemoveTaskMutationVariables
+>;
+
+/**
+ * __useRemoveTaskMutation__
+ *
+ * To run a mutation, you first call `useRemoveTaskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveTaskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeTaskMutation, { data, loading, error }] = useRemoveTaskMutation({
+ *   variables: {
+ *      task_id: // value for 'task_id'
+ *   },
+ * });
+ */
+export function useRemoveTaskMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveTaskMutation,
+    RemoveTaskMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<RemoveTaskMutation, RemoveTaskMutationVariables>(
+    RemoveTaskDocument,
+    options,
+  );
+}
+export type RemoveTaskMutationHookResult = ReturnType<
+  typeof useRemoveTaskMutation
+>;
+export type RemoveTaskMutationResult =
+  Apollo.MutationResult<RemoveTaskMutation>;
+export type RemoveTaskMutationOptions = Apollo.BaseMutationOptions<
+  RemoveTaskMutation,
+  RemoveTaskMutationVariables
 >;
 export const UpdateTaskDocument = gql`
   mutation UpdateTask($id: Int!, $name: String!) {
