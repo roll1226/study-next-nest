@@ -4,6 +4,7 @@
 
 type Customer {
   created_at: DateTime!
+  email: String!
   id: ID!
   tasks: [Task!]!
   updated_at: DateTime!

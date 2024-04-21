@@ -1,7 +1,7 @@
 # Try out GraphQL queries here
 query GetCustomerById($id: Float!) {
   getCustomer(customerId: $id) {
-    username
+    email
     tasks {
       name
     }
@@ -10,7 +10,7 @@ query GetCustomerById($id: Float!) {
 
 query GetCustomers {
   customers {
-    username
+    email
     tasks {
       name
     }

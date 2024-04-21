@@ -5,14 +5,14 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('customers')
 @ObjectType()
 export class Customer {
-  @PrimaryGeneratedColumn({
+  @PrimaryColumn({
     name: 'id',
     unsigned: true,
     type: 'int',
@@ -21,7 +21,11 @@ export class Customer {
   @Field(() => ID)
   readonly id: number;
 
-  @Column('text', { comment: 'ユーザーネーム' })
+  @Column('text', { comment: 'メールアドレス' })
+  @Field()
+  readonly email: string;
+
+  @Column('text', { comment: 'ユーザー名' })
   @Field()
   readonly username: string;
 

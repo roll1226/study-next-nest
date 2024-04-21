@@ -2,7 +2,7 @@ query GetTaskById($id: Float!) {
   getTask(taskId: $id) {
     name
     customer {
-      username
+      email
     }
   }
 }
@@ -11,7 +11,7 @@ query GetTasks {
   tasks {
     name
     customer {
-      username
+      email
     }
   }
 }
@@ -28,7 +28,7 @@ mutation InsertTask($name: String!, $customer_id: Int!) {
     id
     name
     customer {
-      username
+      email
     }
   }
 }

@@ -12,7 +12,7 @@ export type GetTaskByIdQuery = {
   getTask: {
     __typename?: "Task";
     name: string;
-    customer: { __typename?: "Customer"; username: string };
+    customer: { __typename?: "Customer"; email: string };
   };
 };
 
@@ -23,7 +23,7 @@ export type GetTasksQuery = {
   tasks: Array<{
     __typename?: "tasks";
     name: string;
-    customer: { __typename?: "customers"; username: string } | null;
+    customer: { __typename?: "customers"; email: string } | null;
   }>;
 };
 
@@ -47,7 +47,7 @@ export type InsertTaskMutation = {
     __typename?: "tasks";
     id: number;
     name: string;
-    customer: { __typename?: "customers"; username: string } | null;
+    customer: { __typename?: "customers"; email: string } | null;
   } | null;
 };
 
@@ -78,7 +78,7 @@ export const GetTaskByIdDocument = gql`
     getTask(taskId: $id) {
       name
       customer {
-        username
+        email
       }
     }
   }
@@ -156,7 +156,7 @@ export const GetTasksDocument = gql`
     tasks {
       name
       customer {
-        username
+        email
       }
     }
   }
@@ -268,7 +268,7 @@ export const InsertTaskDocument = gql`
       id
       name
       customer {
-        username
+        email
       }
     }
   }

@@ -11,7 +11,7 @@ export type GetCustomerByIdQuery = {
   __typename?: "query_root";
   getCustomer: {
     __typename?: "Customer";
-    username: string;
+    email: string;
     tasks: Array<{ __typename?: "Task"; name: string }>;
   };
 };
@@ -22,7 +22,7 @@ export type GetCustomersQuery = {
   __typename?: "query_root";
   customers: Array<{
     __typename?: "customers";
-    username: string;
+    email: string;
     tasks: Array<{ __typename?: "tasks"; name: string }>;
   }>;
 };
@@ -30,7 +30,7 @@ export type GetCustomersQuery = {
 export const GetCustomerByIdDocument = gql`
   query GetCustomerById($id: Float!) {
     getCustomer(customerId: $id) {
-      username
+      email
       tasks {
         name
       }
@@ -110,7 +110,7 @@ export type GetCustomerByIdQueryResult = Apollo.QueryResult<
 export const GetCustomersDocument = gql`
   query GetCustomers {
     customers {
-      username
+      email
       tasks {
         name
       }

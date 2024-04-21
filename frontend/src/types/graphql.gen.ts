@@ -40,6 +40,7 @@ export type Scalars = {
 export type Customer = {
   __typename?: "Customer";
   created_at: Scalars["DateTime"]["output"];
+  email: Scalars["String"]["output"];
   id: Scalars["ID"]["output"];
   tasks: Array<Task>;
   updated_at: Scalars["DateTime"]["output"];
@@ -119,6 +120,8 @@ export type customers = {
   __typename?: "customers";
   /** 作成日時 */
   created_at: Scalars["timestamp"]["output"];
+  /** メールアドレス */
+  email: Scalars["String"]["output"];
   /** Customer ID */
   id: Scalars["Int"]["output"];
   /** An array relationship */
@@ -127,7 +130,7 @@ export type customers = {
   tasks_aggregate: tasks_aggregate;
   /** 更新日時 */
   updated_at: Scalars["timestamp"]["output"];
-  /** ユーザーネーム */
+  /** ユーザー名 */
   username: Scalars["String"]["output"];
 };
 
@@ -191,6 +194,7 @@ export type customers_bool_exp = {
   _not: InputMaybe<customers_bool_exp>;
   _or: InputMaybe<Array<customers_bool_exp>>;
   created_at: InputMaybe<timestamp_comparison_exp>;
+  email: InputMaybe<String_comparison_exp>;
   id: InputMaybe<Int_comparison_exp>;
   tasks: InputMaybe<tasks_bool_exp>;
   tasks_aggregate: InputMaybe<tasks_aggregate_bool_exp>;
@@ -213,12 +217,14 @@ export type customers_inc_input = {
 export type customers_insert_input = {
   /** 作成日時 */
   created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** メールアドレス */
+  email: InputMaybe<Scalars["String"]["input"]>;
   /** Customer ID */
   id: InputMaybe<Scalars["Int"]["input"]>;
   tasks: InputMaybe<tasks_arr_rel_insert_input>;
   /** 更新日時 */
   updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
-  /** ユーザーネーム */
+  /** ユーザー名 */
   username: InputMaybe<Scalars["String"]["input"]>;
 };
 
@@ -227,11 +233,13 @@ export type customers_max_fields = {
   __typename?: "customers_max_fields";
   /** 作成日時 */
   created_at: Maybe<Scalars["timestamp"]["output"]>;
+  /** メールアドレス */
+  email: Maybe<Scalars["String"]["output"]>;
   /** Customer ID */
   id: Maybe<Scalars["Int"]["output"]>;
   /** 更新日時 */
   updated_at: Maybe<Scalars["timestamp"]["output"]>;
-  /** ユーザーネーム */
+  /** ユーザー名 */
   username: Maybe<Scalars["String"]["output"]>;
 };
 
@@ -240,11 +248,13 @@ export type customers_min_fields = {
   __typename?: "customers_min_fields";
   /** 作成日時 */
   created_at: Maybe<Scalars["timestamp"]["output"]>;
+  /** メールアドレス */
+  email: Maybe<Scalars["String"]["output"]>;
   /** Customer ID */
   id: Maybe<Scalars["Int"]["output"]>;
   /** 更新日時 */
   updated_at: Maybe<Scalars["timestamp"]["output"]>;
-  /** ユーザーネーム */
+  /** ユーザー名 */
   username: Maybe<Scalars["String"]["output"]>;
 };
 
@@ -274,6 +284,7 @@ export type customers_on_conflict = {
 /** Ordering options when selecting data from "customers". */
 export type customers_order_by = {
   created_at: InputMaybe<order_by>;
+  email: InputMaybe<order_by>;
   id: InputMaybe<order_by>;
   tasks_aggregate: InputMaybe<tasks_aggregate_order_by>;
   updated_at: InputMaybe<order_by>;
@@ -291,6 +302,8 @@ export type customers_select_column =
   /** column name */
   | "created_at"
   /** column name */
+  | "email"
+  /** column name */
   | "id"
   /** column name */
   | "updated_at"
@@ -301,11 +314,13 @@ export type customers_select_column =
 export type customers_set_input = {
   /** 作成日時 */
   created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** メールアドレス */
+  email: InputMaybe<Scalars["String"]["input"]>;
   /** Customer ID */
   id: InputMaybe<Scalars["Int"]["input"]>;
   /** 更新日時 */
   updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
-  /** ユーザーネーム */
+  /** ユーザー名 */
   username: InputMaybe<Scalars["String"]["input"]>;
 };
 
@@ -342,11 +357,13 @@ export type customers_stream_cursor_input = {
 export type customers_stream_cursor_value_input = {
   /** 作成日時 */
   created_at: InputMaybe<Scalars["timestamp"]["input"]>;
+  /** メールアドレス */
+  email: InputMaybe<Scalars["String"]["input"]>;
   /** Customer ID */
   id: InputMaybe<Scalars["Int"]["input"]>;
   /** 更新日時 */
   updated_at: InputMaybe<Scalars["timestamp"]["input"]>;
-  /** ユーザーネーム */
+  /** ユーザー名 */
   username: InputMaybe<Scalars["String"]["input"]>;
 };
 
@@ -361,6 +378,8 @@ export type customers_sum_fields = {
 export type customers_update_column =
   /** column name */
   | "created_at"
+  /** column name */
+  | "email"
   /** column name */
   | "id"
   /** column name */
@@ -1394,6 +1413,7 @@ export type CustomerResolvers<
     ResolversParentTypes["Customer"] = ResolversParentTypes["Customer"],
 > = {
   created_at: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  email: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   id: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   tasks: Resolver<Array<ResolversTypes["Task"]>, ParentType, ContextType>;
   updated_at: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
@@ -1434,6 +1454,7 @@ export type customersResolvers<
     ResolversParentTypes["customers"] = ResolversParentTypes["customers"],
 > = {
   created_at: Resolver<ResolversTypes["timestamp"], ParentType, ContextType>;
+  email: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   id: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   tasks: Resolver<
     Array<ResolversTypes["tasks"]>,
@@ -1549,6 +1570,7 @@ export type customers_max_fieldsResolvers<
     ParentType,
     ContextType
   >;
+  email: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   updated_at: Resolver<
     Maybe<ResolversTypes["timestamp"]>,
@@ -1569,6 +1591,7 @@ export type customers_min_fieldsResolvers<
     ParentType,
     ContextType
   >;
+  email: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   id: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   updated_at: Resolver<
     Maybe<ResolversTypes["timestamp"]>,
