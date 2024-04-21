@@ -1,4 +1,4 @@
-type firebaseEnvType = {
+type firebaseConfigEnvType = {
   apiKey: string;
   authDomain: string;
   projectId: string;
@@ -12,6 +12,7 @@ export interface DotEnvInterface {
   getHasuraGraphQLAdminSecret: () => string;
   getHasuraGraphQLEndpoint: () => string;
   getHasuraGraphQLWebsocketEndpoint: () => string;
-  getFirebaseEnv: () => firebaseEnvType;
+  getFirebaseConfig: () => firebaseConfigEnvType;
+  getFirebaseEmulator: () => boolean;
   getNodeEnv: () => "development" | "production" | "test";
 }

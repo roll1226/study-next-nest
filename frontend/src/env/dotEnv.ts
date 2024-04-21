@@ -13,7 +13,7 @@ class DotEnv implements DotEnvInterface {
     return process.env.NEXT_PUBLIC_HASURA_GRAPHQL_WEBSOCKET_ENDPOINT;
   };
 
-  getFirebaseEnv = () => {
+  getFirebaseConfig = () => {
     return {
       apiKey: process.env.NEXT_PUBLIC_API_KEY,
       authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
@@ -23,6 +23,13 @@ class DotEnv implements DotEnvInterface {
       appId: process.env.NEXT_PUBLIC_APP_ID,
       measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
     };
+  };
+
+  getFirebaseEmulator = () => {
+    const nextPublicFirebaseEmulator =
+      process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR;
+    if (nextPublicFirebaseEmulator === undefined) return false;
+    return nextPublicFirebaseEmulator;
   };
 
   getNodeEnv = () => {
