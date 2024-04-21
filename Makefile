@@ -70,3 +70,8 @@ hasura-create-migrate:
 	hasura --project hasura migrate create init --sql-from-server
 hasura-migrate:
 	hasura --project hasura migrate apply --database-name nest_next
+build-functions:
+	cd functions && npm run build
+emulators:
+	@make build-functions
+	firebase emulators:start
