@@ -2,7 +2,7 @@ import {
   GetTasksSubscriptionSubscription,
   useGetTasksSubscriptionSubscription,
 } from "@/gql/tasks/tasks.gen";
-import Logger from "@/utils/debugger/Logger";
+import { Logger } from "@/utils/debugger/Logger";
 import { ApolloError } from "@apollo/client";
 import { useEffect, useState } from "react";
 

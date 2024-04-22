@@ -8,8 +8,8 @@ import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { env } from "@/env/dotEnv";
-import HasuraLogger from "@/utils/debugger/HasuraLogger";
-import Logger from "@/utils/debugger/Logger";
+import { Logger } from "./utils/debugger/Logger";
+import { HasuraLogger } from "./utils/debugger/HasuraLogger";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;
