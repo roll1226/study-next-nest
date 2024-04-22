@@ -19,7 +19,7 @@ const firebaseAuth = getAuth(app);
 const firebaseFunction = getFunctions(app);
 const firebaseFirestore = getFirestore(app);
 const firebaseStorage = getStorage(app);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 
 if (isEmulator()) {
   connectAuthEmulator(firebaseAuth, "http://localhost:9099");
@@ -33,5 +33,5 @@ export {
   firebaseFunction,
   firebaseFirestore,
   firebaseStorage,
-  analytics,
+  // analytics,
 };
