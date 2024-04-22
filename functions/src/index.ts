@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import axios from "axios";
+// import axios from "axios";
 
 admin.initializeApp();
 
@@ -74,7 +74,7 @@ admin.initializeApp();
 //     return admin.auth().setCustomUserClaims(user.uid, customClaims);
 //   });
 
-admin.initializeApp(functions.config().firebase);
+// admin.initializeApp(functions.config().firebase);
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate((user) => {
@@ -91,7 +91,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
     .setCustomUserClaims(user.uid, customClaims)
     .then(() => {
       admin.firestore().collection("user_meta").doc(user.uid).create({
-        refreshTime: admin.firestore.FieldValue.serverTimestamp(),
+        refreshTime: Date.now(),
       });
     })
     .catch((error) => {
