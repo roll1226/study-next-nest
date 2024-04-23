@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import {Timestamp} from "firebase-admin/firestore";
 // import axios from "axios";
 
 admin.initializeApp();
@@ -91,7 +92,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
     .setCustomUserClaims(user.uid, customClaims)
     .then(() => {
       admin.firestore().collection("user_meta").doc(user.uid).create({
-        refreshTime: Date.now(),
+        refreshTime: Timestamp.now(),
       });
     })
     .catch((error) => {
