@@ -1,4 +1,5 @@
 import { FIREBASE_ERROR_TYPE } from "@/consts/firebaseError";
+import { LocalStorages } from "@/utils/LocalStorages";
 import { Logger } from "@/utils/debugger/Logger";
 import { FirebaseAuth } from "@/utils/lib/firebase/FirebaseAuth";
 
@@ -8,6 +9,9 @@ export const useTrySignUp: UseTrySignUp = ({ email, password }) => {
   const trySignUp = () => {
     FirebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(async (result) => {
+        const authToken = await result.user.getIdToken(true);
+        LocalStorages.setAuthToken(authToken);
+        Logger.debug(authToken);
         Logger.debug("add User In Firebase Auth");
       })
       .catch((err) => {

@@ -10,6 +10,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { env } from "@/env/dotEnv";
 import { Logger } from "./utils/debugger/Logger";
 import { HasuraLogger } from "./utils/debugger/HasuraLogger";
+import { LocalStorages } from "./utils/LocalStorages";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;
@@ -25,7 +26,8 @@ const errorLink = onError((errors) => {
 const httpLink = createHttpLink({
   uri: env.getHasuraGraphQLEndpoint(),
   headers: {
-    "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
+    // "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
+    Authorization: `Bearer ${LocalStorages.getAuthToken()}`,
   },
 });
 
