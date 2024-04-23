@@ -3,7 +3,7 @@ import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 
 export const HasuraLogger = {
   Messages: () => {
-    if (env.getNodeEnv() === "development") {
+    if (env.isDevelopment()) {
       loadDevMessages();
       loadErrorMessages();
     }

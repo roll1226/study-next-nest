@@ -11,6 +11,7 @@ import { env } from "@/env/dotEnv";
 import { Logger } from "./utils/debugger/Logger";
 import { HasuraLogger } from "./utils/debugger/HasuraLogger";
 import { LocalStorages } from "./utils/LocalStorages";
+import { Jwt } from "./utils/lib/jwt/Jwt";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;
@@ -23,12 +24,21 @@ const errorLink = onError((errors) => {
   if (networkError) Logger.debug(`[Network error]: ${networkError}`);
 });
 
+const authToken = LocalStorages.getAuthToken();
+Logger.debug(Jwt.getEmulatedSignedToken(authToken as string));
+const apolloHeader: Record<string, string> = authToken
+  ? {
+      Authorization: `Bearer ${
+        env.isDevelopment() ? Jwt.getEmulatedSignedToken(authToken) : authToken
+      }`,
+    }
+  : {
+      "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
+    };
+
 const httpLink = createHttpLink({
   uri: env.getHasuraGraphQLEndpoint(),
-  headers: {
-    // "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
-    Authorization: `Bearer ${LocalStorages.getAuthToken()}`,
-  },
+  headers: apolloHeader,
 });
 
 const wsLink = new WebSocketLink({
@@ -36,9 +46,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      headers: {
-        "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
-      },
+      headers: apolloHeader,
     },
   },
 });

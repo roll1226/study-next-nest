@@ -35,6 +35,10 @@ class DotEnv implements DotEnvInterface {
   getNodeEnv = () => {
     return process.env.NODE_ENV;
   };
+
+  isDevelopment = () => {
+    return this.getNodeEnv() === "development";
+  };
 }
 
 export const env = new DotEnv();

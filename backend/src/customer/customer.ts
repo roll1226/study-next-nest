@@ -15,7 +15,7 @@ export class Customer {
   @PrimaryColumn({
     name: 'id',
     unsigned: true,
-    type: 'int',
+    type: 'text',
     comment: 'Customer ID',
   })
   @Field(() => ID)

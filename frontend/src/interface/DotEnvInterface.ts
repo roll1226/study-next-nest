@@ -15,4 +15,5 @@ export interface DotEnvInterface {
   getFirebaseConfig: () => firebaseConfigEnvType;
   getFirebaseEmulator: () => boolean;
   getNodeEnv: () => "development" | "production" | "test";
+  isDevelopment: () => boolean;
 }
