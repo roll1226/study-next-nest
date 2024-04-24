@@ -22,40 +22,40 @@ codegen:
 	cd frontend && npm run codegen
 postgres:
 	docker compose exec postgres bash
-create-model:
-	cd backend && nest g mo ${name}
-create-resolver:
-	cd backend && nest g r ${name}
-create-service:
-	cd backend && nest g s ${name}
-create-class:
-	cd backend && nest g cl ${name}
-create-config:
-	cd backend && nest g config ${name}
-create-controller:
-	cd backend && nest g co ${name}
-create-decorator:
-	cd backend && nest g d ${name}
-create-filter:
-	cd backend && nest g f ${name}
-create-gateway:
-	cd backend && nest g ga ${name}
-create-guard:
-	cd backend && nest g gu ${name}
-create-interceptor:
-	cd backend && nest g in ${name}
-create-interface:
-	cd backend && nest g interface ${name}
-create-middleware:
-	cd backend && nest g mi ${name}
-create-pipe:
-	cd backend && nest g pi ${name}
-create-provider:
-	cd backend && nest g pr ${name}
-create-library:
-	cd backend && nest g lib ${name}
-create-resource:
-	cd backend && nest g res ${name}
+create.model-%:
+	cd backend && nest g mo ${@:create.model-%=%}
+create.resolver-%:
+	cd backend && nest g r ${@:create.resolver-%=%}
+create.service-%:
+	cd backend && nest g s ${@:create.service-%=%}
+create.class-%:
+	cd backend && nest g cl ${@:create.class-%=%}
+create.config-%:
+	cd backend && nest g config ${@:create.config-%=%}
+create.controller-%:
+	cd backend && nest g co ${@:create.controller-%=%}
+create.decorator-%:
+	cd backend && nest g d ${@:create.decorator-%=%}
+create.filter-%:
+	cd backend && nest g f ${@:create.filter-%=%}
+create.gateway-%:
+	cd backend && nest g ga ${@:create.gateway-%=%}
+create.guard-%:
+	cd backend && nest g gu ${@:create.guard-%=%}
+create.interceptor-%:
+	cd backend && nest g in ${@:create.interceptor-%=%}
+create.interface-%:
+	cd backend && nest g interface ${@:create.interface-%=%}
+create.middleware-%:
+	cd backend && nest g mi ${@:create.middleware-%=%}
+create.pipe-%:
+	cd backend && nest g pi ${@:create.pipe-%=%}
+create.provider-%:
+	cd backend && nest g pr ${@:create.provider-%=%}
+create.library-%:
+	cd backend && nest g lib ${@:create.library-%=%}
+create.resource-%:
+	cd backend && nest g res ${@:create.resource-%=%}
 hasura-console:
 	hasura --project hasura console
 hasura-metadata-export:
