@@ -56,24 +56,24 @@ create.library-%:
 	cd backend && nest g lib ${@:create.library-%=%}
 create.resource-%:
 	cd backend && nest g res ${@:create.resource-%=%}
-hasura-console:
+hasura.console:
 	hasura --project hasura console
-hasura-metadata-export:
+hasura.metadata-export:
 	hasura --project hasura metadata export
-hasura-metadata-apply:
+hasura.metadata-apply:
 	hasura --project hasura metadata apply
-hasura-metadata-reload:
+hasura.metadata-reload:
 	hasura --project hasura metadata reload
-hasura-seeds:
+hasura.seeds:
 	hasura --project hasura seeds apply
-hasura-create-seed:
-	hasura --project hasura create ${name}
-hasura-create-migrate:
+hasura.create-seed-%:
+	hasura --project hasura seed create ${@:hasura.create-seed-%=%}Seed --from-table ${@:hasura.create-seed-%=%}
+hasura.create-migrate:
 	hasura --project hasura migrate create init --sql-from-server
-hasura-migrate:
-	hasura --project hasura migrate apply --database-name nest_next
-build-functions:
+hasura.migrate-%:
+	hasura --project hasura migrate apply --database-name ${@:hasura.migrate-%:%}
+build.functions:
 	cd functions && npm run build
 emulators:
-	@make build-functions
+	@make build.functions
 	firebase emulators:start
