@@ -1,6 +1,8 @@
 DIRECTORIES = frontend backend
 install: $(addprefix install-, $(DIRECTORIES))
 
+init:
+	sh commands/init.sh
 install-%:
 	cd ${@:install-%=%} && npm i
 up:
