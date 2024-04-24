@@ -25,6 +25,10 @@ class DotEnv implements DotEnvInterface {
     };
   };
 
+  getHasuraTokenKey = () => {
+    return process.env.NEXT_PUBLIC_HASURA_TOKEN_KEY;
+  };
+
   getFirebaseEmulator = () => {
     const nextPublicFirebaseEmulator =
       process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR;

@@ -13,6 +13,7 @@ export interface DotEnvInterface {
   getHasuraGraphQLEndpoint: () => string;
   getHasuraGraphQLWebsocketEndpoint: () => string;
   getFirebaseConfig: () => firebaseConfigEnvType;
+  getHasuraTokenKey: () => string;
   getFirebaseEmulator: () => boolean;
   getNodeEnv: () => "development" | "production" | "test";
   isDevelopment: () => boolean;

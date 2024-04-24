@@ -1,15 +1,27 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { Timestamp } from "firebase-admin/firestore";
+import {Timestamp} from "firebase-admin/firestore";
 import axios from "axios";
 
 admin.initializeApp();
 
+const query = `
+  mutation InsertCustomer($id: String!, $email: String!, $username: String!) {
+    insert_customers(objects: {id: $id, email: $email, username: $username}) {
+      returning {
+        id
+        email,
+        created_at
+      }
+    }
+  }
+`;
+
 exports.processSignUp = functions.auth.user().onCreate((user) => {
   const customClaims = {
     "https://hasura.io/jwt/claims": {
-      "x-hasura-default-role": "customer",
-      "x-hasura-allowed-roles": ["customer"],
+      "x-hasura-default-role": "anonymous",
+      "x-hasura-allowed-roles": ["customer", "anonymous"],
       "x-hasura-user-id": user.uid,
     },
   };
@@ -18,17 +30,6 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
     .auth()
     .setCustomUserClaims(user.uid, customClaims)
     .then(() => {
-      const query = `
-        mutation InsertCustomer($id: String!, $email: String!, $username: String!) {
-          insert_customers(objects: {id: $id, email: $email, username: $username}) {
-            returning {
-              id
-              email,
-              created_at
-            }
-          }
-        }
-      `;
       const variables = {
         id: user.uid,
         email: user.email,
@@ -46,7 +47,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
           {
             headers: {
               "Content-Type": "application/json",
-              "x-hasura-admin-secret": "roll1226",
+              "x-hasura-admin-secret": "hasura_graphql_admin_secret_roll1226",
             },
           }
         )

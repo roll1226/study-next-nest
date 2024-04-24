@@ -14,6 +14,7 @@ declare module "process" {
         NEXT_PUBLIC_APP_ID: string;
         NEXT_PUBLIC_MEASUREMENT_ID: string;
         NEXT_PUBLIC_USE_FIREBASE_EMULATOR: boolean | undefined;
+        NEXT_PUBLIC_HASURA_TOKEN_KEY: string;
       }
     }
   }

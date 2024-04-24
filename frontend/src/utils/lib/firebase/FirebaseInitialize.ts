@@ -5,16 +5,16 @@ import { getAnalytics } from "firebase/analytics";
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
+import { Logger } from "@/utils/debugger/Logger";
 
 const isEmulator = () => {
   const useEmulator = env.getFirebaseEmulator();
   return !!(useEmulator && useEmulator);
 };
 
-const app = getApps().length
-  ? getApp()
-  : initializeApp(env.getFirebaseConfig());
+const app = initializeApp(env.getFirebaseConfig());
 
+Logger.debug(env.getFirebaseConfig());
 const firebaseAuth = getAuth(app);
 const firebaseFunction = getFunctions(app);
 const firebaseFirestore = getFirestore(app);
