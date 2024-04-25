@@ -1,9 +1,11 @@
-import { env } from "@/env/dotEnv";
-import sign from "jwt-encode";
-import { decodeToken } from "react-jwt";
+import { Logger } from "@/utils/debugger/Logger";
+import * as jwt from "jsonwebtoken";
 
 export const Jwt = {
   getEmulatedSignedToken: (token: string) => {
-    return sign(decodeToken(token), env.getHasuraGraphQLAdminSecret());
+    return jwt.sign(
+      jwt.decode(token) as string,
+      "hasura_graphql_admin_secret_roll1226"
+    );
   },
 } as const;

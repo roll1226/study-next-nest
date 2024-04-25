@@ -25,7 +25,7 @@ const errorLink = onError((errors) => {
 });
 
 const authToken = LocalStorages.getAuthToken();
-Logger.debug(authToken);
+Logger.debug(Jwt.getEmulatedSignedToken(authToken as string));
 const apolloHeader: Record<string, string> = authToken
   ? {
       Authorization: `Bearer ${
