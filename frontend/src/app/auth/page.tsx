@@ -1,7 +1,8 @@
 "use client";
 
+import { useTrySignIn } from "@/hooks/auth/useTrySignIn";
+import { useTrySignOut } from "@/hooks/auth/useTrySignOut";
 import { useTrySignUp } from "@/hooks/auth/useTrySignUp";
-import { FirebaseAuth } from "@/utils/lib/firebase/FirebaseAuth";
 import { FC } from "react";
 
 const AuthPage: FC = () => {
@@ -10,16 +11,19 @@ const AuthPage: FC = () => {
     password: "password",
   });
 
+  const trySignIn = useTrySignIn({
+    email: "test@examole.com",
+    password: "password",
+  });
+
+  const trySignOut = useTrySignOut();
+
   const signUp = () => {
     trySignUp();
   };
 
-  const signIn = () => {
-    FirebaseAuth.signInWithEmailAndPassword("test@examole.com", "password");
-  };
-
   const signOut = () => {
-    FirebaseAuth.signOut();
+    trySignOut();
   };
 
   return (
@@ -28,7 +32,7 @@ const AuthPage: FC = () => {
         サインアップ
       </button>
       <br />
-      <button type="button" onClick={signIn}>
+      <button type="button" onClick={trySignIn}>
         サインイン
       </button>
       <br />

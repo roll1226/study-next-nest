@@ -13,7 +13,7 @@ import {
 } from "@/utils/lib/firebase/FirebaseInitialize";
 import { LocalStorages } from "@/utils/LocalStorages";
 import { env } from "@/env/dotEnv";
-import { doc, onSnapshot } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 import { FirebaseFirestore } from "@/utils/lib/firebase/FirebaseFirestore";
 
 type AuthContextProps = {
@@ -27,7 +27,7 @@ type Props = {
 
 const AuthContext = createContext<AuthContextProps>({
   currentUser: null,
-  loading: true,
+  loading: false,
 });
 
 export const useAuthContext = () => {
@@ -35,7 +35,7 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider: FC<Props> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const value = { currentUser, loading };
 
