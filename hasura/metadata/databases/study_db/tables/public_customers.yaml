@@ -14,9 +14,7 @@ insert_permissions:
     permission:
       check:
         id:
-          _eq: x-hasura-user-id
-      set:
-        id: x-hasura-user-id
+          _eq: X-Hasura-User-Id
       columns:
         - created_at
         - email
@@ -45,7 +43,7 @@ select_permissions:
         - username
       filter:
         id:
-          _eq: x-hasura-user-id
+          _eq: X-Hasura-User-Id
     comment: ""
 update_permissions:
   - role: customer
@@ -56,6 +54,6 @@ update_permissions:
         - username
       filter:
         id:
-          _eq: x-hasura-user-id
+          _eq: X-Hasura-User-Id
       check: null
     comment: ""

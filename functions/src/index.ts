@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import {Timestamp} from "firebase-admin/firestore";
+import { Timestamp } from "firebase-admin/firestore"; // eslint-disable-line
 import axios from "axios";
 
 admin.initializeApp();
@@ -29,14 +29,14 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
   return admin
     .auth()
     .setCustomUserClaims(user.uid, customClaims)
-    .then(() => {
+    .then(async () => {
       const variables = {
         id: user.uid,
         email: user.email,
         username: "test",
       };
 
-      axios
+      await axios
         .post(
           "http://localhost:8080/v1/graphql",
           {
@@ -47,7 +47,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
           {
             headers: {
               "Content-Type": "application/json",
-              "x-hasura-admin-secret": "hasura_graphql_admin_secret_roll1226",
+              "x-hasura-admin-secret": "roll1226",
             },
           }
         )
@@ -60,7 +60,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
           console.log(err);
         });
 
-      admin.firestore().collection("user_meta").doc(user.uid).create({
+      await admin.firestore().collection("user_meta").doc(user.uid).create({
         refreshTime: Timestamp.now(),
       });
     })
