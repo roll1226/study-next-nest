@@ -5,12 +5,18 @@ init:
 	sh commands/init.sh
 install-%:
 	cd ${@:install-%=%} && npm i
-up:
-	docker compose up
-up-build:
-	docker compose up --build
-up-background:
-	docker compose up -d
+up.emulators:
+	docker compose --env-file ./envs/.env.development.local up
+up-build.emulators:
+	docker compose --env-file ./envs/.env.development.local up --build
+up-background.emulators:
+	docker compose --env-file ./envs/.env.development.local up -d
+up.cloud:
+	docker compose --env-file ./envs/.env.local up
+up-build.cloud:
+	docker compose --env-file ./envs/.env.local up --build
+up-background.cloud:
+	docker compose --env-file ./envs/.env.local up -d
 down:
 	docker compose down
 restart:
