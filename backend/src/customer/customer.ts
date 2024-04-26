@@ -19,7 +19,7 @@ export class Customer {
     comment: 'Customer ID',
   })
   @Field(() => ID)
-  readonly id: number;
+  readonly id: string;
 
   @Column('text', { comment: 'メールアドレス' })
   @Field()

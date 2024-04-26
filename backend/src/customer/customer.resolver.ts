@@ -8,7 +8,7 @@ export class CustomerResolver {
 
   @Query(() => Customer)
   async getCustomer(
-    @Args({ name: 'customerId' }) customerId: number,
+    @Args({ name: 'customerId' }) customerId: string,
   ): Promise<Customer> {
     return await this.customerService.findOne(customerId);
   }

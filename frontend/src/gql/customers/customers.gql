@@ -1,5 +1,5 @@
 # Try out GraphQL queries here
-query GetCustomerById($id: Float!) {
+query GetCustomerById($id: String!) {
   getCustomer(customerId: $id) {
     email
     tasks {

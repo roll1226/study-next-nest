@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 const defaultOptions = {} as const;
 export type GetCustomerByIdQueryVariables = Types.Exact<{
-  id: Types.Scalars["Float"]["input"];
+  id: Types.Scalars["String"]["input"];
 }>;
 
 export type GetCustomerByIdQuery = {
@@ -28,7 +28,7 @@ export type GetCustomersQuery = {
 };
 
 export const GetCustomerByIdDocument = gql`
-  query GetCustomerById($id: Float!) {
+  query GetCustomerById($id: String!) {
     getCustomer(customerId: $id) {
       email
       tasks {

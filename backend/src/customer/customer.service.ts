@@ -10,7 +10,7 @@ export class CustomerService {
     private customerRepository: Repository<Customer>,
   ) {}
 
-  async findOne(id: number): Promise<Customer> {
+  async findOne(id: string): Promise<Customer> {
     return await this.customerRepository.findOne({
       where: { id },
       relations: ['tasks'],

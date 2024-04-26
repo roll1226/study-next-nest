@@ -23,7 +23,7 @@ subscription GetTasksSubscription {
   }
 }
 
-mutation InsertTask($name: String!, $customer_id: Int!) {
+mutation InsertTask($name: String!, $customer_id: String!) {
   insert_tasks_one(object: { name: $name, customer_id: $customer_id }) {
     id
     name

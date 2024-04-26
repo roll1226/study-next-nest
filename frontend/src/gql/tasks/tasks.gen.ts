@@ -38,7 +38,7 @@ export type GetTasksSubscriptionSubscription = {
 
 export type InsertTaskMutationVariables = Types.Exact<{
   name: Types.Scalars["String"]["input"];
-  customer_id: Types.Scalars["Int"]["input"];
+  customer_id: Types.Scalars["String"]["input"];
 }>;
 
 export type InsertTaskMutation = {
@@ -263,7 +263,7 @@ export type GetTasksSubscriptionSubscriptionHookResult = ReturnType<
 export type GetTasksSubscriptionSubscriptionResult =
   Apollo.SubscriptionResult<GetTasksSubscriptionSubscription>;
 export const InsertTaskDocument = gql`
-  mutation InsertTask($name: String!, $customer_id: Int!) {
+  mutation InsertTask($name: String!, $customer_id: String!) {
     insert_tasks_one(object: { name: $name, customer_id: $customer_id }) {
       id
       name
