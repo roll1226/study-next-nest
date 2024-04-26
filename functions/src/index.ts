@@ -63,6 +63,8 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
       await admin.firestore().collection("user_meta").doc(user.uid).create({
         refreshTime: Timestamp.now(),
       });
+
+      return;
     })
     .catch((error) => {
       console.log(error);
