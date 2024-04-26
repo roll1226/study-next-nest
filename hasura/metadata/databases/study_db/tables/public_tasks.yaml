@@ -5,3 +5,51 @@ object_relationships:
   - name: customer
     using:
       foreign_key_constraint_on: customer_id
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer:
+          id:
+            _eq: x-hasura-user-id
+      columns:
+        - customer_id
+        - id
+        - name
+        - created_at
+        - updated_at
+    comment: ""
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - created_at
+        - customer_id
+        - id
+        - name
+        - updated_at
+      filter:
+        customer:
+          id:
+            _eq: x-hasura-user-id
+    comment: ""
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - name
+        - updated_at
+      filter:
+        customer:
+          id:
+            _eq: x-hasura-user-id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: customer
+    permission:
+      filter:
+        customer:
+          id:
+            _eq: x-hasura-user-id
+    comment: ""

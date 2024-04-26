@@ -9,7 +9,6 @@ import React, {
 import { onAuthStateChanged, User } from "firebase/auth";
 import {
   firebaseAuth,
-  firebaseFirestore,
 } from "@/utils/lib/firebase/FirebaseInitialize";
 import { LocalStorages } from "@/utils/LocalStorages";
 import { env } from "@/env/dotEnv";

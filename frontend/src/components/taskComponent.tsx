@@ -3,20 +3,25 @@ import {
   useRemoveTaskMutation,
 } from "@/gql/tasks/tasks.gen";
 import { useTaskSubscription } from "@/hooks/subscription/useTaskSubscription";
+import { useAuthContext } from "@/providers/AuthProvider";
+import { Logger } from "@/utils/debugger/Logger";
 import { useState } from "react";
 
 export const TaskComponent = () => {
   const [InsertTaskMutation] = useInsertTaskMutation();
   const [RemoveTaskMutation] = useRemoveTaskMutation();
   const { tasks, taskError, taskLoading } = useTaskSubscription();
+  const { currentUser } = useAuthContext();
 
   const [taskName, setTaskName] = useState("");
 
   const addTask = () => {
+    if (!currentUser) return Logger.debug("未ログインです");
+
     InsertTaskMutation({
       variables: {
         name: taskName,
-        customer_id: 1,
+        customer_id: currentUser.uid,
       },
     });
   };
