@@ -21,6 +21,7 @@ const firebaseFirestore = getFirestore(app);
 const firebaseStorage = getStorage(app);
 // const analytics = getAnalytics(app);
 
+// TODO: エミュレーター用処理
 if (isEmulator()) {
   connectAuthEmulator(firebaseAuth, "http://localhost:9099");
   connectFirestoreEmulator(firebaseFirestore, "localhost", 8000);
