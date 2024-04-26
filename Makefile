@@ -3,19 +3,29 @@ install: $(addprefix install-, $(DIRECTORIES))
 
 init:
 	sh commands/init.sh
+pre_emulator:
+	sh commands/pre_emulator.sh
+pre_cloud:
+	sh commands/pre_cloud.sh
 install-%:
 	cd ${@:install-%=%} && npm i
 up.emulators:
+	@make pre_emulator
 	docker compose --env-file ./envs/.env.development.local up
 up-build.emulators:
+	@make pre_emulator
 	docker compose --env-file ./envs/.env.development.local up --build
 up-background.emulators:
+	@make pre_emulator
 	docker compose --env-file ./envs/.env.development.local up -d
 up.cloud:
+	@make pre_cloud
 	docker compose --env-file ./envs/.env.local up
 up-build.cloud:
+	@make pre_cloud
 	docker compose --env-file ./envs/.env.local up --build
 up-background.cloud:
+	@make pre_cloud
 	docker compose --env-file ./envs/.env.local up -d
 down:
 	docker compose down

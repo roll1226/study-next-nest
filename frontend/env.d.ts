@@ -13,8 +13,9 @@ declare module "process" {
         NEXT_PUBLIC_MESSAGING_SENDER_ID: string;
         NEXT_PUBLIC_APP_ID: string;
         NEXT_PUBLIC_MEASUREMENT_ID: string;
-        NEXT_PUBLIC_USE_FIREBASE_EMULATOR: boolean | undefined;
+        NEXT_PUBLIC_USE_FIREBASE_EMULATOR: "run" | undefined;
         NEXT_PUBLIC_HASURA_TOKEN_KEY: string;
+        NEXT_PUBLIC_HASURA_GRAPHQL_JWT_SECRET: string;
       }
     }
   }

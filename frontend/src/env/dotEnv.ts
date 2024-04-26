@@ -30,10 +30,11 @@ class DotEnv implements DotEnvInterface {
   };
 
   getFirebaseEmulator = () => {
-    const nextPublicFirebaseEmulator =
-      process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR;
-    if (nextPublicFirebaseEmulator === undefined) return false;
-    return nextPublicFirebaseEmulator;
+    return Boolean(process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR);
+  };
+
+  getHasuraGraphQLJwtSecret = () => {
+    return process.env.NEXT_PUBLIC_HASURA_GRAPHQL_JWT_SECRET;
   };
 
   getNodeEnv = () => {

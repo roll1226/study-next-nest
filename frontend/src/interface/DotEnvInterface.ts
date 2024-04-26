@@ -15,6 +15,7 @@ export interface DotEnvInterface {
   getFirebaseConfig: () => firebaseConfigEnvType;
   getHasuraTokenKey: () => string;
   getFirebaseEmulator: () => boolean;
+  getHasuraGraphQLJwtSecret: () => string;
   getNodeEnv: () => "development" | "production" | "test";
   isDevelopment: () => boolean;
 }
