@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { Timestamp } from "firebase-admin/firestore"; // eslint-disable-line
+import { Timestamp } from "firebase-admin/firestore";
 import axios from "axios";
 import { defineSecret } from "firebase-functions/params";
 
