@@ -25,7 +25,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
   const customClaims = {
     "https://hasura.io/jwt/claims": {
       "x-hasura-default-role": "customer",
-      "x-hasura-allowed-roles": ["customer", "anonymous"],
+      "x-hasura-allowed-roles": ["customer"],
       "x-hasura-user-id": user.uid,
     },
   };
@@ -63,7 +63,6 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
       await admin.firestore().collection("user_meta").doc(user.uid).create({
         refreshTime: Timestamp.now(),
       });
-      return;
     })
     .catch((error) => {
       console.log(error);
