@@ -55,18 +55,14 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
             },
           }
         )
-        .then(async (res) => {
-          console.info("success");
-          console.log(res);
-          await admin.firestore().collection("user_meta").doc(user.uid).create({
-            refreshTime: Timestamp.now(),
-          });
-        })
         .catch((err) => {
           console.error("success");
           console.log(err);
         });
 
+      await admin.firestore().collection("user_meta").doc(user.uid).create({
+        refreshTime: Timestamp.now(),
+      });
       return;
     })
     .catch((error) => {
