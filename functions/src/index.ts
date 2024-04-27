@@ -2,15 +2,19 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { Timestamp } from "firebase-admin/firestore"; // eslint-disable-line
 import axios from "axios";
+import { defineSecret } from "firebase-functions/params";
 
 admin.initializeApp();
+
+const hasuraGraphqlEndpoint = defineSecret("HASURA_GRAPHQL_ENDPOINT");
+const hasuraGraphqlAdminSecret = defineSecret("HASURA_GRAPHQL_ADMIN_SECRET");
 
 const query = `
   mutation InsertCustomer($id: String!, $email: String!, $username: String!) {
     insert_customers(objects: {id: $id, email: $email, username: $username}) {
       returning {
         id
-        email,
+        email
         created_at
       }
     }
@@ -38,7 +42,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
 
       await axios
         .post(
-          "http://localhost:8080/v1/graphql",
+          hasuraGraphqlEndpoint.value(),
           {
             operationName: "InsertCustomer",
             query,
@@ -47,7 +51,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
           {
             headers: {
               "Content-Type": "application/json",
-              "x-hasura-admin-secret": "roll1226",
+              "x-hasura-admin-secret": hasuraGraphqlAdminSecret.value(),
             },
           }
         )

@@ -23,8 +23,9 @@ module.exports = {
   ],
   plugins: ["@typescript-eslint", "import"],
   rules: {
-    quotes: ["error", "double"], // eslint-disable-line
+    "object-curly-spacing": ["error", "always"],
+    "quotes": [2, "double", { avoidEscape: true, allowTemplateLiterals: true }],
     "import/no-unresolved": 0,
-    indent: ["error", 2], // eslint-disable-line
+    "indent": ["error", 2],
   },
 };
