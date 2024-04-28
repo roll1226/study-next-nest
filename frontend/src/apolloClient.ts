@@ -33,6 +33,7 @@ const apolloHeader: Record<string, string> = authToken
     }
   : {
       "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
+      "x-hasura-role": "anonymous",
     };
 
 const httpLink = createHttpLink({
