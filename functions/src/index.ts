@@ -21,7 +21,7 @@ const query = `
   }
 `;
 
-exports.processSignUp = functions.auth.user().onCreate((user) => {
+exports.processSignUp = functions.auth.user().onCreate(async (user) => {
   const customClaims = {
     "https://hasura.io/jwt/claims": {
       "x-hasura-default-role": "customer",
@@ -30,7 +30,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
     },
   };
 
-  return admin
+  return await admin
     .auth()
     .setCustomUserClaims(user.uid, customClaims)
     .then(async () => {
@@ -60,6 +60,7 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
           console.log(err);
         });
 
+      // NOTE:クレーム情報の設定に遅延がある時のためにmetaデータをFirestoreで管理
       await admin.firestore().collection("user_meta").doc(user.uid).create({
         refreshTime: Timestamp.now(),
       });

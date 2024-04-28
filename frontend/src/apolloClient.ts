@@ -50,7 +50,7 @@ const wsLink = new WebSocketLink({
   },
 });
 
-// 開発環境のみ読み出されるようにする
+// NOTE:開発環境のみ読み出されるようにする
 HasuraLogger.Messages();
 
 const link = ApolloLink.from([errorLink]).split(
