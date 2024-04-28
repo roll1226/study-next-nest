@@ -7,12 +7,12 @@ import { FC } from "react";
 
 const AuthPage: FC = () => {
   const trySignUp = useTrySignUp({
-    email: "test@examole.com",
+    email: "test1@examole.com",
     password: "password",
   });
 
   const trySignIn = useTrySignIn({
-    email: "test@examole.com",
+    email: "test1@examole.com",
     password: "password",
   });
 

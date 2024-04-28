@@ -7,13 +7,12 @@ import React, {
   ReactNode,
 } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import {
-  firebaseAuth,
-} from "@/utils/lib/firebase/FirebaseInitialize";
+import { firebaseAuth } from "@/utils/lib/firebase/FirebaseInitialize";
 import { LocalStorages } from "@/utils/LocalStorages";
 import { env } from "@/env/dotEnv";
 import { onSnapshot } from "firebase/firestore";
 import { FirebaseFirestore } from "@/utils/lib/firebase/FirebaseFirestore";
+import { Jwt } from "@/utils/lib/jwt/Jwt";
 
 type AuthContextProps = {
   currentUser: User | null;
@@ -53,13 +52,14 @@ export const AuthProvider: FC<Props> = ({ children }) => {
       const idTokenResult = await user.getIdTokenResult();
       const hasuraClaims = idTokenResult.claims[env.getHasuraTokenKey()];
 
-      if (hasuraClaims) return LocalStorages.setAuthToken(token);
+      if (hasuraClaims)
+        return LocalStorages.setAuthToken(Jwt.getSignedToken(token));
 
       onSnapshot(
         FirebaseFirestore.getAuthTokenRefreshDoc(user.uid),
         async (doc) => {
           const token = await user.getIdToken(true);
-          LocalStorages.setAuthToken(token);
+          LocalStorages.setAuthToken(Jwt.getSignedToken(token));
         }
       );
     });

@@ -27,9 +27,7 @@ const errorLink = onError((errors) => {
 const authToken = LocalStorages.getAuthToken();
 const apolloHeader: Record<string, string> = authToken
   ? {
-      Authorization: `Bearer ${
-        env.isDevelopment() ? Jwt.getEmulatedSignedToken(authToken) : authToken
-      }`,
+      Authorization: `Bearer ${authToken}`,
     }
   : {
       "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
