@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sh ./commands/sh/move_repository_root.sh
-sh ./commands/pre_cloud/frontend.sh
-sh ./commands/pre_cloud/backend.sh
+sh ./commands/sh/frontend.sh Cloud
+sh ./commands/sh/backend.sh Cloud

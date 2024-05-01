@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sh ./commands/sh/move_repository_root.sh
-sh ./commands/pre_emulator/frontend.sh
-sh ./commands/pre_emulator/backend.sh
+sh ./commands/sh/frontend.sh Emulator
+sh ./commands/sh/backend.sh Emulator
