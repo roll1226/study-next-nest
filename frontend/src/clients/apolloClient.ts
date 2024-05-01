@@ -8,9 +8,9 @@ import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { env } from "@/env/dotEnv";
-import { Logger } from "./utils/debugger/Logger";
-import { HasuraLogger } from "./utils/debugger/HasuraLogger";
-import { LocalStorages } from "./utils/LocalStorages";
+import { Logger } from "../utils/debugger/Logger";
+import { HasuraLogger } from "../utils/debugger/HasuraLogger";
+import { apolloClientHeader } from "./apolloClientHeader";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;
@@ -23,19 +23,9 @@ const errorLink = onError((errors) => {
   if (networkError) Logger.debug(`[Network error]: ${networkError}`);
 });
 
-const authToken = LocalStorages.getAuthToken();
-const apolloHeader: Record<string, string> = authToken
-  ? {
-      Authorization: `Bearer ${authToken}`,
-    }
-  : {
-      "x-hasura-admin-secret": `${env.getHasuraGraphQLAdminSecret()}`,
-      "x-hasura-role": "anonymous",
-    };
-
 const httpLink = createHttpLink({
   uri: env.getHasuraGraphQLEndpoint(),
-  headers: apolloHeader,
+  headers: apolloClientHeader,
 });
 
 const wsLink = new WebSocketLink({
@@ -43,7 +33,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      headers: apolloHeader,
+      headers: apolloClientHeader,
     },
   },
 });
