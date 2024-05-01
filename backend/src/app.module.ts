@@ -36,7 +36,7 @@ const configService = new ConfigService();
       },
       managedMetaDataConfig: {
         metadataVersion: 'v3',
-        dirPath: configService.get('HASURA_METADATA_PATH'),
+        dirPath: configService.get('NESTJS_HASURA_METADATA_PATH'),
         secretHeaderEnvName: 'NESTJS_EVENT_WEBHOOK_SHARED_SECRET',
         nestEndpointEnvName: 'NESTJS_EVENT_WEBHOOK_ENDPOINT',
         defaultEventRetryConfig: {

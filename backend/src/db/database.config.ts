@@ -10,12 +10,12 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     const configService = new ConfigService();
     return {
       type: 'postgres',
-      host: configService.get('DATABASE_HOST'),
-      port: configService.get('DATABASE_PORT'),
-      username: configService.get('DATABASE_USER'),
-      password: configService.get('DATABASE_PASSWORD'),
-      database: configService.get('DATABASE_DB'),
-      schema: configService.get('DATABASE_SCHEMA'),
+      host: configService.get('NESTJS_DATABASE_HOST'),
+      port: configService.get('NESTJS_DATABASE_PORT'),
+      username: configService.get('NESTJS_DATABASE_USER'),
+      password: configService.get('NESTJS_DATABASE_PASSWORD'),
+      database: configService.get('NESTJS_DATABASE_DB'),
+      schema: configService.get('NESTJS_DATABASE_SCHEMA'),
       entities: [Customer, Task],
       synchronize: true,
     };

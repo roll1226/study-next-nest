@@ -1,6 +1,6 @@
 - name: nest_graphql_schemas
   definition:
-    url: '{{NESTJS_REMOTE_SCHEMA}}'
+    url: "{{NESTJS_REMOTE_SCHEMA}}"
     timeout_seconds: 60
     customization: {}
   comment: Nestjs graphql schemas
