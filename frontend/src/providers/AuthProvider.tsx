@@ -25,7 +25,7 @@ type Props = {
 
 const AuthContext = createContext<AuthContextProps>({
   currentUser: null,
-  loading: false,
+  loading: true,
 });
 
 export const useAuthContext = () => {
@@ -33,13 +33,14 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider: FC<Props> = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const value = { currentUser, loading };
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(firebaseAuth, async (user) => {
-      setLoading(true);
+      setLoading(false);
+
       if (user === null) {
         firebaseAuth.signOut();
         LocalStorages.removeAuthToken();
@@ -73,7 +74,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     <AuthContext.Provider
       value={{ currentUser: value.currentUser, loading: value.loading }}
     >
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

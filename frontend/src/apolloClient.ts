@@ -11,7 +11,6 @@ import { env } from "@/env/dotEnv";
 import { Logger } from "./utils/debugger/Logger";
 import { HasuraLogger } from "./utils/debugger/HasuraLogger";
 import { LocalStorages } from "./utils/LocalStorages";
-import { Jwt } from "./utils/lib/jwt/Jwt";
 
 const errorLink = onError((errors) => {
   const { graphQLErrors, networkError } = errors;

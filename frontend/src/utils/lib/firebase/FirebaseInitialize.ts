@@ -14,7 +14,6 @@ const isEmulator = () => {
 
 const app = initializeApp(env.getFirebaseConfig());
 
-Logger.debug(env.getFirebaseEmulator());
 const firebaseAuth = getAuth(app);
 const firebaseFunction = getFunctions(app);
 const firebaseFirestore = getFirestore(app);
