@@ -37,6 +37,9 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: ${POSTGRES_DB}
       TZ: "Asia/Tokyo"
+    ports:
+      - "5432:5432"
+
 
   graphql-engine:
     image: hasura/graphql-engine:v2.37.0
