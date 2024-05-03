@@ -54,13 +54,13 @@ export const AuthProvider: FC<Props> = ({ children }) => {
       const hasuraClaims = idTokenResult.claims[env.getHasuraTokenKey()];
 
       if (hasuraClaims)
-        return LocalStorages.setAuthToken(Jwt.getSignedToken(token));
+        return LocalStorages.setAuthToken(await Jwt.getSignedToken(token));
 
       onSnapshot(
         FirebaseFirestore.getAuthTokenRefreshDoc(user.uid),
         async (doc) => {
           const token = await user.getIdToken(true);
-          LocalStorages.setAuthToken(Jwt.getSignedToken(token));
+          LocalStorages.setAuthToken(await Jwt.getSignedToken(token));
         }
       );
     });

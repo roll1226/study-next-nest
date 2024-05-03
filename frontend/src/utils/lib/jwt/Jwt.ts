@@ -1,5 +1,6 @@
 import { env } from "@/env/dotEnv";
-import * as jwt from "jsonwebtoken";
+import { FirebaseFunctions } from "../firebase/FirebaseFunctions";
+import { Logger } from "@/utils/debugger/Logger";
 
 // HACK: FIrebase Functionsに移す予定
 export const Jwt = {
@@ -10,12 +11,11 @@ export const Jwt = {
    * @param token string
    * @return string
    */
-  getSignedToken: (token: string) => {
+  getSignedToken: async (token: string) => {
     if (!env.isDevelopment()) return token;
 
-    return jwt.sign(
-      jwt.decode(token) as string,
-      env.getHasuraGraphQLJwtSecret()
-    );
+    const res = await FirebaseFunctions.createJwtByEmulator(token);
+    const { jwt } = res.data as { jwt: string };
+    return jwt;
   },
 } as const;

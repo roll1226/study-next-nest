@@ -1,5 +1,5 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import { auth } from "firebase-functions/v1";
 import { defineSecret } from "firebase-functions/params";
 import { Timestamp } from "firebase-admin/firestore";
 import axios from "axios";
@@ -19,7 +19,7 @@ const query = `
   }
 `;
 
-export default functions.auth.user().onCreate(async (user) => {
+export default auth.user().onCreate(async (user) => {
   const customClaims = {
     "https://hasura.io/jwt/claims": {
       "x-hasura-default-role": "customer",

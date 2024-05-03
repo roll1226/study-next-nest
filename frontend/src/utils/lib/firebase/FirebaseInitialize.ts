@@ -15,7 +15,7 @@ const isEmulator = () => {
 const app = initializeApp(env.getFirebaseConfig());
 
 const firebaseAuth = getAuth(app);
-const firebaseFunction = getFunctions(app);
+const firebaseFunctions = getFunctions(app, "asia-northeast1");
 const firebaseFirestore = getFirestore(app);
 const firebaseStorage = getStorage(app);
 // const analytics = getAnalytics(app);
@@ -25,12 +25,12 @@ if (isEmulator()) {
   connectAuthEmulator(firebaseAuth, "http://localhost:9099");
   connectFirestoreEmulator(firebaseFirestore, "localhost", 8000);
   connectStorageEmulator(firebaseStorage, "localhost", 9199);
-  connectFunctionsEmulator(firebaseFunction, "localhost", 5001);
+  connectFunctionsEmulator(firebaseFunctions, "localhost", 5001);
 }
 
 export {
   firebaseAuth,
-  firebaseFunction,
+  firebaseFunctions,
   firebaseFirestore,
   firebaseStorage,
   // analytics,
