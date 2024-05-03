@@ -73,6 +73,7 @@ create.library-%:
 create.resource-%:
 	cd backend && nest g res ${@:create.resource-%=%}
 hasura.console:
+	@make hasura.metadata-reload
 	hasura --project hasura console
 hasura.metadata-export:
 	hasura --project hasura metadata export
