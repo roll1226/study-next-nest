@@ -6,7 +6,6 @@ const hasuraGraphqlJwtSecret = defineSecret("HASURA_GRAPHQL_JWT_SECRET");
 export default functions
   .region("asia-northeast1")
   .https.onCall((data, context): { jwt: string } => {
-    console.log(context.rawRequest.body.data.authToken);
     const { authToken } = data;
 
     if (!context.auth) {
