@@ -1,11 +1,8 @@
 import * as admin from "firebase-admin";
 import { auth } from "firebase-functions/v1";
-import { defineSecret } from "firebase-functions/params";
 import { Timestamp } from "firebase-admin/firestore";
 import axios from "axios";
-
-const hasuraGraphqlEndpoint = defineSecret("HASURA_GRAPHQL_ENDPOINT");
-const hasuraGraphqlAdminSecret = defineSecret("HASURA_GRAPHQL_ADMIN_SECRET");
+import { env } from "../envs/dotEnv";
 
 const query = `
   mutation InsertCustomer($id: String!, $email: String!, $username: String!) {
@@ -40,7 +37,7 @@ export default auth.user().onCreate(async (user) => {
 
       await axios
         .post(
-          hasuraGraphqlEndpoint.value(),
+          env.getHasuraGraphqlEndpoint(),
           {
             operationName: "InsertCustomer",
             query,
@@ -49,7 +46,7 @@ export default auth.user().onCreate(async (user) => {
           {
             headers: {
               "Content-Type": "application/json",
-              "x-hasura-admin-secret": hasuraGraphqlAdminSecret.value(),
+              "x-hasura-admin-secret": env.getHasuraGraphqlAdminSecret(),
             },
           }
         )

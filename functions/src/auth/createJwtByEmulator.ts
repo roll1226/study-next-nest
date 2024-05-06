@@ -1,8 +1,7 @@
 import * as jwt from "jsonwebtoken";
-import { defineSecret } from "firebase-functions/params";
 import * as functions from "firebase-functions";
+import { env } from "../envs/dotEnv";
 
-const hasuraGraphqlJwtSecret = defineSecret("HASURA_GRAPHQL_JWT_SECRET");
 export default functions
   .region("asia-northeast1")
   .https.onCall((data, context): { jwt: string } => {
@@ -15,7 +14,7 @@ export default functions
     return {
       jwt: jwt.sign(
         jwt.decode(authToken) as string,
-        hasuraGraphqlJwtSecret.value()
+        env.getHasuraGraphqlJwtSecret()
       ),
     };
   });
