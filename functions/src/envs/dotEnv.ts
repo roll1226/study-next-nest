@@ -1,5 +1,5 @@
 import { DotEnvInterface } from "../interface/DotEnvInterface";
-import { defineSecret } from "firebase-functions/params";
+import { defineSecret, defineBoolean } from "firebase-functions/params";
 
 /**
  * Firebase Functionsで使用する環境変数
@@ -18,6 +18,10 @@ class DotEnv implements DotEnvInterface {
 
   getHasuraGraphqlJwtSecret = () => {
     return defineSecret("FUNCTIONS_HASURA_GRAPHQL_JWT_SECRET").value();
+  };
+
+  isDevelopment = () => {
+    return defineBoolean("FUNCTIONS_IS_DEVELOPMENT").value();
   };
 }
 

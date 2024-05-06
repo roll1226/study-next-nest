@@ -5,6 +5,8 @@ import { env } from "../envs/dotEnv";
 export default functions
   .region("asia-northeast1")
   .https.onCall((data, context): { jwt: string } => {
+    if (!env.isDevelopment()) return { jwt: "" };
+
     const { authToken } = data;
 
     if (!context.auth) {
