@@ -94,3 +94,6 @@ build.functions:
 emulators:
 	@make build.functions
 	firebase emulators:start
+deploy.functions:
+	firebase deploy --only functions
+	firebase functions:delete createJwtByEmulator -f
