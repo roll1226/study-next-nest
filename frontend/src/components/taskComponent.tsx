@@ -26,10 +26,18 @@ export const TaskComponent = () => {
     });
   };
 
-  const removeTask = ($taskId: number) => {
+  const removeTask = (taskId: number) => {
     RemoveTaskMutation({
       variables: {
-        task_id: $taskId,
+        task_id: taskId,
+      },
+      update(cache) {
+        const normalizedId = cache.identify({
+          id: taskId,
+          __typename: "tasks",
+        });
+        cache.evict({ id: normalizedId });
+        cache.gc();
       },
     });
   };
