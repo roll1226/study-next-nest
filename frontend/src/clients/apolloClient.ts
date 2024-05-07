@@ -56,5 +56,6 @@ const link = ApolloLink.from([errorLink]).split(
 export const client = new ApolloClient({
   ssrMode: typeof window === "undefined",
   cache: new InMemoryCache(),
+  connectToDevTools: true, // 開発環境のみtrueになるようにする
   link,
 });

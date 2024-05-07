@@ -11,8 +11,9 @@ export type GetTaskByIdQuery = {
   __typename?: "query_root";
   getTask: {
     __typename?: "Task";
+    id: string;
     name: string;
-    customer: { __typename?: "Customer"; email: string };
+    customer: { __typename?: "Customer"; id: string; email: string };
   };
 };
 
@@ -22,8 +23,9 @@ export type GetTasksQuery = {
   __typename?: "query_root";
   tasks: Array<{
     __typename?: "tasks";
+    id: number;
     name: string;
-    customer: { __typename?: "customers"; email: string } | null;
+    customer: { __typename?: "customers"; id: string; email: string } | null;
   }>;
 };
 
@@ -76,8 +78,10 @@ export type UpdateTaskMutation = {
 export const GetTaskByIdDocument = gql`
   query GetTaskById($id: Float!) {
     getTask(taskId: $id) {
+      id
       name
       customer {
+        id
         email
       }
     }
@@ -154,8 +158,10 @@ export type GetTaskByIdQueryResult = Apollo.QueryResult<
 export const GetTasksDocument = gql`
   query GetTasks {
     tasks {
+      id
       name
       customer {
+        id
         email
       }
     }

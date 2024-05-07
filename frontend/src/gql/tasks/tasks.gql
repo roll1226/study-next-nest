@@ -1,7 +1,9 @@
 query GetTaskById($id: Float!) {
   getTask(taskId: $id) {
+    id
     name
     customer {
+      id
       email
     }
   }
@@ -9,8 +11,10 @@ query GetTaskById($id: Float!) {
 
 query GetTasks {
   tasks {
+    id
     name
     customer {
+      id
       email
     }
   }
