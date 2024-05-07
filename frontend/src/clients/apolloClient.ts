@@ -53,9 +53,21 @@ const link = ApolloLink.from([errorLink]).split(
   httpLink
 );
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Subscription: {
+      fields: {
+        tasks: {
+          merge: false,
+        },
+      },
+    },
+  },
+});
+
 export const client = new ApolloClient({
   ssrMode: typeof window === "undefined",
-  cache: new InMemoryCache(),
+  cache,
   connectToDevTools: true, // 開発環境のみtrueになるようにする
   link,
 });
