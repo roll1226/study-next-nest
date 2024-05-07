@@ -35,7 +35,12 @@ export type GetTasksSubscriptionSubscriptionVariables = Types.Exact<{
 
 export type GetTasksSubscriptionSubscription = {
   __typename?: "subscription_root";
-  tasks: Array<{ __typename?: "tasks"; id: number; name: string }>;
+  tasks: Array<{
+    __typename?: "tasks";
+    id: number;
+    name: string;
+    customer: { __typename?: "customers"; id: string; email: string } | null;
+  }>;
 };
 
 export type InsertTaskMutationVariables = Types.Exact<{
@@ -232,6 +237,10 @@ export const GetTasksSubscriptionDocument = gql`
     tasks {
       id
       name
+      customer {
+        id
+        email
+      }
     }
   }
 `;

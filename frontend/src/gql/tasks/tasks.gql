@@ -24,6 +24,10 @@ subscription GetTasksSubscription {
   tasks {
     id
     name
+    customer {
+      id
+      email
+    }
   }
 }
 
