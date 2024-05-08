@@ -7,7 +7,10 @@ export class TaskResolver {
   constructor(private tasksService: TaskService) {}
 
   @Query(() => Task)
-  async getTask(@Args({ name: 'taskId' }) taskId: number): Promise<Task> {
-    return await this.tasksService.findOne(taskId);
+  async getTask(
+    @Args({ name: 'taskId' }) taskId: number,
+    @Args({ name: 'customerId', nullable: true }) customerId: string,
+  ): Promise<Task> {
+    return await this.tasksService.findOne(taskId, customerId);
   }
 }

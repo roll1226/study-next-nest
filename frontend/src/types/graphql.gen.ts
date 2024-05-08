@@ -517,6 +517,7 @@ export type query_rootgetCustomerArgs = {
 };
 
 export type query_rootgetTaskArgs = {
+  customerId: InputMaybe<Scalars["String"]["input"]>;
   taskId: Scalars["Float"]["input"];
 };
 

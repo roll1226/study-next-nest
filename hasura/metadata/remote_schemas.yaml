@@ -1,6 +1,33 @@
 - name: nest_graphql_schemas
   definition:
-    url: "{{NESTJS_REMOTE_SCHEMA}}"
+    url: '{{NESTJS_REMOTE_SCHEMA}}'
     timeout_seconds: 60
     customization: {}
   comment: Nestjs graphql schemas
+  permissions:
+    - role: customer
+      definition:
+        schema: |
+          schema {
+            query: Query
+          }
+          scalar DateTime
+          type Customer {
+            created_at: DateTime!
+            email: String!
+            id: ID!
+            tasks: [Task!]!
+            updated_at: DateTime!
+            username: String!
+          }
+          type Query {
+            getCustomer(customerId: String! @preset(value: "x-hasura-user-id")): Customer!
+            getTask(customerId: String @preset(value: "X-Hasura-User-Id"), taskId: Float!): Task!
+          }
+          type Task {
+            created_at: DateTime!
+            customer: Customer!
+            id: ID!
+            name: String!
+            updated_at: DateTime!
+          }

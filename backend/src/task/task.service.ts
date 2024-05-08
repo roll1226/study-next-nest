@@ -10,9 +10,9 @@ export class TaskService {
     private taskRepository: Repository<Task>,
   ) {}
 
-  async findOne(id: number): Promise<Task> {
+  async findOne(id: number, customerId?: string): Promise<Task> {
     return await this.taskRepository.findOne({
-      where: { id },
+      where: { id, customer: { id: customerId } },
       relations: ['customer'],
     });
   }

@@ -18,7 +18,7 @@ scalar DateTime
 
 type Query {
   getCustomer(customerId: String!): Customer!
-  getTask(taskId: Float!): Task!
+  getTask(customerId: String, taskId: Float!): Task!
 }
 
 type Task {
