@@ -3,9 +3,12 @@
 import { useTrySignIn } from "@/hooks/auth/useTrySignIn";
 import { useTrySignOut } from "@/hooks/auth/useTrySignOut";
 import { useTrySignUp } from "@/hooks/auth/useTrySignUp";
+import { useAuthContext } from "@/providers/AuthProvider";
 import { FC } from "react";
 
 const AuthPage: FC = () => {
+  const { currentUser } = useAuthContext();
+
   const trySignUp = useTrySignUp({
     email: "test1@examole.com",
     password: "password",
@@ -28,17 +31,21 @@ const AuthPage: FC = () => {
 
   return (
     <div>
-      <button type="button" onClick={signUp}>
-        サインアップ
-      </button>
-      <br />
-      <button type="button" onClick={trySignIn}>
-        サインイン
-      </button>
-      <br />
-      <button type="button" onClick={signOut}>
-        サインアウト
-      </button>
+      {!currentUser ? (
+        <>
+          <button type="button" onClick={signUp}>
+            サインアップ
+          </button>
+          <br />
+          <button type="button" onClick={trySignIn}>
+            サインイン
+          </button>
+        </>
+      ) : (
+        <button type="button" onClick={signOut}>
+          サインアウト
+        </button>
+      )}
     </div>
   );
 };
