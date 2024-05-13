@@ -6,9 +6,10 @@ import { Logger } from "@/utils/debugger/Logger";
 import { useEffect } from "react";
 
 const UpdateTasks = ({ params }: { params: { id: string } }) => {
+  const taskId = Number(params.id);
   const { data, loading, error } = useGetTaskByIdQuery({
     variables: {
-      id: Number(params.id),
+      id: taskId,
     },
   });
 
@@ -19,8 +20,9 @@ const UpdateTasks = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <UpdateTaskComponent />
-      <p>変更</p>
+      {data?.getTask.name}
+      <UpdateTaskComponent taskId={taskId} propName={data?.getTask.name!} />
+      <b>変更</b>
     </>
   );
 };
