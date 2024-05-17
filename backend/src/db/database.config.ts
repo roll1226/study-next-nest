@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Customer } from 'src/customer/customer';
 import { Task } from 'src/task/task';
 
@@ -17,7 +17,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: configService.get('NESTJS_DATABASE_DB'),
       schema: configService.get('NESTJS_DATABASE_SCHEMA'),
       entities: [Customer, Task],
-      synchronize: true,
+      synchronize: false,
     };
   }
 }
